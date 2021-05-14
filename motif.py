@@ -1,11 +1,3 @@
-HAS_RNA_DRAW = False
-
-try:
-    import rna_draw
-    HAS_RNA_DRAW = True 
-except:
-    pass
-
 import re
 import math
 import pickle 
@@ -13,6 +5,7 @@ import pandas as pd
 from enum import Enum
 from abc import ABC, abstractmethod
 from multipledispatch import dispatch
+
 
 ALLOWED_PAIRS = {"AU", "UA", "GC", "CG", "UG", "GU"}
 
@@ -239,6 +232,7 @@ class Motif(ABC):
 
     def contains(self, pos):
         return pos in self.positions_
+
 
 class SingleStrand(Motif):
     def __init__(self, **kwargs):
@@ -521,6 +515,14 @@ def traverse(motif):
         #print('\t',c)
         traverse(c)
 
+def highest_id( m : Motif, best=0 ):
+    best = max( best, m.id() )
+
+    for c in m.children():
+        best = highest_id(c, best)
+
+    return best
+
 class SecStruct:
     # what do we want this to do? 
     # 1. serve as a place to hold the motifs 
@@ -537,7 +539,6 @@ class SecStruct:
         assert len(re.sub('[\(\.\)]', '', secstruct)) == 0
         assert len(re.sub('[ACGU]', '', sequence)) == 0
         assert secstruct.count('(') == secstruct.count(')')
-        self.has_rna_draw_ = HAS_RNA_DRAW
         
         self.structure_ = secstruct 
         self.sequence_ = sequence
@@ -546,6 +547,9 @@ class SecStruct:
         # helpe for recusion
         self.counter_ = 0
         self.set_ids_(self.root_)
+         
+        self.it_ = self.root_
+        self.__end_id = highest_id( self.root_ )
 
     def set_ids_(self, m: Motif):
         m.id(self.counter_)
@@ -557,8 +561,6 @@ class SecStruct:
             self.set_ids_(child)
     
     def display(self):
-        if HAS_RNA_DRAW:
-            rna_draw.rna_draw(ss=self.structure_, seq=self.sequence_, out=f"structure{self.total_structures_}.png")
         print(self.root_.str())
 
     def sequence(self):
@@ -644,14 +646,35 @@ class SecStruct:
         else:
             print(f"{motif_type} is an invalid motif type. Allowed values are:\n{', '.join(list(TYPE_MAPPER.values()))}")
 
+
+    def get(self, id ):
+        return self.id_mapping_[ id ]
+
+    def __iter__(self):
+        for m in self.id_mapping_.values():
+            yield m
+    
+    def hairpins( self, **kwargs ):
+        for m in self.id_mapping_.values():
+            if m.is_hairpin(): 
+                yield m
+     
+    def helix( self ):
+        for m in self.id_mapping_.values():
+            if m.is_helix(): 
+                yield m
+   
+    def junctions( self ):
+        for m in self.id_mapping_.values():
+            if m.is_junction(): 
+                yield m
+
+    def singlestrands( self ):
+        for m in self.id_mapping_.values():
+            if m.is_singlestrand(): 
+                yield m
+    
+
+
 if __name__ == "__main__":
-    ss, seq = '.....((((..((((...........))))..((((...........))))..))))...........(((((((....))))))).....................', 'GGAAAGUCCAAGAGCGAACAAACAAAGCUCAAGUACGAACCAACAAAGUACAAGGACAAAGAAAGAAAGCUGUCCUUCGGGGCAGCAAAAGAAACAACAACAACAAC'
-    SS = SecStruct(secstruct=ss, sequence=seq)
-    SS.display()
-    SS.change_motif(3, '(((((((&)))))))', 'GGGGGGG&CCCCCCC')
-    SS.display()
-    SS.change_motif(3, '(...)', 'GAAAC')
-    SS.display()
-    SS.change_motif(3, '(((..(((....)))..(((....)))..)))', 'GGGAAGGGAAAACCCAAGGGAAAACCCAACCC')
-    SS.display()
-    print(SS.get_ids("Hairpin"))
+    pass
