@@ -753,8 +753,8 @@ class SecStruct:
         
 
 if __name__ == "__main__":
-    design = [SecStruct( '....((((...((((....))))...))))', 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN') ]
-    print( d.sequence  ) 
-    d.set_barcode( 0, 'GGGG' )
-    print( d.sequence  )
+    design = SecStruct( '....((((...((((....))))...))))', 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN')
+    print( design.sequence  ) 
+    design.set_barcode( 0, 'GGGG' )
+    print( design.sequence  )
 
