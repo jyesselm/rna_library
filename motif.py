@@ -1,4 +1,5 @@
 import re
+import sys
 import math
 import pickle
 import pandas as pd
@@ -6,17 +7,24 @@ from enum import Enum
 from abc import ABC, abstractmethod
 from multipledispatch import dispatch
 
-
 ALLOWED_PAIRS = {"AU", "UA", "GC", "CG", "UG", "GU"}
 
 
 class MotifType(Enum):
+    """
+    Enumerated Class for motif type. Values are:
+
     UNASSIGNED = 0
     SINGLESTRAND = 1
     HELIX = 2
     HAIRPIN = 3
     JUNCTION = 4
-
+    """
+    UNASSIGNED = 0
+    SINGLESTRAND = 1
+    HELIX = 2
+    HAIRPIN = 3
+    JUNCTION = 4
 
 TYPE_MAPPER = {
     MotifType.SINGLESTRAND: "SingleStrand",
@@ -69,6 +77,7 @@ class Motif(ABC):
         self.end_pos_ = -1
         self.positions_ = set()
         self.id_ = None
+        self.__is_barcode = False
 
         if "sequence" in kwargs:
             self.sequence_ = kwargs["sequence"]
@@ -143,7 +152,7 @@ class Motif(ABC):
         )
 
     def __str__(self) -> str:
-        return TYPE_MAPPER[self.type_] + "," + self.sequence_ + "," + self.structure_
+        return TYPE_MAPPER[ self.type_ ] + "," + self.sequence_ + "," + self.structure_
 
     # def __str__(self):
     #    return self.str()
@@ -236,6 +245,16 @@ class Motif(ABC):
     @abstractmethod
     def has_non_canonical(self):
         pass
+
+    def same_pattern(self, sequence):
+        template = '&'.join(['N'*len( s ) for s in self.strands_]) 
+        if len( sequence ) != len( template ):
+            return False
+
+        for s, t in zip( sequence, template ):
+            if (s == '&' and t != '&') or (s != '&' and t == '&'):
+                return False
+        return True 
 
     def start_pos(self):
         return self.start_pos_
@@ -521,7 +540,7 @@ def parse_to_motifs(structure, sequence):
     # basic sanity checks
     assert len(structure) == len(sequence)
     assert len(re.sub("[\(\.\)]", "", structure)) == 0
-    assert len(re.sub("[ACGUT]", "", sequence)) == 0
+    assert len(re.sub("[ACGUTN]", "", sequence)) == 0
     assert structure.count("(") == structure.count(")")
     for ii in range(3):
         invalid = "(" + "." * ii + ")"
@@ -566,7 +585,7 @@ class SecStruct:
 
         assert len(secstruct) == len(sequence) and len(secstruct) > 0
         assert len(re.sub("[\(\.\)]", "", secstruct)) == 0
-        assert len(re.sub("[ACGUT]", "", sequence)) == 0
+        assert len(re.sub("[ACGUTN]", "", sequence)) == 0
         assert secstruct.count("(") == secstruct.count(")")
 
         self.structure_ = secstruct
@@ -611,17 +630,17 @@ class SecStruct:
 
         if motif.has_parent():
             # reset the parent of the new motif
-            new_motif.parent(motif.parent())
-            motif.parent(None)
+            new_motif.parent( motif.parent() )
+            motif.parent( None )
 
             cleaned_children = []
             for child in motif.parent().children():
                 if child.id() == id:
-                    cleaned_children.append(new_motif)
+                    cleaned_children.append( new_motif           )
                 else:
-                    cleaned_children.append(child)
+                    cleaned_children.append( child               )
 
-            new_motif.parent().set_children(cleaned_children)
+            new_motif.parent().set_children( cleaned_children    )
 
         else:
             # this is the case where you are actually just replacing the root? seems like a dumb thing to do
@@ -693,7 +712,6 @@ class SecStruct:
         pass
 
 
-
     def get(self, id ):
         return self.id_mapping_[ id ]
 
@@ -721,7 +739,22 @@ class SecStruct:
             if m.is_singlestrand(): 
                 yield m
     
-
+    def set_barcode( self, m_id, bc_seq ):
+        m : Motif 
+        m = self.id_mapping_[ m_id ]
+        if not m.is_singlestrand() and not m.is_helix():
+            raise TypeError(f"Barcode motif must be either a singlestrand or helix")
+        
+        if not m.same_pattern( bc_seq ):
+            raise TypeError(f"The supplied barcode \"{bc_seq}\" is not compatible with the selected motif")
+        
+        m.sequence( bc_seq )
+        self.sequence_ = self.root_.recursive_sequence()
+        
 
 if __name__ == "__main__":
-    pass
+    design = [SecStruct( '....((((...((((....))))...))))', 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN') ]
+    print( d.sequence  ) 
+    d.set_barcode( 0, 'GGGG' )
+    print( d.sequence  )
+
