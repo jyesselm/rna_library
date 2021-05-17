@@ -750,11 +750,18 @@ class SecStruct:
         
         m.sequence( bc_seq )
         self.sequence_ = self.root_.recursive_sequence()
+
+
+    def __add__( self, other ):
         
+        seq_total = self.sequence + other.sequence
+        ss_total = self.structure + other.structure
+        #TODO bring over barcode info        
+        return SecStruct( ss_total, seq_total )
 
 if __name__ == "__main__":
-    design = SecStruct( '....((((...((((....))))...))))', 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNN')
-    print( design.sequence  ) 
-    design.set_barcode( 0, 'GGGG' )
-    print( design.sequence  )
+    d1 = SecStruct( '(((...)))', 'GGGAAACCC')
+    d2 = SecStruct( '....', 'AAAA')
+    print( (d1 + d2).sequence )
+    print( (d1 + d2).structure )
 
