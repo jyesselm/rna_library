@@ -1,25 +1,86 @@
+#!/usr/bin/env python3
 import re
 import sys
+import RNA
 import math
 import pickle
+import itertools
 import pandas as pd
-from enum import Enum
+import editdistance
+from enum import Enum, IntEnum
 from abc import ABC, abstractmethod
 from multipledispatch import dispatch
 
 ALLOWED_PAIRS = {"AU", "UA", "GC", "CG", "UG", "GU"}
+BPS = ("GU", "UG", "AU", "UA", "GC", "CG")
+NTS = ("A", "C", "G", "U") 
+LEGAL_BPS = set( BPS )
+
+def satisfies_constraints( sequence, template ):
+    
+    for s, t in zip( sequence, template):
+        if t == 'N' or t == 'B':
+            continue
+        elif t != s:
+            return False
+    return True
 
 
-class MotifType(Enum):
-    """
-    Enumerated Class for motif type. Values are:
+class BasePair( IntEnum ):
+    GU = 0,
+    UG = 1,
+    AU = 2,
+    UA = 3,
+    GC = 4,
+    CG = 5
 
-    UNASSIGNED = 0
-    SINGLESTRAND = 1
-    HELIX = 2
-    HAIRPIN = 3
-    JUNCTION = 4
-    """
+    def is_GU( self ):
+        return self == BasePair.GU or self == BasePair.UG
+    
+    def is_AU( self ):
+        return self == BasePair.AU or self == BasePair.UA
+
+    def is_GC( self ):
+        return self == BasePair.CG or self == BasePair.GC
+
+    def is_canoncial( self ):
+        return self.is_AU() or self.is_GC()
+    
+    def to_str( self ):
+        return BPS[ int( self ) ]
+
+BP_VALS = [int(bp) for bp in BasePair]
+
+BASEPAIR_MAPPER = {
+    "GU" : BasePair.GU,
+    "UG" : BasePair.UG,
+    "AU" : BasePair.AU,
+    "UA" : BasePair.UA,
+    "GC" : BasePair.GC,
+    "CG" : BasePair.CG
+}
+
+
+class Nucleotide( IntEnum ):
+    A = 0,
+    C = 1,
+    G = 2,
+    U = 3
+
+    def to_str( self ):
+        return NTS[ int(self) ]
+
+NT_VALS = [int(nt) for nt in Nucleotide]
+
+NUCLEOTIDE_MAPPER = {
+    "A": Nucleotide.A,
+    "C": Nucleotide.C,
+    "G": Nucleotide.G,
+    "U": Nucleotide.U
+}
+
+class MotifType( Enum ):
+    
     UNASSIGNED = 0
     SINGLESTRAND = 1
     HELIX = 2
@@ -32,6 +93,50 @@ TYPE_MAPPER = {
     MotifType.HAIRPIN: "Hairpin",
     MotifType.JUNCTION: "Junction",
 }
+
+def pool_with_distance( sequences, min_dist ):
+    
+    result = []
+    
+    for seq in sorted( sequences ):
+        for ii in range(len(result)-1, -1, -1):
+            if editdistance.eval( seq, result[ii] ) < min_dist:
+                break
+        else:
+            result.append( seq )
+
+    return result
+
+
+def bp_codes_to_sequence( bp_code ):
+    size = len( bp_code )
+    left, right = ['N']*size, ['N']*size
+    
+    for idx, bp in enumerate( bp_code ):
+        string = BasePair( bp ).to_str()
+        left[ idx ] = string[0]
+        right[ size - idx -1 ] = string[1]
+    
+    return f"{''.join(left)}&{''.join(right)}" 
+
+
+def nt_codes_to_sequences( codes ):
+    result = []
+    for c in codes:
+        result.append( Nucleotide(c).to_str())
+    return ''.join( result )
+
+
+def get_pair_list( secstruct : str ): # note assumes that the incoming structure has been validated
+    result = [] 
+    lparens = [] 
+    for ii, db in enumerate( secstruct ):
+        if db == '(':
+            lparens.append( ii )
+        elif db == ')':
+            result.append((lparens.pop(), ii ))
+    assert len( lparens ) == 0
+    return result
 
 
 def connectivity_list(structure):
@@ -78,6 +183,7 @@ class Motif(ABC):
         self.positions_ = set()
         self.id_ = None
         self.__is_barcode = False
+        self.__sequences = []
 
         if "sequence" in kwargs:
             self.sequence_ = kwargs["sequence"]
@@ -153,12 +259,6 @@ class Motif(ABC):
 
     def __str__(self) -> str:
         return TYPE_MAPPER[ self.type_ ] + "," + self.sequence_ + "," + self.structure_
-
-    # def __str__(self):
-    #    return self.str()
-
-    # def __repr__(self):
-    #    return self.str()
 
     def is_helix(self):
         return False
@@ -264,7 +364,21 @@ class Motif(ABC):
 
     def contains(self, pos):
         return pos in self.positions_
+    
 
+    # this is for making barcodes
+    def sequences( self, seqs ):
+        self.__sequences = seqs
+
+    def number_sequences( self ):
+        return len( self.__sequences )
+
+    def set_sequence( self, idx ):
+        self.sequence_ = self.__sequences[ idx ]
+    
+    @abstractmethod
+    def generate_sequences( self ):
+        pass
 
 class SingleStrand(Motif):
     def __init__(self, **kwargs):
@@ -294,7 +408,17 @@ class SingleStrand(Motif):
 
     def has_non_canonical(self):
         return False
-
+    
+    def generate_sequences( self ):
+        nts = []
+        for nt in self.sequence_:
+            if nt == 'N':
+                nts.append( NT_VALS )
+            else:
+                nts.append( [ int( NUCLEOTIDE_MAPPER[ nt ] )] )
+        nt_combos = list(itertools.product( *nts ))
+        sequences = list(map( nt_codes_to_sequences, nt_combos ))
+        self.sequences( sequences )
 
 class Helix(Motif):
     def __init__(self, **kwargs):
@@ -347,6 +471,25 @@ class Helix(Motif):
                 return True
         return False
 
+    def generate_sequences( self ):
+        bp_codes = []   
+        for idx, bp in enumerate( self.pairs() ):
+            n_count = bp.count( 'N' )
+            if n_count == 0:
+                bp_codes.append( [ int(BASEPAIR_MAPPER[ bp ]) ] )
+            elif n_count == 2:
+                bp_codes.append( BP_VALS )
+            elif n_count == 1:
+                (left, right) = bp
+                allowed = []
+                if left != 'N':
+                    allowed = list(filter( lambda pr: pr[0] == left, BPS))
+                elif right != 'N':
+                    allowed = list(filter( lambda pr: pr[1] == right, BPS))
+                bp_codes.append( list(map( lambda code: int(BASEPAIR_MAPPER[ code ]), allowed )) )
+        nt_combos = list(itertools.product( *bp_codes ))
+        sequences = list(map( bp_codes_to_sequence, nt_combos ))
+        self.sequences( sequences ) 
 
 class Hairpin(Motif):
     def __init__(self, **kwargs):
@@ -372,6 +515,17 @@ class Hairpin(Motif):
     def has_non_canonical(self):
         pair = self.sequence_[0] + self.sequence_[-1]
         return pair not in ALLOWED_PAIRS
+    
+    def generate_sequences( self ):
+        nts = []
+        for n in self.recursive_sequence():
+            if n != 'N':
+                nts.append( [int( NUCLEOTIDE_MAPPER[ n ] )])
+            else:
+                nts.append( NT_VALS )
+        nt_combos = list(itertools.product( *nts ))
+        sequences = list(map( nt_codes_to_sequences, nt_combos ))
+        self.sequences( ['N'+seq+'N' for seq in sequences] )
 
 
 class Junction(Motif):
@@ -447,6 +601,9 @@ class Junction(Motif):
 
     def symmetric(self):
         return self.symmetric_
+    
+    def generate_sequences( self ):
+        raise TypeError(f"The method generate_sequences() is not supported for the Junction type")
 
 
 # wrap these into a class or make private with __func_name
@@ -540,7 +697,7 @@ def parse_to_motifs(structure, sequence):
     # basic sanity checks
     assert len(structure) == len(sequence)
     assert len(re.sub("[\(\.\)]", "", structure)) == 0
-    assert len(re.sub("[ACGUTN]", "", sequence)) == 0
+    assert len(re.sub("[ACGUTNB]", "", sequence)) == 0
     assert structure.count("(") == structure.count(")")
     for ii in range(3):
         invalid = "(" + "." * ii + ")"
@@ -759,7 +916,115 @@ class SecStruct:
         #TODO bring over barcode info        
         return SecStruct( ss_total, seq_total )
 
+def validate_barcode_constraints( secstruct, sequence ):
+    # must be the same length
+    assert len(secstruct) == len(sequence)
+    # valid characters only    
+    assert len( re.findall('[^(.)]', secstruct) ) == 0
+    assert len( re.findall('[^AUCGNB]', sequence) ) == 0
+    # check that the basepairs are good
+    pairs = get_pair_list( secstruct )
+    check_pairs( sequence, pairs )
+
+
+def check_pairs( sequence, indices ):
+    for pair_idx in indices:
+        pair = sequence[pair_idx[0]] + sequence[pair_idx[1]]
+        
+        if 'N' in pair or 'B' in pair:
+            continue
+        
+        if pair not in LEGAL_BPS:
+            raise TypeError(f"{pair} is not a legal basepair. Only {', '.join(BPS)} are allowed")
+
+def contains_jct( m : Motif ):
+    count = m.is_junction()
+    
+    for c in m.children():
+        count |= c.is_junction()
+   
+    return count
+
+def generate_sequences( m : Motif ):
+    m.generate_sequences()
+    for c in m.children():
+        generate_sequences( c )
+
+def get_idxs( m : Motif, idxs ):
+    idxs.append( m.number_sequences() )
+    for c in m.children():
+        get_idxs( c, idxs )
+
+def make_sequences( m : Motif ):
+    # 1. make the idx's
+    idxs = [] 
+    get_idxs( m, idxs )
+    idxs = list(map(lambda n: list(range(n)), idxs))
+    # 2. get the permutations
+    permutations = list(itertools.product( *idxs ))
+    seqs = [] 
+    for perm in permutations:
+        set_sequence( m, perm )
+        seqs.append( m.recursive_sequence() )
+    return list( set( seqs ))
+
+def set_sequence( m : Motif, perm, ii=0):
+    m.set_sequence(perm[ ii ])
+    for c in m.children():
+        ii += 1
+        set_sequence( c, perm, ii )
+
+def longest_repeat( nums ):
+    if len( nums ) == 0: # maybe throw an error here... shouldn't be getting this
+        return 0
+    count, best, curr = 0, 0, math.nan
+    
+    for n in nums:
+        if n != curr:
+            best = max( best, count )
+            count = 1
+            curr = n
+        else:
+            count += 1
+    
+    return max( best, count )
+
+def build_barcodes( secstruct, start=None, distance=3 ):
+    #TODO  set it up so that you give it a dot-bracket and sequence
+    if start is None or len(start) == 0:
+        start = 'N'*len( secstruct )
+    validate_barcode_constraints( secstruct, start )
+    
+    m : Motif
+    m = parse_to_motifs( secstruct, start )
+    if contains_jct( m ):
+        raise TypeError(f"the build_barcodes() method cannot build barcodes containing junctions")
+    generate_sequences( m )
+    sequences = make_sequences( m )
+    if start.count('N') != len( start ):
+        filt = list(filter(lambda s: satisfies_constraints(s, start), sequences))
+    else:
+        filt = sequences
+    # repeats  
+    filt = list(filter( lambda seq: longest_repeat( seq ) < 4, filt )) 
+    # get the edit distance right
+    filt = pool_with_distance( filt, distance )
+    folding_info = list(map( lambda seq: (seq, *RNA.fold( seq )), filt))
+    # must fold correctly 
+    filt = list(filter( lambda entry: entry[1] == secstruct, folding_info))
+    # order by mfe
+    filt = sorted( filt, key=lambda entry: entry[-1] )
+    # get just the sequence
+    result = list(map( lambda entry: entry[0], filt ))
+    return result
+
+
 if __name__ == "__main__":
+    ss =  "...(((((((...)))))))"
+    seq = "NNNNNNNNUGAAACANNNNN"
+    barcodes = build_barcodes( ss, seq )
+    print(len(barcodes))
+    exit( 0 ) 
     d1 = SecStruct( '(((...)))', 'GGGAAACCC')
     d2 = SecStruct( '....', 'AAAA')
     print( (d1 + d2).sequence )
