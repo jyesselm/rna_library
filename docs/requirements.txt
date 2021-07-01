@@ -2,4 +2,4 @@ RNA
 pandas
 editdistance
 enum-compat
-plum
+plum-dispatch
