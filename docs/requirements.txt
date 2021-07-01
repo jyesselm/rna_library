@@ -1,8 +1,8 @@
-RNA=="*"
-itertools=="*"
-pandas=="*"
-editdistance=="*"
-enum=="*"
-abc=="*"
-plum=="*"
-typing=="*"
+RNA
+itertools
+pandas
+editdistance
+enum
+abc
+plum
+typing
