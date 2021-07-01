@@ -1,5 +1,4 @@
 RNA
-itertools
 pandas
 editdistance
 enum
