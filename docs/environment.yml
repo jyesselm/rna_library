@@ -1,13 +1,27 @@
-name: docs
+name: base
 channels:
-    - bioconda
-    - conda-forge
-    - defaults
-depedencies:
-    - viennarna==2.4.15=py38h8162308_0
-    - python=3.8
-    - pip:
-      - pandas
-      - editdistance
-      - enum-compat
-      - plum-dispatch
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - conda
+  - python=3.8
+  - conda-env
+  - conda-build
+  - conda-verify
+  - _ipyw_jlab_nb_ext_conf
+  - anaconda
+  - anaconda-navigator
+  - navigator-updater
+  - viennarna
+  - multiset
+  - httplib2
+  - ffmpeg
+  - simplejson
+  - distro
+  - distance
+  - editdistance
+  - sphinx
+  - sphinx_rtd_theme
+  - mordred
+  - plum-dispatch
