@@ -1,4 +1,0 @@
-pandas
-editdistance
-enum-compat
-plum-dispatch
