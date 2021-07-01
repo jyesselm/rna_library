@@ -5,31 +5,31 @@ from .enums import *
 class Junction(Motif):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.type_ = MotifType.JUNCTION
-        self.closing_pairs_ = []
-        self.gaps_ = [len(strand) - 2 for strand in self.strands_]
+        self._Motif__type = MotifType.JUNCTION
+        self.__closing_pairs = []
+        self.__gaps = [len(strand) - 2 for strand in self.strands()]
 
-        self.structure_ = ["."] * len(self.sequence_)
-        self.closing_pairs_.append(self.sequence_[0] + self.sequence_[-1])
+        secstruct = ["."] * len(self.sequence())
+        self.__closing_pairs.append(self.sequence()[0] + self.sequence()[-1])
 
-        for index, nt in enumerate(self.sequence_):
+        for index, nt in enumerate(self.sequence()):
             if nt == "&":
-                self.structure_[index - 1] = "("
-                self.structure_[index] = "&"
-                self.structure_[index + 1] = ")"
-                self.closing_pairs_.append(
-                    self.sequence_[index - 1] + self.sequence_[index + 1]
+                secstruct[index - 1] = "("
+                secstruct[index] = "&"
+                secstruct[index + 1] = ")"
+                self.__closing_pairs.append(
+                    self.sequence()[index - 1] + self.sequence()[index + 1]
                 )
 
-        self.structure_[0] = "("
-        self.structure_[-1] = ")"
+        secstruct[0] = "("
+        secstruct[-1] = ")"
 
-        self.structure_ = "".join(self.structure_)
-        self.token_ = f"Junction{len(self.strands())}_" + "|".join(
-            [str(len(strand) - 2) for strand in self.strands_]
-        )
+        self.structure( "".join( secstruct ) )
+        self.__token = f"Junction{len(self.strands())}_" + "|".join(
+            [str(len(strand) - 2) for strand in self.strands()]
+        ) 
         self.num_branches_ = len(self.strands())
-        self.symmetric_ = len(set([len(strand) - 2 for strand in self.strands_])) == 1
+        self.symmetric_ = len(set([len(strand) - 2 for strand in self.strands()])) == 1
 
     def buffer(self):
         buffers = [self.parent.buffer()]
@@ -45,7 +45,7 @@ class Junction(Motif):
 
     def recursive_structure(self):
         result = str()
-        secstruct_chunks = [subseq[1:-1] for subseq in self.structure_.split("&")]
+        secstruct_chunks = [subseq[1:-1] for subseq in self.structure().split("&")]
         for secstruct_chunk, child in zip(secstruct_chunks, self.children()):
             result += secstruct_chunk
             result += child.recursive_structure()
@@ -54,7 +54,7 @@ class Junction(Motif):
 
     def recursive_sequence(self):
         result = str()
-        seq_chunks = [subseq[1:-1] for subseq in self.sequence_.split("&")]
+        seq_chunks = [subseq[1:-1] for subseq in self.sequence().split("&")]
         for seq_chunk, child in zip(seq_chunks, self.children()):
             result += seq_chunk
             result += child.recursive_sequence()
@@ -62,7 +62,7 @@ class Junction(Motif):
         return result
 
     def closing_pairs(self):
-        return self.closing_pairs_
+        return self.__closing_pairs
 
     def has_non_canonical(self):
         for pair in self.closing_pairs_:

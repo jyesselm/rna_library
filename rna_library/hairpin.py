@@ -7,11 +7,12 @@ from .enums import *
 class Hairpin(Motif):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.type_ = MotifType.HAIRPIN
+        self._Motif__type = MotifType.HAIRPIN
+        #self.__type = MotifType.HAIRPIN
 
-        size = len(self.sequence_) - 2
-        self.structure_ = "(" + "." * size + ")"
-        self.token_ = f"Hairpin{size}"
+        size = len(self.sequence()) - 2
+        self.__structure = "(" + "." * size + ")"
+        self.__token = f"Hairpin{size}"
 
     def buffer(self):
         return self.parent().buffer()
@@ -20,13 +21,13 @@ class Hairpin(Motif):
         return True
 
     def recursive_structure(self):
-        return self.structure_[1:-1]
+        return self.sequence()[1:-1]
 
     def recursive_sequence(self):
-        return self.sequence_[1:-1]
+        return self.sequence()[1:-1]
 
     def has_non_canonical(self):
-        pair = self.sequence_[0] + self.sequence_[-1]
+        pair = self.__sequence[0] + self.__sequence[-1]
         return pair not in ALLOWED_PAIRS
     
     def generate_sequences( self ):

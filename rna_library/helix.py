@@ -1,4 +1,5 @@
 import itertools
+from plum import dispatch
 
 from .motif import Motif
 from .enums import *
@@ -8,32 +9,35 @@ from .util import *
 class Helix(Motif):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.type_ = MotifType.HELIX
-        self.size_ = (len(self.sequence_) - 1) // 2
-        self.structure_ = f'{"("*self.size_}&{")"*self.size_}'
-        self.token_ = f"Helix{self.size_}"
-        self.pairs_ = []
+        self._Motif__type = MotifType.HELIX
+        self.__size = (len(self.sequence()) - 1) // 2
+        self.__structure = f'{"("*self.__size}&{")"*self.__size}'
+        self.__token = f"Helix{self.__size}"
+        self.__pairs = []
 
-        for index in range(self.size_):
-            self.pairs_.append(self.sequence_[index] + self.sequence_[-index - 1])
+        for index in range(self.__size):
+            self.__pairs.append(self.sequence()[index] + self.sequence()[-index - 1])
 
-    def size(self, val=None):
-        if val is None:
-            return self.size_
-        else:
-            self.size_ = val
+
+    @dispatch
+    def size(self):
+        return self.__size
+    
+    @dispatch
+    def size(self, val ):
+        self.__size = val
 
     def buffer(self):
-        return self.size_
+        return self.__size
 
     def pairs(self):
-        return self.pairs_
+        return self.__pairs
 
     def is_helix(self):
         return True
 
     def recursive_structure(self):
-        result = self.structure_.split("&")
+        result = self.structure().split("&")
 
         result = result[0] + self.children()[0].recursive_structure() + result[1]
         if len(self.children()) == 2:
@@ -42,7 +46,7 @@ class Helix(Motif):
         return result
 
     def recursive_sequence(self):
-        result = self.sequence_.split("&")
+        result = self.sequence().split("&")
 
         result = result[0] + self.children()[0].recursive_sequence() + result[1]
         if len(self.children()) == 2:

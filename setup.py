@@ -8,10 +8,10 @@ try:
 except ImportError:
     from distutils.core import setup
 
-setup(name='pyMotif',
+setup(name='rna_library',
         version='0.1.0',
         description='TODO',
         author='Chris Jurich',
         author_email='cjurich2@huskers.unl.edu',
-        packages=['pyMotif'],
+        packages=['rna_library'],
         )

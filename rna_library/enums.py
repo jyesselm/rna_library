@@ -120,6 +120,5 @@ TYPE_MAPPER = { #TODO should make this a class of MotifType
     MotifType.HAIRPIN: "Hairpin",
     MotifType.JUNCTION: "Junction",
 }
-
-
-
+"""A :class: `dict()` object that maps a :class: `MotifType` to its value
+as a `str().`"""

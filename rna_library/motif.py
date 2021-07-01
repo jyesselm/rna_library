@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Motif classes that serve as the driver for this library's functionality.
-
 """
 import re
 import sys
@@ -15,7 +14,7 @@ from enum import Enum, IntEnum
 from .enums import * 
 from .util import *
 from abc import ABC, abstractmethod
-from multipledispatch import dispatch
+from plum import dispatch
 
 
 class Motif(ABC):
@@ -29,51 +28,57 @@ class Motif(ABC):
         """
         Constructor
         """
-        self.type_ = MotifType.UNASSIGNED
-        self.parent_ = None
-        self.sequence_ = str()
-        self.children_ = []
-        self.strands_ = []
-        self.depth_ = int()
-        self.structure_ = str()
-        self.token_ = str()
-        self.start_pos_ = math.inf
-        self.end_pos_ = -1
-        self.positions_ = set()
-        self.id_ = None
+        self.__type = MotifType.UNASSIGNED
+        self.__parent = None
+        self.__sequence = str()
+        self.__children = []
+        self.__strands = []
+        self.__depth = int()
+        self.__structure = str()
+        self.__token = str()
+        self.__start_pos = math.inf
+        self.__end_pos = -1
+        self.__positions = set()
+        self.__id = None
         self.__is_barcode = False
         self.__sequences = []
 
         if "sequence" in kwargs:
-            self.sequence_ = kwargs["sequence"]
+            self.__sequence = kwargs["sequence"]
 
         if "strands" in kwargs:
-            self.strands_ = kwargs["strands"]
+            self.__strands = kwargs["strands"]
 
-        if len(self.sequence_) == 0:
+        if len(self.__sequence) == 0:
             return
 
         strand_seqs = []
-        for strand in self.strands_:
-            self.start_pos_ = min(min(strand), self.start_pos_)
-            self.end_pos_ = max(max(strand), self.end_pos_)
-
+        for strand in self.__strands:
+            self.start_pos_ = min(min(strand), self.__start_pos)
+            self.end_pos_ = max(max(strand), self.__end_pos) 
             for pos in strand:
-                self.positions_.add(pos)
+                self.__positions.add(pos)
 
-            strand_seqs.append("".join([self.sequence_[index] for index in strand]))
+            strand_seqs.append("".join([self.__sequence[index] for index in strand]))
 
-        self.sequence_ = "&".join(strand_seqs)
+        self.__sequence = "&".join(strand_seqs)
 
-    def link_children_(self, depth : int):
-            
+    def link_children(self, depth : int = 0):
+        """
+        Method used to link a :class:`Motif()` object to its children and vice versa. Should only be called once by the root :class:`Motif()`.
+        :param depth: depth of the current :class:`Motif()` object. defaults to 0
+        :type depth: int, optional
+        """            
+        if depth < 0:
+            raise TypeError(f"Depth supplied to Motf.link_children() must be >= 0")
+
         if self.type() == MotifType.SINGLESTRAND:
             depth = 0
 
         self.depth(depth)
 
         # there might be empty lists in here... remove them if that is the case
-        self.children_ = [
+        self.__children = [
             child for child in self.children() if not isinstance(child, list)
         ]
 
@@ -81,9 +86,14 @@ class Motif(ABC):
             child.parent(self)
 
         for child in self.children():
-            child.link_children_(depth + 1)
+            child.link_children(depth + 1)
 
-    def str(self):
+    def str(self) -> str:
+        """
+        Creates a recursive string representation of the current :class:`Motif()` object.
+        :return: The :class:`Motif()` instance in text form.
+        :rtype: :class:`str()`
+        """
         if self.id_ is not None:
             identification = f"ID: {self.id_}, "
         else:
@@ -104,12 +114,16 @@ class Motif(ABC):
                     tks = contents[-1].splitlines()[0]
                     first_line = contents[-1].splitlines()[0]
                     length = len(first_line) - len(first_line.lstrip())
-                    # contents.append('<-' + '-'*len(contents[-1].splitlines()[0]) )
-            # children = '\n'.join([""] + [child.str() for child in self.children()])
+            
             children = "\n".join(contents)
             return f"{depth}{identification}{self.token_} {self.structure_} {self.sequence_}{children}"
 
     def __eq__(self, other) -> bool:
+        """
+        Overloaded `==` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
+        :param: other: Another :class:`Motif()` to be compared against.
+        :type: other: :class:`Motif()`
+        """
         return (
             self.type_ == other.type_
             and self.sequence_ == other.sequence_
@@ -117,7 +131,12 @@ class Motif(ABC):
         )
 
     def __str__(self) -> str:
-        return TYPE_MAPPER[ self.type_ ] + "," + self.sequence_ + "," + self.structure_
+        """
+        String representation of just the motif at hand
+        :return: The :class:`str()` representation of the :class:`Motif()`.
+        :rtype: :class:`str()`
+        """
+        return f"{ TYPE_MAPPER[ self.__type ] },{ self.__sequence },{ self.__structure }"
 
     def is_helix(self):
         return False
@@ -132,19 +151,22 @@ class Motif(ABC):
         return False
 
     def type(self):
-        return self.type_
+        return self.__type
 
     def children(self):
-        return self.children_
+        return self.__children
+
+    def add_child(self, other):
+        self.__children.append( other )
 
     def set_children(self, other):
-        self.children_ = other
+        self.__children = other
 
     def parent(self, other=None):
         if other is not None:
-            self.parent_ = other
+            self.__parent = other
         else:
-            return self.parent_
+            return self.__parent
 
     def token(self, tk=None):
         if tk is None:
@@ -159,27 +181,30 @@ class Motif(ABC):
             self.structure_ = secstruct
 
     def strands(self):
-        return self.strands_
+        return self.__strands
 
-    def sequence(self, seq=None):
-        if seq is None:
-            return self.sequence_
-        else:
-            self.sequence_ = seq
 
-    @dispatch()
+    @dispatch
+    def sequence(self):
+        return self.__sequence
+    
+    @dispatch
+    def sequence(self, seq ):
+        self.__sequence = seq
+
+    @dispatch
     def id(self):
         return self.id_
 
-    @dispatch(int)
+    @dispatch
     def id(self, new_id):
         self.id_ = new_id
 
-    @dispatch()
+    @dispatch
     def depth(self):
         return self.depth_
 
-    @dispatch(int)
+    @dispatch
     def depth(self, value):
         self.depth_ = value
 
