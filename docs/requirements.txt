@@ -1,7 +1,7 @@
 RNA
 pandas
 editdistance
-enum
+enum-compat
 abc
 plum
 typing
