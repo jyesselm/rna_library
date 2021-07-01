@@ -3,21 +3,24 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-pyMotif
+RNA Library
 ===================================
-Welcome to pyMotif's documentation. PyMotif is used for manipulating 
+Welcome to ``rna_library``'s documentation. 
+RNA Library is a tool for building libraries of RNA sequences 
+RNA Library is used for manipulating 
 RNAs using a graph-oriented, polymorphic approach. 
 
 
 
-.. automodule:: pyMotif.motif
-    :members:
-
+   
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-  
-   ds
+
+   install
+   gs
+   usage
+   src
 .. Indices and tables
 .. ==================
 .. 

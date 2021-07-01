@@ -1,4 +1,4 @@
-"""Utility functions for the rna_library module"""
+"""Utility functions for the ``rna_library`` module"""
 
 import re
 import sys
@@ -15,10 +15,23 @@ from plum import dispatch
 from typing import List, Tuple
 
 
-def satisfies_constraints( sequence, template ):
-    """ This is a test"""    
+def satisfies_constraints( sequence : str, template : str ) -> bool:
+    """
+    Confirms whether a sequence and template are the same or not. A template has one of 6
+    possible characters at each position: one of the normal A/C/G/U, N for "any" or "B" to indicate
+    the position is meant to be part of a barcode. Will return ``False`` if sequence and template
+    are not the same length.
+
+    :param str sequence: sequence in question
+    :param str template: templated sequence
+    :rtype: bool
+    """    
+    if len( sequence ) != len( template ):
+        return False
+
     for s, t in zip( sequence, template):
-        if t == 'N' or t == 'B': continue
+        if t == 'N' or t == 'B': 
+            continue
         elif t != s:
             return False
     return True
@@ -26,13 +39,15 @@ def satisfies_constraints( sequence, template ):
 
 def pool_with_distance( sequences : List[ str ], min_dist : int ) -> List[ str ] :
     """
-    Creates a pool of sequences where each sequence has at least a Levenshtein distance between it and all other sequences.
-    :param: sequences, a list of starting RNA sequences
-    :type: :sequences: list[ str ], required
-    :param: min_dist, minimum edit distance between each sequence in the pool
-    :type: :min_dist: int, required, must be >= 0
-    :rtype: list[ str ]
-    """ 
+    Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
+    Method sorts sequences internally so input order is not relevant to final pool.
+    
+    .. warning:: This function can runs in polynomial time so large pools **WILL** take a significant amount of time to run. For reference, pools on the order of hundreds of thousands took multiple hours to run on an i7 in 2021.
+
+    :param: list[str] sequences: A list of starting RNA sequences.
+    :param: int min_dist: Minimum edit distance between each sequence in the pool. Must be >= 0.
+    :rtype: list[str]
+    """
     result = []
     for seq in sorted( sequences ):
         for ii in range(len(result)-1, -1, -1):
@@ -47,8 +62,8 @@ def pool_with_distance( sequences : List[ str ], min_dist : int ) -> List[ str ]
 def bp_codes_to_sequence( bp_code ) -> str:
     """
     Converts a list of :class:`BasePair()`'s into a sequence string.
-    :param: bp_code, a list of basepairs to be converted. Basepairs are in order of nesting.
-    :type: :bp_code: list[ :class:`BasePair()` ], required
+    
+    :param list[BasePair] bp_code: a list of basepairs to be converted. Basepairs are in order of nesting.
     :rtype: str
     """
     size = len( bp_code )
@@ -65,11 +80,11 @@ def bp_codes_to_sequence( bp_code ) -> str:
 def nt_codes_to_sequences( codes ) -> str:
     """
     Converts a list of :class:`Nucleotide()`'s into a sequence string.
-    :param: codes, a list of nucleotides to be converted. 
-    :type: :codes: list[ :class:`Nucleotide()` ], required
+    
+    :param list[Nucleotide] codes: a list of nucleotides to be converted. 
     :rtype: str
     """
-    result = []
+    resulu = []
     for c in codes:
         result.append( Nucleotide(c).to_str())
     return ''.join( result )
@@ -77,11 +92,12 @@ def nt_codes_to_sequences( codes ) -> str:
 
 def get_pair_list( secstruct : str ) -> List[ Tuple[int, int] ]:
     """
-    Creates a list of pair indices from a dot-bracket secstruct string. Note 
-    that the function assumes the incoming structure is valid.
-    :param: secstruct, a dot-bracket structure which is assumed to be valid
-    :type: :secstruct: str
-    :rtype: list[ tuple( int, int ) ]
+    Creates a list of pairs of indices from a dot-bracket secstruct string. Note 
+    that the function assumes the incoming structure is valid. 
+    
+    :param str secstruct: a dot-bracket structure which is assumed to be valid
+    :rtype: list[tuple(int,int)]
+    :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
     """
     result = [] 
     lparens = [] 
@@ -99,10 +115,13 @@ def get_pair_list( secstruct : str ) -> List[ Tuple[int, int] ]:
 
 def connectivity_list( structure : str ) -> List[ int ] :
     """
-    Generates a connectivity list or pairmap from a dot-bracket secondary structure.
-    :param: structure, a dot-bracket structure
-    :type: :structure: str
-    :rtype: list[ int ]
+    Generates a connectivity list or pairmap from a dot-bracket secondary structure. 
+    The list has a value of ``-1`` for unpaired positions else has the index of a 
+    positions complement.
+    
+    :param str structure: a dot-bracket structure 
+    :rtype: list[int]
+    :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
     """
     connections, pairs = [-1] * len(structure), []
 
@@ -115,18 +134,18 @@ def connectivity_list( structure : str ) -> List[ int ] :
             connections[index] = complement
     
     if len( pairs ):
-        raise TypeError("Extra pairs left over in structure")
+        raise TypeError("Unbalanced parentheses in structure")
 
     return connections
 
 
 def is_circular( start : int, connections : List[ int ] ) -> bool:
     """
-    Checks if a starting point in a pairmap is in a circular portion aka a loop.
-    :param: start, staring index in the pairmap
-    :type: :start: int, required
-    :param: connections, pairmap generated from `connectivity_list()`
-    :type: :connections:, list[ int ]
+    Checks if a starting point in a pairmap is in a circular portion.
+    This can include the closing pairs of both hairpins and junctions.
+
+    :param int start: staring index in the pairmap
+    :param list[int] connections: pairmap generated from ``util.connectivity_list()``
     :rtype: bool
     """
     if start != -1:

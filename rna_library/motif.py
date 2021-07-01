@@ -26,7 +26,10 @@ class Motif(ABC):
     """
     def __init__(self, **kwargs):
         """
-        Constructor
+        Constructor for ``Motif``.
+        
+        .. warning:: Should **NOT** be called directly. All instantiations are handled by ``rna_library.parser.parse_to_motifs()``
+
         """
         self.__type = MotifType.UNASSIGNED
         self.__parent = None
@@ -66,8 +69,9 @@ class Motif(ABC):
     def link_children(self, depth : int = 0):
         """
         Method used to link a :class:`Motif()` object to its children and vice versa. Should only be called once by the root :class:`Motif()`.
-        :param depth: depth of the current :class:`Motif()` object. defaults to 0
-        :type depth: int, optional
+
+        :param int depth: depth of the current :class:`Motif()` object. defaults to 0
+        :rtype: None
         """            
         if depth < 0:
             raise TypeError(f"Depth supplied to Motf.link_children() must be >= 0")
@@ -91,7 +95,7 @@ class Motif(ABC):
     def str(self) -> str:
         """
         Creates a recursive string representation of the current :class:`Motif()` object.
-        :return: The :class:`Motif()` instance in text form.
+        
         :rtype: :class:`str()`
         """
         if self.id_ is not None:
@@ -120,9 +124,10 @@ class Motif(ABC):
 
     def __eq__(self, other) -> bool:
         """
-        Overloaded `==` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
-        :param: other: Another :class:`Motif()` to be compared against.
-        :type: other: :class:`Motif()`
+        Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
+        
+        :param: `Motif()` other: Another :class:`Motif()` to be compared against.
+        
         """
         return (
             self.type_ == other.type_
@@ -132,7 +137,8 @@ class Motif(ABC):
 
     def __str__(self) -> str:
         """
-        String representation of just the motif at hand
+        String representation of just the motif at hand.
+        
         :return: The :class:`str()` representation of the :class:`Motif()`.
         :rtype: :class:`str()`
         """
@@ -248,7 +254,6 @@ class Motif(ABC):
 
     def contains(self, pos):
         return pos in self.positions_
-    
 
     # this is for making barcodes
     def sequences( self, seqs ):

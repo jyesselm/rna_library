@@ -1,2 +1,2 @@
-Basic Usage
-==============
+Example Usage
+===============

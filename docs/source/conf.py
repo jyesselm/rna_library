@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyMotif'
+project = 'rna_library'
 copyright = '2021, Christopher Jurich, Joseph Yesselman'
 author = 'Christopher Jurich, Joseph Yesselman'
 
