@@ -1,0 +1,7 @@
+name: docs
+channels:
+    - bioconda
+    - defaults
+depedencies:
+    - viennarna==2.4.15=py38h8162308_0
+    - python=3.8
