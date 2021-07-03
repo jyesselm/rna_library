@@ -1,7 +1,7 @@
 name: base
 channels:
-  - conda-forge
   - bioconda
+  - conda-forge
   - defaults
 dependencies:
   - conda
@@ -13,7 +13,7 @@ dependencies:
   - anaconda
   - anaconda-navigator
   - navigator-updater
-  - viennarna
+  - bioconda::viennarna
   - multiset
   - httplib2
   - ffmpeg
