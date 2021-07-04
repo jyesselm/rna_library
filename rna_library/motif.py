@@ -18,11 +18,7 @@ from plum import dispatch
 
 
 class Motif(ABC):
-    """Abstract base class that :class:`Hairpin()`, 
-    :class:`Helix()`,
-    :class:`Junction()` and
-    :class:`SingleStrand()`
-    all inherit from.
+    """Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
     """
     def __init__(self, **kwargs):
         """
