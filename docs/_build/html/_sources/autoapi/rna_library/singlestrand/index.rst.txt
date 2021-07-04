@@ -22,6 +22,10 @@ Classes
 
    Bases: :py:obj:`rna_library.motif.Motif`
 
+   .. autoapi-inheritance-diagram:: rna_library.singlestrand.SingleStrand
+      :parts: 1
+      :private-bases:
+
    Abstract base class that :class:`Hairpin()`, 
    :class:`Helix()`,
    :class:`Junction()` and

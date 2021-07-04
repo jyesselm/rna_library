@@ -22,25 +22,25 @@ Classes
 
    Bases: :py:obj:`rna_library.motif.Motif`
 
-   Abstract base class that :class:`Hairpin()`, 
-   :class:`Helix()`,
-   :class:`Junction()` and
-   :class:`SingleStrand()`
-   all inherit from.
+   .. autoapi-inheritance-diagram:: rna_library.hairpin.Hairpin
+      :parts: 1
+      :private-bases:
 
-   .. method:: buffer(self)
+   Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`.
 
-
-   .. method:: is_hairpin(self)
+   .. method:: buffer(self) -> int
 
 
-   .. method:: recursive_structure(self)
+   .. method:: is_hairpin(self) -> bool
 
 
-   .. method:: recursive_sequence(self)
+   .. method:: recursive_structure(self) -> str
 
 
-   .. method:: has_non_canonical(self)
+   .. method:: recursive_sequence(self) -> str
+
+
+   .. method:: has_non_canonical(self) -> bool
 
 
    .. method:: generate_sequences(self)

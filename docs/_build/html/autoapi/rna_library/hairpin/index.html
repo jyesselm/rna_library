@@ -167,7 +167,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hairpin</span></code></a></p></td>
-<td><p>Abstract base class that <a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,</p></td>
+<td><p>Represents a hairpin loop in an RNA structure. Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -175,34 +175,34 @@
 <dt id="rna_library.hairpin.Hairpin">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.hairpin.</code><code class="sig-name descname">Hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<p>Abstract base class that <a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code> and
-<code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code>
-all inherit from.</p>
+<div class="graphviz"><img src="../../../_images/inheritance-f61fb512d058aa5a3b90761f18b4f439d134ae26.png" alt="Inheritance diagram of rna_library.hairpin.Hairpin" usemap="#inheritancece3b04c618" class="inheritance graphviz" /></div>
+<map id="inheritancece3b04c618" name="inheritancece3b04c618">
+<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="#rna_library.hairpin.Hairpin" target="_top" title="Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`." alt="" coords="245,5,317,31"/>
+</map><p>Represents a hairpin loop in an RNA structure. Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code>.</p>
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.buffer">
-<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.hairpin.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.is_hairpin">
-<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.hairpin.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.recursive_structure">
-<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.recursive_sequence">
-<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.has_non_canonical">
-<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.hairpin.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

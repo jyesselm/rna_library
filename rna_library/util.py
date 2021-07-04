@@ -148,7 +148,7 @@ def is_circular( start : int, connections : List[ int ] ) -> bool:
     :param list[int] connections: pairmap generated from ``util.connectivity_list()``
     :rtype: bool
     """
-    if start != -1:
+    if connections[ start ] != -1:
         return abs( start - connections[ start] ) == 1
 
     it = start + 1
@@ -161,4 +161,3 @@ def is_circular( start : int, connections : List[ int ] ) -> bool:
         it = connections[it] + 1
         if it == start or it < start:
             return True
-

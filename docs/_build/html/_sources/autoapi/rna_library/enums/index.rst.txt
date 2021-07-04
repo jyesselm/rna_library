@@ -73,30 +73,34 @@ Attributes
 
    Bases: :py:obj:`enum.IntEnum`
 
+   .. autoapi-inheritance-diagram:: rna_library.enums.BasePair
+      :parts: 1
+      :private-bases:
+
    Enumerated type for canoncial and wobble basepairs.
 
    .. attribute:: GU
-      :annotation: = [0]
+      :annotation: = 0
 
       
 
    .. attribute:: UG
-      :annotation: = [1]
+      :annotation: = 1
 
       
 
    .. attribute:: AU
-      :annotation: = [2]
+      :annotation: = 2
 
       
 
    .. attribute:: UA
-      :annotation: = [3]
+      :annotation: = 3
 
       
 
    .. attribute:: GC
-      :annotation: = [4]
+      :annotation: = 4
 
       
 
@@ -155,6 +159,10 @@ Attributes
 
    Bases: :py:obj:`enum.IntEnum`
 
+   .. autoapi-inheritance-diagram:: rna_library.enums.Nucleotide
+      :parts: 1
+      :private-bases:
+
    Enumerated type for all nucleotide types.
 
    .. attribute:: A
@@ -202,6 +210,10 @@ Attributes
 
 
    Bases: :py:obj:`enum.IntEnum`
+
+   .. autoapi-inheritance-diagram:: rna_library.enums.MotifType
+      :parts: 1
+      :private-bases:
 
    Enumerated type for all motif types 
 

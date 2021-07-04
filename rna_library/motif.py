@@ -2,6 +2,8 @@
 """
 Motif classes that serve as the driver for this library's functionality.
 """
+from __future__ import annotations
+
 import re
 import sys
 import RNA
@@ -14,8 +16,8 @@ from enum import Enum, IntEnum
 from .enums import * 
 from .util import *
 from abc import ABC, abstractmethod
-from plum import dispatch
-
+from plum import dispatch 
+# this is so that the typehingint can reference itself
 
 class Motif(ABC):
     """Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
@@ -118,7 +120,7 @@ class Motif(ABC):
             children = "\n".join(contents)
             return f"{depth}{identification}{self.token_} {self.structure_} {self.sequence_}{children}"
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other : Motif) -> bool:
         """
         Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
         
@@ -140,99 +142,155 @@ class Motif(ABC):
         """
         return f"{ TYPE_MAPPER[ self.__type ] },{ self.__sequence },{ self.__structure }"
 
-    def is_helix(self):
+    def is_helix(self) -> bool:
+        """
+        If the motif is a helix or not. Overridden by child :class:`Helix()` class.
+
+        :return: If the motif is of type :class:`Helix()`
+        :rtype: :class:`bool()`
+        """
         return False
 
-    def is_singlestrand(self):
+    def is_singlestrand(self) -> bool:
+        """
+        If the motif is a singlestrand or not. Overridden by child :class:`SingleStrand()` class.
+
+        :return: If the motif is of type :class:`SingleStrand()`
+        :rtype: :class:`bool()`
+        """
         return False
 
-    def is_hairpin(self):
+    def is_hairpin(self) -> bool:
+        """
+        If the motif is a hairpin or not. Overridden by child :class:`Hairpin()` class.
+
+        :return: If the motif is of type :class:`Hairpin()`
+        :rtype: :class:`bool()`
+        """
         return False
 
-    def is_junction(self):
+    def is_junction(self) -> bool:
+        """
+        If the motif is a junction or not. Overridden by child :class:`Junction()` class.
+
+        :return: If the motif is of type :class:`Junction()`
+        :rtype: :class:`bool()`
+        """
         return False
 
-    def type(self):
+    def type(self) -> MotifType:
+        """
+        Returns the :class:`MotifType()` type for the given motif.
+
+        :return: The :class:`MotifType()` enum value for the given motif.
+        :rtype: :class:`MotifType()`
+        """
         return self.__type
 
-    def children(self):
+    def children(self) -> List[ Motif ]:
+        """
+        Getter for the :class:`Motif()`'s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.
+        
+        :return: A `list()` of :class:`Motif()` if the current :class:`Motif()` has any.
+        :rtype: :class:`list[Motif]`
+        """
         return self.__children
 
-    def add_child(self, other):
+    def add_child(self, other : Motif) -> None:
+        """
+        Appends a new :class:`Motif()` to the internal list of children for the current :class:`Motif()`.
+
+        .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
+        
+        :param: `Motif()` other: Another :class:`Motif()` to be appended to the internal children list.
+        """
         self.__children.append( other )
 
-    def set_children(self, other):
+    def set_children(self, other : List[Motif]) -> None:
+        """
+        Sets the entire list of `Motif()` to the internal list of children for the current :class:`Motif()`.
+
+        .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
+        
+        :param: `Motif()` other: Another :class:`Motif()` to be appended to the internal children list.
+        """
         self.__children = other
 
-    def parent(self, other=None):
-        if other is not None:
-            self.__parent = other
-        else:
-            return self.__parent
-
-    def token(self, tk=None):
-        if tk is None:
-            return self.token_
-        else:
-            self.token_ = tk
-
-    def structure(self, secstruct=None):
-        if secstruct is None:
-            return self.structure_
-        else:
-            self.structure_ = secstruct
-
-    def strands(self):
-        return self.__strands
-
+    @dispatch
+    def parent(self, other : Motif) -> None:
+        self.__parent = other
+    
+    @dispatch
+    def parent(self) -> Motif :
+        return self.__parent
 
     @dispatch
-    def sequence(self):
+    def token(self, tk: str ) -> None:
+        self.token_ = tk
+    
+    @dispatch 
+    def token(self) -> str:
+        self.token_ = tk
+    
+    @dispatch
+    def structure(self, secstruct : str ) -> None:
+        self.structure_ = secstruct
+    
+    @dispatch
+    def structure(self) -> str:
+        return self.structure_
+    
+
+    def strands(self) -> List[List[int]]:
+        return self.__strands
+
+    @dispatch
+    def sequence(self) -> str:
         return self.__sequence
     
     @dispatch
-    def sequence(self, seq ):
+    def sequence(self, seq : str ) -> None:
         self.__sequence = seq
 
     @dispatch
-    def id(self):
+    def id(self) -> int:
         return self.id_
 
     @dispatch
-    def id(self, new_id):
+    def id(self, new_id : int) -> None:
         self.id_ = new_id
 
     @dispatch
-    def depth(self):
+    def depth(self) -> int:
         return self.depth_
 
     @dispatch
-    def depth(self, value):
+    def depth(self, value: int) -> None:
         self.depth_ = value
 
     @abstractmethod
-    def buffer(self):
+    def buffer(self) -> int:
         pass
 
-    def has_children(self):
-        return len(self.children_) > 0
+    def has_children(self) -> bool:
+        return len(self.__children) > 0
 
-    def has_parent(self):
-        return self.parent_ is not None
-
-    @abstractmethod
-    def recursive_sequence(self):
-        pass
+    def has_parent(self) -> bool:
+        return self.__parent is not None
 
     @abstractmethod
-    def recursive_structure(self):
+    def recursive_sequence(self) -> str:
         pass
 
     @abstractmethod
-    def has_non_canonical(self):
+    def recursive_structure(self) -> str:
         pass
 
-    def same_pattern(self, sequence):
+    @abstractmethod
+    def has_non_canonical(self) -> bool:
+        pass
+    
+    def same_pattern(self, sequence : str) -> bool:
         template = '&'.join(['N'*len( s ) for s in self.strands_]) 
         if len( sequence ) != len( template ):
             return False
@@ -242,14 +300,14 @@ class Motif(ABC):
                 return False
         return True 
 
-    def start_pos(self):
-        return self.start_pos_
+    def start_pos(self) -> int:
+        return self.__start_pos
 
-    def end_pos(self):
-        return self.end_pos_
+    def end_pos(self) -> int:
+        return self.__end_pos
 
-    def contains(self, pos):
-        return pos in self.positions_
+    def contains(self, pos : int) -> bool:
+        return pos in self.__positions
 
     # this is for making barcodes
     def sequences( self, seqs ):
@@ -258,7 +316,7 @@ class Motif(ABC):
     def number_sequences( self ):
         return len( self.__sequences )
 
-    def set_sequence( self, idx ):
+    def set_sequence( self, idx ): # TODO maybe this should be a dispatch overload?
         self.sequence_ = self.__sequences[ idx ]
     
     @abstractmethod

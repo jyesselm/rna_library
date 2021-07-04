@@ -19,11 +19,11 @@ class BasePair( IntEnum ):
     """
     Enumerated type for canoncial and wobble basepairs.
     """
-    GU = 0,
-    UG = 1,
-    AU = 2,
-    UA = 3,
-    GC = 4,
+    GU = 0
+    UG = 1
+    AU = 2
+    UA = 3
+    GC = 4
     CG = 5
 
     def is_GU( self ):

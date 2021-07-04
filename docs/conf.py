@@ -30,10 +30,15 @@ author = 'Christopher Jurich'
 extensions = [
 ]
 extensions.append('autoapi.extension')
+extensions.append('sphinx.ext.inheritance_diagram')
 
 autoapi_type = 'python'
 autoapi_dirs = ['../rna_library']
-
+autoapi_options = ['members', 'undoc-members', 'private-members', 'show-inheritance', 'show-module-summary', 'special-members', 'imported-members']
+autoapi_options.append('members')
+autoapi_options.append('show-inheritance-diagram')
+autoapi_options.append('show-module-summary')
+#autoapi_options = [ 'show-inheritance-diagram']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
