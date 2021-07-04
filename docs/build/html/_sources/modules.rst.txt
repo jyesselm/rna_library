@@ -1,7 +1,0 @@
-pyMotif
-=======
-
-.. toctree::
-   :maxdepth: 4
-
-   pyMotif

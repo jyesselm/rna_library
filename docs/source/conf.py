@@ -10,21 +10,16 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
-import sys
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../'))
-sys.path.insert(0, os.path.abspath('../../'))
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'rna_library'
-copyright = '2021, Christopher Jurich, Joseph Yesselman'
-author = 'Christopher Jurich, Joseph Yesselman'
-
-# The full version, including alpha/beta/rc tags
-release = '1.0.0'
+copyright = '2021, Christopher Jurich'
+author = 'Christopher Jurich'
 
 
 # -- General configuration ---------------------------------------------------
@@ -33,11 +28,12 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-        'sphinx.ext.autodoc', 
-        'sphinx.ext.napoleon',
-        'autoapi.extension'
+        'sphinx_rtd_theme'
 ]
 
+extensions.append('autoapi.extension')
+
+autoapi_type = 'python'
 autoapi_dirs = ['../../rna_library']
 
 # Add any paths that contain templates here, relative to this directory.
