@@ -1,0 +1,43 @@
+:mod:`rna_library.demo`
+=======================
+
+.. py:module:: rna_library.demo
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.demo.traverse
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.demo.root
+   rna_library.demo.stats
+
+
+.. data:: root
+   
+
+   
+
+.. data:: stats
+   
+
+   
+
+.. function:: traverse(m: motif.Motif, stats)
+
+   Function that returns number of motifs in the structure
+
+

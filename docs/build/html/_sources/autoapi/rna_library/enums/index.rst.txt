@@ -1,0 +1,240 @@
+:mod:`rna_library.enums`
+========================
+
+.. py:module:: rna_library.enums
+
+.. autoapi-nested-parse::
+
+   Enumerated types for base pairs, nucleotides and motifs. 
+   Assist with ensuring type correctness and lowers overhead vs string-based
+   implementations.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.enums.BasePair
+   rna_library.enums.Nucleotide
+   rna_library.enums.MotifType
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.enums.ALLOWED_PAIRS
+   rna_library.enums.BPS
+   rna_library.enums.LEGAL_BPS
+   rna_library.enums.NTS
+   rna_library.enums.BP_VALS
+   rna_library.enums.BASEPAIR_MAPPER
+   rna_library.enums.NT_VALS
+   rna_library.enums.NUCLEOTIDE_MAPPER
+   rna_library.enums.TYPE_MAPPER
+
+
+.. data:: ALLOWED_PAIRS
+   
+
+   A :class:`set()` containing all 6 canonical and wobble basepairings.
+
+
+.. data:: BPS
+   :annotation: = ['GU', 'UG', 'AU', 'UA', 'GC', 'CG']
+
+   A :class:`tuple()` of allowed canonical and wobble basepairings.
+   Ordered for easy conversion by the :class:`BasePair()` class.
+
+
+.. data:: LEGAL_BPS
+   
+
+   A :class:`set()` of all 4 allowed nucleotide types.
+
+
+.. data:: NTS
+   :annotation: = ['A', 'C', 'G', 'U']
+
+   A :class:`tuple()` of all 4 canonical nucleotide types. Ordered 
+   for each conversion by the :class:`Nucleotide()` class.
+
+
+.. class:: BasePair
+
+
+   Bases: :py:obj:`enum.IntEnum`
+
+   Enumerated type for canoncial and wobble basepairs.
+
+   .. attribute:: GU
+      :annotation: = [0]
+
+      
+
+   .. attribute:: UG
+      :annotation: = [1]
+
+      
+
+   .. attribute:: AU
+      :annotation: = [2]
+
+      
+
+   .. attribute:: UA
+      :annotation: = [3]
+
+      
+
+   .. attribute:: GC
+      :annotation: = [4]
+
+      
+
+   .. attribute:: CG
+      :annotation: = 5
+
+      
+
+   .. method:: is_GU(self)
+
+      :return: If the instance is a UG or GU pair.
+      :rtype: :class:`bool()`
+
+
+   .. method:: is_AU(self)
+
+      :return: If the instance is a UA or AU pair.
+      :rtype: :class:`bool()`
+
+
+   .. method:: is_GC(self)
+
+      :return: If the instance is a CG or GC pair.
+      :rtype: :class:`bool()`
+
+
+   .. method:: is_canoncial(self)
+
+      :return: If the instance is a canonical Watson-Crick basepair.
+      :rtype: :class:`bool()`
+
+
+   .. method:: to_str(self)
+
+      :return: The :class:`BasePair()` instance in text form.
+      :rtype: :class:`str()`
+
+
+
+.. data:: BP_VALS
+   
+
+   A :class:`list()` that contains the integer values for all of the 
+   :class:`BasePair()` enumerations.
+
+
+.. data:: BASEPAIR_MAPPER
+   
+
+   A :class:`dict()` object that maps a canonical basepair to its
+   :class:`BasePair()` value.
+
+
+.. class:: Nucleotide
+
+
+   Bases: :py:obj:`enum.IntEnum`
+
+   Enumerated type for all nucleotide types.
+
+   .. attribute:: A
+      :annotation: = [0]
+
+      
+
+   .. attribute:: C
+      :annotation: = [1]
+
+      
+
+   .. attribute:: G
+      :annotation: = [2]
+
+      
+
+   .. attribute:: U
+      :annotation: = 3
+
+      
+
+   .. method:: to_str(self)
+
+      :return: The :class:`Nucleotide()` instance in text form.
+      :rtype: :class:`str()`
+
+
+
+.. data:: NT_VALS
+   
+
+   A :class:`list()` that contains the integer values for all of the 
+   :class:`Nucleotide()` enumerations.
+
+
+.. data:: NUCLEOTIDE_MAPPER
+   
+
+   A :class:`dict()` object that maps a canoncial nucleotide to its
+   :class:`Nucleotide()` value.
+
+
+.. class:: MotifType
+
+
+   Bases: :py:obj:`enum.IntEnum`
+
+   Enumerated type for all motif types 
+
+   .. attribute:: UNASSIGNED
+      :annotation: = 0
+
+      
+
+   .. attribute:: SINGLESTRAND
+      :annotation: = 1
+
+      
+
+   .. attribute:: HELIX
+      :annotation: = 2
+
+      
+
+   .. attribute:: HAIRPIN
+      :annotation: = 3
+
+      
+
+   .. attribute:: JUNCTION
+      :annotation: = 4
+
+      
+
+
+.. data:: TYPE_MAPPER
+   
+
+   A :class: `dict()` object that maps a :class: `MotifType` to its value
+   as a `str().`
+
+

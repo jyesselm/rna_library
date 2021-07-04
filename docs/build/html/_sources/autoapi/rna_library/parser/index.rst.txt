@@ -1,0 +1,42 @@
+:mod:`rna_library.parser`
+=========================
+
+.. py:module:: rna_library.parser
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.parser.helix_length
+   rna_library.parser.get_junction_or_hairpin
+   rna_library.parser.get_helix
+   rna_library.parser.get_singlestrand
+   rna_library.parser.get_motifs
+   rna_library.parser.parse_to_motifs
+
+
+
+.. function:: helix_length(connections, start)
+
+
+.. function:: get_junction_or_hairpin(sequence, connections, start)
+
+
+.. function:: get_helix(sequence, connections, start)
+
+
+.. function:: get_singlestrand(sequence, connections, start)
+
+
+.. function:: get_motifs(sequence: str, connections: List[int], start: int)
+
+
+.. function:: parse_to_motifs(structure: str, sequence: str) -> rna_library.motif.Motif
+
+

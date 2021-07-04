@@ -1,0 +1,54 @@
+:mod:`rna_library.barcode`
+==========================
+
+.. py:module:: rna_library.barcode
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.barcode.generate_sequences
+   rna_library.barcode.get_idxs
+   rna_library.barcode.make_sequences
+   rna_library.barcode.set_sequence
+   rna_library.barcode.longest_repeat
+   rna_library.barcode.contains_jct
+   rna_library.barcode.check_pairs
+   rna_library.barcode.validate_barcode_constraints
+   rna_library.barcode.build_barcodes
+
+
+
+.. function:: generate_sequences(m: rna_library.motif.Motif)
+
+
+.. function:: get_idxs(m: rna_library.motif.Motif, idxs: rna_library.util.List[int])
+
+
+.. function:: make_sequences(m: rna_library.motif.Motif)
+
+
+.. function:: set_sequence(m: rna_library.motif.Motif, perm, ii=0)
+
+
+.. function:: longest_repeat(nums)
+
+
+.. function:: contains_jct(m: rna_library.motif.Motif)
+
+
+.. function:: check_pairs(sequence, indices)
+
+
+.. function:: validate_barcode_constraints(secstruct: str, sequence: str)
+
+
+.. function:: build_barcodes(secstruct: str, start: Union[str, None] = None, distance: int = 3)
+
+

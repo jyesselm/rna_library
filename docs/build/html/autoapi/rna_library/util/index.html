@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>rna_library.util &mdash; rna_library  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> rna_library
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">rna_library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">rna_library.util</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../_sources/autoapi/rna_library/util/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-rna_library.util">
+<span id="rna-library-util"></span><h1><a class="reference internal" href="#module-rna_library.util" title="rna_library.util"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rna_library.util</span></code></a><a class="headerlink" href="#module-rna_library.util" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions for the <code class="docutils literal notranslate"><span class="pre">rna_library</span></code> module</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.satisfies_constraints" title="rna_library.util.satisfies_constraints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">satisfies_constraints</span></code></a>(sequence: str, template: str) → bool</p></td>
+<td><p>Confirms whether a sequence and template are the same or not. A template has one of 6</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.pool_with_distance" title="rna_library.util.pool_with_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pool_with_distance</span></code></a>(sequences: List[str], min_dist: int) → List[str]</p></td>
+<td><p>Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.bp_codes_to_sequence" title="rna_library.util.bp_codes_to_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bp_codes_to_sequence</span></code></a>(bp_code) → str</p></td>
+<td><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePair()</span></code>’s into a sequence string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.nt_codes_to_sequences" title="rna_library.util.nt_codes_to_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nt_codes_to_sequences</span></code></a>(codes) → str</p></td>
+<td><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Nucleotide()</span></code>’s into a sequence string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.get_pair_list" title="rna_library.util.get_pair_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pair_list</span></code></a>(secstruct: str) → List[Tuple[int, int]]</p></td>
+<td><p>Creates a list of pairs of indices from a dot-bracket secstruct string. Note</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.connectivity_list" title="rna_library.util.connectivity_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectivity_list</span></code></a>(structure: str) → List[int]</p></td>
+<td><p>Generates a connectivity list or pairmap from a dot-bracket secondary structure.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.is_circular" title="rna_library.util.is_circular"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_circular</span></code></a>(start: int, connections: List[int]) → bool</p></td>
+<td><p>Checks if a starting point in a pairmap is in a circular portion.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="rna_library.util.satisfies_constraints">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">satisfies_constraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">template</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.util.satisfies_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Confirms whether a sequence and template are the same or not. A template has one of 6
+possible characters at each position: one of the normal A/C/G/U, N for “any” or “B” to indicate
+the position is meant to be part of a barcode. Will return <code class="docutils literal notranslate"><span class="pre">False</span></code> if sequence and template
+are not the same length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sequence</strong> (<em>str</em>) – sequence in question</p></li>
+<li><p><strong>template</strong> (<em>str</em>) – templated sequence</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.pool_with_distance">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">pool_with_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequences</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">min_dist</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="headerlink" href="#rna_library.util.pool_with_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
+Method sorts sequences internally so input order is not relevant to final pool.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function can runs in polynomial time so large pools <strong>WILL</strong> take a significant amount of time to run. For reference, pools on the order of hundreds of thousands took multiple hours to run on an i7 in 2021.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>list[str] sequences: A list of starting RNA sequences.</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>int min_dist: Minimum edit distance between each sequence in the pool. Must be &gt;= 0.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.bp_codes_to_sequence">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">bp_codes_to_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bp_code</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.util.bp_codes_to_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePair()</span></code>’s into a sequence string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bp_code</strong> (<em>list</em><em>[</em><a class="reference internal" href="../enums/index.html#rna_library.enums.BasePair" title="rna_library.enums.BasePair"><em>BasePair</em></a><em>]</em>) – a list of basepairs to be converted. Basepairs are in order of nesting.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.nt_codes_to_sequences">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">nt_codes_to_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">codes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.util.nt_codes_to_sequences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Nucleotide()</span></code>’s into a sequence string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>codes</strong> (<em>list</em><em>[</em><a class="reference internal" href="../enums/index.html#rna_library.enums.Nucleotide" title="rna_library.enums.Nucleotide"><em>Nucleotide</em></a><em>]</em>) – a list of nucleotides to be converted.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.get_pair_list">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">get_pair_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span><a class="headerlink" href="#rna_library.util.get_pair_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a list of pairs of indices from a dot-bracket secstruct string. Note
+that the function assumes the incoming structure is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>secstruct</strong> (<em>str</em>) – a dot-bracket structure which is assumed to be valid</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[tuple(int,int)]</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – if the number of left parentheses exceeds the number of right parentheses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.connectivity_list">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">connectivity_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">structure</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="headerlink" href="#rna_library.util.connectivity_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a connectivity list or pairmap from a dot-bracket secondary structure.
+The list has a value of <code class="docutils literal notranslate"><span class="pre">-1</span></code> for unpaired positions else has the index of a
+positions complement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>structure</strong> (<em>str</em>) – a dot-bracket structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – if the number of left parentheses exceeds the number of right parentheses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rna_library.util.is_circular">
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">is_circular</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">connections</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.util.is_circular" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a starting point in a pairmap is in a circular portion.
+This can include the closing pairs of both hairpins and junctions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em>) – staring index in the pairmap</p></li>
+<li><p><strong>connections</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – pairmap generated from <code class="docutils literal notranslate"><span class="pre">util.connectivity_list()</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Christopher Jurich.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

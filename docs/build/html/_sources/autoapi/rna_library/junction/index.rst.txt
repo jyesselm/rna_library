@@ -1,0 +1,61 @@
+:mod:`rna_library.junction`
+===========================
+
+.. py:module:: rna_library.junction
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.junction.Junction
+
+
+
+
+.. class:: Junction(**kwargs)
+
+
+   Bases: :py:obj:`rna_library.motif.Motif`
+
+   Abstract base class that :class:`Hairpin()`, 
+   :class:`Helix()`,
+   :class:`Junction()` and
+   :class:`SingleStrand()`
+   all inherit from.
+
+   .. method:: buffer(self)
+
+
+   .. method:: gaps(self)
+
+
+   .. method:: is_junction(self)
+
+
+   .. method:: recursive_structure(self)
+
+
+   .. method:: recursive_sequence(self)
+
+
+   .. method:: closing_pairs(self)
+
+
+   .. method:: has_non_canonical(self)
+
+
+   .. method:: number_branches(self)
+
+
+   .. method:: symmetric(self)
+
+
+   .. method:: generate_sequences(self)
+
+
+

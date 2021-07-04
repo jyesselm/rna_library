@@ -1,0 +1,195 @@
+:mod:`rna_library.motif`
+========================
+
+.. py:module:: rna_library.motif
+
+.. autoapi-nested-parse::
+
+   Motif classes that serve as the driver for this library's functionality.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.motif.Motif
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.motif.traverse
+   rna_library.motif.highest_id
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.motif.ss
+
+
+.. class:: Motif(**kwargs)
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Abstract base class that :class:`Hairpin()`, 
+   :class:`Helix()`,
+   :class:`Junction()` and
+   :class:`SingleStrand()`
+   all inherit from.
+
+   .. method:: link_children(self, depth: int = 0)
+
+      Method used to link a :class:`Motif()` object to its children and vice versa. Should only be called once by the root :class:`Motif()`.
+
+      :param int depth: depth of the current :class:`Motif()` object. defaults to 0
+      :rtype: None
+
+
+   .. method:: str(self) -> str
+
+      Creates a recursive string representation of the current :class:`Motif()` object.
+
+      :rtype: :class:`str()`
+
+
+   .. method:: __eq__(self, other) -> bool
+
+      Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
+
+      :param: `Motif()` other: Another :class:`Motif()` to be compared against.
+
+
+   .. method:: __str__(self) -> str
+
+      String representation of just the motif at hand.
+
+      :return: The :class:`str()` representation of the :class:`Motif()`.
+      :rtype: :class:`str()`
+
+
+   .. method:: is_helix(self)
+
+
+   .. method:: is_singlestrand(self)
+
+
+   .. method:: is_hairpin(self)
+
+
+   .. method:: is_junction(self)
+
+
+   .. method:: type(self)
+
+
+   .. method:: children(self)
+
+
+   .. method:: add_child(self, other)
+
+
+   .. method:: set_children(self, other)
+
+
+   .. method:: parent(self, other=None)
+
+
+   .. method:: token(self, tk=None)
+
+
+   .. method:: structure(self, secstruct=None)
+
+
+   .. method:: strands(self)
+
+
+   .. method:: sequence(self)
+
+
+   .. method:: sequence(self, seq)
+
+
+   .. method:: id(self)
+
+
+   .. method:: id(self, new_id)
+
+
+   .. method:: depth(self)
+
+
+   .. method:: depth(self, value)
+
+
+   .. method:: buffer(self)
+      :abstractmethod:
+
+
+   .. method:: has_children(self)
+
+
+   .. method:: has_parent(self)
+
+
+   .. method:: recursive_sequence(self)
+      :abstractmethod:
+
+
+   .. method:: recursive_structure(self)
+      :abstractmethod:
+
+
+   .. method:: has_non_canonical(self)
+      :abstractmethod:
+
+
+   .. method:: same_pattern(self, sequence)
+
+
+   .. method:: start_pos(self)
+
+
+   .. method:: end_pos(self)
+
+
+   .. method:: contains(self, pos)
+
+
+   .. method:: sequences(self, seqs)
+
+
+   .. method:: number_sequences(self)
+
+
+   .. method:: set_sequence(self, idx)
+
+
+   .. method:: generate_sequences(self)
+      :abstractmethod:
+
+
+
+.. function:: traverse(motif)
+
+
+.. function:: highest_id(m: Motif, best=0)
+
+
+.. data:: ss
+   :annotation: = ..(((...)))......
+
+   
+

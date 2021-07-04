@@ -1,0 +1,49 @@
+:mod:`rna_library.singlestrand`
+===============================
+
+.. py:module:: rna_library.singlestrand
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.singlestrand.SingleStrand
+
+
+
+
+.. class:: SingleStrand(**kwargs)
+
+
+   Bases: :py:obj:`rna_library.motif.Motif`
+
+   Abstract base class that :class:`Hairpin()`, 
+   :class:`Helix()`,
+   :class:`Junction()` and
+   :class:`SingleStrand()`
+   all inherit from.
+
+   .. method:: buffer(self)
+
+
+   .. method:: is_singlestrand(self)
+
+
+   .. method:: recursive_structure(self)
+
+
+   .. method:: recursive_sequence(self)
+
+
+   .. method:: has_non_canonical(self)
+
+
+   .. method:: generate_sequences(self)
+
+
+

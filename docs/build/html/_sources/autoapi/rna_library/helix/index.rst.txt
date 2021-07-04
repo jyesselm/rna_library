@@ -1,0 +1,58 @@
+:mod:`rna_library.helix`
+========================
+
+.. py:module:: rna_library.helix
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.helix.Helix
+
+
+
+
+.. class:: Helix(**kwargs)
+
+
+   Bases: :py:obj:`rna_library.motif.Motif`
+
+   Abstract base class that :class:`Hairpin()`, 
+   :class:`Helix()`,
+   :class:`Junction()` and
+   :class:`SingleStrand()`
+   all inherit from.
+
+   .. method:: size(self)
+
+
+   .. method:: size(self, val)
+
+
+   .. method:: buffer(self)
+
+
+   .. method:: pairs(self)
+
+
+   .. method:: is_helix(self)
+
+
+   .. method:: recursive_structure(self)
+
+
+   .. method:: recursive_sequence(self)
+
+
+   .. method:: has_non_canonical(self)
+
+
+   .. method:: generate_sequences(self)
+
+
+

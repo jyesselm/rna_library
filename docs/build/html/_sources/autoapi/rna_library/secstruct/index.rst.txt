@@ -1,0 +1,85 @@
+:mod:`rna_library.secstruct`
+============================
+
+.. py:module:: rna_library.secstruct
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.secstruct.SecStruct
+
+
+
+
+.. class:: SecStruct(secstruct: str, sequence: str)
+
+
+   .. method:: set_ids_(self, m: rna_library.motif.Motif)
+
+
+   .. method:: display(self)
+
+
+   .. method:: sequence(self)
+      :property:
+
+
+   .. method:: structure(self)
+      :property:
+
+
+   .. method:: helix_replace_(self, id, secstruct, sequence)
+
+
+   .. method:: motif_replace_(self, id, new_secstruct, new_sequence)
+
+
+   .. method:: change_motif(self, id, new_secstruct, new_sequence)
+
+
+   .. method:: get_sequence_structure(self)
+
+
+   .. method:: _get_ids_internal(self, m, ids, mtype)
+
+
+   .. method:: get_ids(self, motif_type)
+
+
+   .. method:: get_motif(self, id) -> rna_library.motif.Motif
+
+
+   .. method:: get_substructure(self, id1, id2=None)
+
+
+   .. method:: get(self, id)
+
+
+   .. method:: __iter__(self)
+
+
+   .. method:: hairpins(self, **kwargs)
+
+
+   .. method:: helix(self)
+
+
+   .. method:: junctions(self)
+
+
+   .. method:: singlestrands(self)
+
+
+   .. method:: set_barcode(self, m_id, bc_seq)
+
+
+   .. method:: __add__(self, other)
+
+
+

@@ -1,0 +1,49 @@
+:mod:`rna_library.hairpin`
+==========================
+
+.. py:module:: rna_library.hairpin
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.hairpin.Hairpin
+
+
+
+
+.. class:: Hairpin(**kwargs)
+
+
+   Bases: :py:obj:`rna_library.motif.Motif`
+
+   Abstract base class that :class:`Hairpin()`, 
+   :class:`Helix()`,
+   :class:`Junction()` and
+   :class:`SingleStrand()`
+   all inherit from.
+
+   .. method:: buffer(self)
+
+
+   .. method:: is_hairpin(self)
+
+
+   .. method:: recursive_structure(self)
+
+
+   .. method:: recursive_sequence(self)
+
+
+   .. method:: has_non_canonical(self)
+
+
+   .. method:: generate_sequences(self)
+
+
+
