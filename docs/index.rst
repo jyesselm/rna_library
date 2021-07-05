@@ -3,13 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to rna_library's documentation!
+RNA Library
 =======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
 
+.. automodule:: rna_library
+   :show-inheritance:
+   :inherited-members:
 
 
 Indices and tables

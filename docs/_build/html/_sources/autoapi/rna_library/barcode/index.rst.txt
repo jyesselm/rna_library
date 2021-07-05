@@ -25,30 +25,30 @@ Functions
 
 
 
-.. function:: generate_sequences(m: rna_library.motif.Motif)
+.. function:: generate_sequences(m)
 
 
-.. function:: get_idxs(m: rna_library.motif.Motif, idxs: rna_library.util.List[int])
+.. function:: get_idxs(m, idxs)
 
 
-.. function:: make_sequences(m: rna_library.motif.Motif)
+.. function:: make_sequences(m)
 
 
-.. function:: set_sequence(m: rna_library.motif.Motif, perm, ii=0)
+.. function:: set_sequence(m, perm, ii=0)
 
 
 .. function:: longest_repeat(nums)
 
 
-.. function:: contains_jct(m: rna_library.motif.Motif)
+.. function:: contains_jct(m)
 
 
 .. function:: check_pairs(sequence, indices)
 
 
-.. function:: validate_barcode_constraints(secstruct: str, sequence: str)
+.. function:: validate_barcode_constraints(secstruct, sequence)
 
 
-.. function:: build_barcodes(secstruct: str, start: Union[str, None] = None, distance: int = 3)
+.. function:: build_barcodes(secstruct, start = None, distance = 3)
 
 

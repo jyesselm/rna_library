@@ -17,10 +17,10 @@ Classes
 
 
 
-.. class:: SecStruct(secstruct: str, sequence: str)
+.. class:: SecStruct(secstruct, sequence)
 
 
-   .. method:: set_ids_(self, m: rna_library.motif.Motif)
+   .. method:: set_ids_(self, m)
 
 
    .. method:: display(self)
@@ -52,7 +52,7 @@ Classes
    .. method:: get_ids(self, motif_type)
 
 
-   .. method:: get_motif(self, id) -> rna_library.motif.Motif
+   .. method:: get_motif(self, id)
 
 
    .. method:: get_substructure(self, id1, id2=None)

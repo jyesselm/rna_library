@@ -167,7 +167,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Helix</span></code></a></p></td>
-<td><p>Abstract base class that <code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code>,</p></td>
+<td><p>Represents a helix or stack in an RNA structure. Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -175,59 +175,133 @@
 <dt id="rna_library.helix.Helix">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.helix.</code><code class="sig-name descname">Helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../../_images/inheritance-c8d25654831120dc06749b793f55b08001ec83a1.png" alt="Inheritance diagram of rna_library.helix.Helix" usemap="#inheritance6a8cad5c33" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../../_images/inheritance-9806469b5bc30eac493dd7fc29e300bdfab254d3.png" alt="Inheritance diagram of rna_library.helix.Helix" usemap="#inheritance6a8cad5c33" class="inheritance graphviz" /></div>
 <map id="inheritance6a8cad5c33" name="inheritance6a8cad5c33">
-<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
-<area shape="rect" id="node2" href="#rna_library.helix.Helix" target="_top" title="Helix" alt="" coords="245,5,317,31"/>
-</map><p>Abstract base class that <code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code>,
-<a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code> and
-<code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code>
-all inherit from.</p>
+<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="#rna_library.helix.Helix" target="_top" title="Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`." alt="" coords="245,5,317,31"/>
+</map><p>Represents a helix or stack in an RNA structure. Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code>.</p>
 <dl class="py method">
 <dt id="rna_library.helix.Helix.size">
 <code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the size of the <a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> which is just the number of
+pairs in the stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>size</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id0">
 <code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the current size for the <a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<em>int</em>) – the new size of the helix.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the buffer of the <a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> which is just the number of
+pairs in the stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.pairs">
 <code class="sig-name descname">pairs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.pairs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the basepairs in the stack as a list of strings of length 2.
+Pairs are returned in order of lowest 3 prime starting index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>pairs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.is_helix">
 <code class="sig-name descname">is_helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.is_helix" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Indicates that the <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code> is of type <a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is_helix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.recursive_structure">
 <code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Builds and returns the continguous sequence of the structure viewing the current
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code> as the root of the structure. The returned sequence will be part of
+the main sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.recursive_sequence">
 <code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Builds and returns the continguous structure of the structure viewing the current
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code> as the root of the structure. The returned structure will be part of
+the main structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.has_non_canonical">
 <code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks if any of the basepairs are non-canonical (i.e. non- AU/UA, GU/UG, GC/CG).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_non_canonical</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.helix.Helix.generate_sequences">
 <code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.helix.Helix.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates all possible sequences for the <a class="reference internal" href="#rna_library.helix.Helix" title="rna_library.helix.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> that are compatible with
+the constraints for the motif.</p>
+</dd></dl>
 
 </dd></dl>
 

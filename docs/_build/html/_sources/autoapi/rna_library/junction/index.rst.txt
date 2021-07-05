@@ -26,11 +26,7 @@ Classes
       :parts: 1
       :private-bases:
 
-   Abstract base class that :class:`Hairpin()`, 
-   :class:`Helix()`,
-   :class:`Junction()` and
-   :class:`SingleStrand()`
-   all inherit from.
+   Represents a junction of any size in an RNA structure including bulges and multi-loops.    
 
    .. method:: buffer(self)
 
@@ -39,6 +35,11 @@ Classes
 
 
    .. method:: is_junction(self)
+
+      If the motif is a junction or not. Overridden by child :class:`Junction()` class.
+
+      :return: If the motif is of type :class:`Junction()`
+      :rtype: :class:`bool()`
 
 
    .. method:: recursive_structure(self)

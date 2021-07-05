@@ -15,22 +15,59 @@ class Hairpin(Motif):
         self.__token = f"Hairpin{size}"
 
     def buffer(self) -> int:
+        """
+        For the :class:`Hairpin()` type, this is simply the size of the 
+        closing helix meaning the number of closing pairs.
+
+        :return: buffer
+        :rtype: int
+        """
         return self.parent().buffer()
 
     def is_hairpin(self) -> bool:
+        """
+        Indicates that the :class:`Motif()` is of type :class:`Hairpin()`.
+
+        :return: is_hairpin
+        :rtype: bool
+        """
         return True
 
     def recursive_structure(self) -> str:
+        """
+        Returns the owned portion of the structure. In this coding of structure 
+        it is just the loop portion and does not include the closing pair.
+
+        :return: recursive_structure
+        :rtype: str
+        """
         return self.sequence()[1:-1]
 
     def recursive_sequence(self) -> str :
+        """
+        Returns the owned portion of the sequence. In this coding of sequence 
+        it is just the loop portion and does not include the closing pair.
+
+        :return: recursive_sequence
+        :rtype: str
+        """
         return self.sequence()[1:-1]
 
     def has_non_canonical(self) -> bool:
+        """
+        Returns whether or not the closing pair is canonical (i.e. is AU/UA, CG/GC, GU/UG).
+
+        :return: has_non_canonical
+        :rtype: bool
+        """
         pair = self.__sequence[0] + self.__sequence[-1]
         return pair not in ALLOWED_PAIRS
     
     def generate_sequences( self ):
+        """
+        Generates all possible sequences for the :class:`Hairpin()` that are compatible with
+        the constraints for the motif.
+        """
         nts = []
         for n in self.recursive_sequence():
             if n != 'N':

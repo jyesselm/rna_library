@@ -166,54 +166,77 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.generate_sequences" title="rna_library.barcode.generate_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_sequences</span></code></a>(m: rna_library.motif.Motif)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.generate_sequences" title="rna_library.barcode.generate_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_sequences</span></code></a>(m)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.get_idxs" title="rna_library.barcode.get_idxs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_idxs</span></code></a>(m: rna_library.motif.Motif, idxs: rna_library.util.List[int])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.get_idxs" title="rna_library.barcode.get_idxs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_idxs</span></code></a>(m, idxs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.make_sequences" title="rna_library.barcode.make_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_sequences</span></code></a>(m: rna_library.motif.Motif)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.make_sequences" title="rna_library.barcode.make_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_sequences</span></code></a>(m)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.set_sequence" title="rna_library.barcode.set_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sequence</span></code></a>(m: rna_library.motif.Motif, perm, ii=0)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.set_sequence" title="rna_library.barcode.set_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_sequence</span></code></a>(m, perm, ii=0)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.longest_repeat" title="rna_library.barcode.longest_repeat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">longest_repeat</span></code></a>(nums)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.contains_jct" title="rna_library.barcode.contains_jct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains_jct</span></code></a>(m: rna_library.motif.Motif)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.contains_jct" title="rna_library.barcode.contains_jct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contains_jct</span></code></a>(m)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.check_pairs" title="rna_library.barcode.check_pairs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_pairs</span></code></a>(sequence, indices)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.validate_barcode_constraints" title="rna_library.barcode.validate_barcode_constraints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_barcode_constraints</span></code></a>(secstruct: str, sequence: str)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.barcode.validate_barcode_constraints" title="rna_library.barcode.validate_barcode_constraints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_barcode_constraints</span></code></a>(secstruct, sequence)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.build_barcodes" title="rna_library.barcode.build_barcodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_barcodes</span></code></a>(secstruct: str, start: Union[str, None] = None, distance: int = 3)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.barcode.build_barcodes" title="rna_library.barcode.build_barcodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_barcodes</span></code></a>(secstruct, start = None, distance = 3)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt id="rna_library.barcode.generate_sequences">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.generate_sequences" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.get_idxs">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">get_idxs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em>, <em class="sig-param"><span class="n">idxs</span><span class="p">:</span> <span class="n">rna_library.util.List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.get_idxs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">get_idxs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">idxs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.get_idxs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p></li>
+<li><p><strong>idxs</strong> (<em>rna_library.util.List</em><em>[</em><em>int</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.make_sequences">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">make_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.make_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">make_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.make_sequences" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.set_sequence">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">set_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em>, <em class="sig-param"><span class="n">perm</span></em>, <em class="sig-param"><span class="n">ii</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.set_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">set_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">perm</span></em>, <em class="sig-param"><span class="n">ii</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.set_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.longest_repeat">
@@ -222,8 +245,13 @@
 
 <dl class="py function">
 <dt id="rna_library.barcode.contains_jct">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">contains_jct</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.contains_jct" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">contains_jct</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.contains_jct" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.check_pairs">
@@ -232,13 +260,30 @@
 
 <dl class="py function">
 <dt id="rna_library.barcode.validate_barcode_constraints">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">validate_barcode_constraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.validate_barcode_constraints" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">validate_barcode_constraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span></em>, <em class="sig-param"><span class="n">sequence</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.validate_barcode_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>secstruct</strong> (<em>str</em>) – </p></li>
+<li><p><strong>sequence</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.barcode.build_barcodes">
-<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">build_barcodes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>None<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">distance</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.build_barcodes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.barcode.</code><code class="sig-name descname">build_barcodes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">distance</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.barcode.build_barcodes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>secstruct</strong> (<em>str</em>) – </p></li>
+<li><p><strong>start</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>None</em><em>]</em>) – </p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </div>

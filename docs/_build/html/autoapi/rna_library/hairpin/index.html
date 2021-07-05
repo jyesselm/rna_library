@@ -175,40 +175,90 @@
 <dt id="rna_library.hairpin.Hairpin">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.hairpin.</code><code class="sig-name descname">Hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../../_images/inheritance-f61fb512d058aa5a3b90761f18b4f439d134ae26.png" alt="Inheritance diagram of rna_library.hairpin.Hairpin" usemap="#inheritancece3b04c618" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../../_images/inheritance-e6f74316d80175a049935c7d6c96b315e0df0716.png" alt="Inheritance diagram of rna_library.hairpin.Hairpin" usemap="#inheritancece3b04c618" class="inheritance graphviz" /></div>
 <map id="inheritancece3b04c618" name="inheritancece3b04c618">
-<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
 <area shape="rect" id="node2" href="#rna_library.hairpin.Hairpin" target="_top" title="Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`." alt="" coords="245,5,317,31"/>
 </map><p>Represents a hairpin loop in an RNA structure. Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code>.</p>
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.buffer">
-<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.hairpin.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>For the <a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> type, this is simply the size of the
+closing helix meaning the number of closing pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.is_hairpin">
-<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.hairpin.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates that the <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code> is of type <a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is_hairpin</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.recursive_structure">
-<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the owned portion of the structure. In this coding of structure
+it is just the loop portion and does not include the closing pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.recursive_sequence">
-<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the owned portion of the sequence. In this coding of sequence
+it is just the loop portion and does not include the closing pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.has_non_canonical">
-<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.hairpin.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not the closing pair is canonical (i.e. is AU/UA, CG/GC, GU/UG).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_non_canonical</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.hairpin.Hairpin.generate_sequences">
 <code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.hairpin.Hairpin.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates all possible sequences for the <a class="reference internal" href="#rna_library.hairpin.Hairpin" title="rna_library.hairpin.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> that are compatible with
+the constraints for the motif.</p>
+</dd></dl>
 
 </dd></dl>
 

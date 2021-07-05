@@ -34,9 +34,9 @@ Functions
 .. function:: get_singlestrand(sequence, connections, start)
 
 
-.. function:: get_motifs(sequence: str, connections: List[int], start: int)
+.. function:: get_motifs(sequence, connections, start)
 
 
-.. function:: parse_to_motifs(structure: str, sequence: str) -> rna_library.motif.Motif
+.. function:: parse_to_motifs(structure, sequence)
 
 

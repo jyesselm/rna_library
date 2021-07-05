@@ -2,6 +2,8 @@
 """
 Motif classes that serve as the driver for this library's functionality.
 """
+# this is so that the typehinting can reference itself
+# TODO figure out which of these methods fail on after an internal change
 from __future__ import annotations
 
 import re
@@ -17,10 +19,11 @@ from .enums import *
 from .util import *
 from abc import ABC, abstractmethod
 from plum import dispatch 
-# this is so that the typehingint can reference itself
 
 class Motif(ABC):
-    """Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
+    """
+    Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
+    
     """
     def __init__(self, **kwargs):
         """
@@ -42,6 +45,7 @@ class Motif(ABC):
         self.__positions = set()
         self.__id = None
         self.__is_barcode = False
+        # these are used for making barcodes... should probably be changed
         self.__sequences = []
 
         if "sequence" in kwargs:
@@ -124,7 +128,7 @@ class Motif(ABC):
         """
         Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
         
-        :param: `Motif()` other: Another :class:`Motif()` to be compared against.
+        :param Motif other: Another :class:`Motif()` to be compared against.
         
         """
         return (
@@ -165,7 +169,6 @@ class Motif(ABC):
         If the motif is a hairpin or not. Overridden by child :class:`Hairpin()` class.
 
         :return: If the motif is of type :class:`Hairpin()`
-        :rtype: :class:`bool()`
         """
         return False
 
@@ -191,7 +194,7 @@ class Motif(ABC):
         """
         Getter for the :class:`Motif()`'s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.
         
-        :return: A `list()` of :class:`Motif()` if the current :class:`Motif()` has any.
+        :return: A :class:`list()` of :class:`Motif()` if the current :class:`Motif()` has any.
         :rtype: :class:`list[Motif]`
         """
         return self.__children
@@ -202,7 +205,7 @@ class Motif(ABC):
 
         .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
         
-        :param: `Motif()` other: Another :class:`Motif()` to be appended to the internal children list.
+        :param: Motif other: Another :class:`Motif()` to be appended to the internal children list.
         """
         self.__children.append( other )
 
@@ -212,85 +215,238 @@ class Motif(ABC):
 
         .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
         
-        :param: `Motif()` other: Another :class:`Motif()` to be appended to the internal children list.
+        :param  List[Motif] other: Another :class:`Motif()` to be appended to the internal children list.
         """
         self.__children = other
 
     @dispatch
     def parent(self, other : Motif) -> None:
+        """ 
+        Sets the :class:`Motif()`'s parent to the supplied :class:`Motif()`. 
+
+        :param Motif other: The new parent for the current :class:`Motif()`.
+        
+        :return: None
+        :rtype: NoneType
+        """
         self.__parent = other
     
     @dispatch
     def parent(self) -> Motif :
+        """ 
+        Gets the parent :class:`Motif()`'s for the current :class:`Motif()`. 
+        
+        :return: the parent motif 
+        :rtype: :class:`Motif()`
+        """
         return self.__parent
 
     @dispatch
     def token(self, tk: str ) -> None:
-        self.token_ = tk
+        """
+        Sets the :class:`Motif()`'s identifying token to an inputted string. Input is **NOT** validated.
+
+        :param str tk: the new token for the :class:`Motif()`.
+        
+        :return: None
+        :rtype: NoneType
+        """
+        # TODO add some kind of validation
+        self.__token = tk
     
     @dispatch 
     def token(self) -> str:
-        self.token_ = tk
+        """
+        Gets the identifying token for the :class:`Motif()`.
+
+        :return: token
+        :rtype: str
+        """
+        return self.__token
     
     @dispatch
     def structure(self, secstruct : str ) -> None:
-        self.structure_ = secstruct
+        """
+        Sets the :class:`Motif()`'s structure to an inputted string. Input is **NOT** validated.
+
+        :param str tk: the new structure for the :class:`Motif()`.
+        
+        :return: None
+        :rtype: NoneType
+        """
+        # TODO add some kind of validation... maybe the level of validation
+        # should be checked as well
+        self.__structure = secstruct
     
     @dispatch
     def structure(self) -> str:
-        return self.structure_
+        """
+        Gets the secondary structure for the :class:`Motif()`.
+
+        :return: token
+        :rtype: str
+        """
+        return self.__structure
     
 
     def strands(self) -> List[List[int]]:
+        """
+        Returns a list of list of :class:`int()`'ss where each sub list contains a contiguous set of nucleotides that "belong" to the :class:`Motif()`.
+        Output varies by motif type and the expected values are below:
+
+        - :class:`Hairpin()` => 1
+        - :class:`Helix()` => 2
+        - :class:`SingleStrand()` => 1
+        - :class:`Junction()` => number of branches in :class:`Junction()`
+
+        :return: strands
+        :rtype: List[List[int]]
+        """
         return self.__strands
 
     @dispatch
     def sequence(self) -> str:
+        """
+        Gets the sequence for the :class:`Motif()`. 
+        Because the nucleotides owned by the :class:`Motif()` may not be contiguous, breaks will 
+        be separated by an ampersand '&'. 
+
+        :return: sequence
+        :rtype: str
+        """
         return self.__sequence
     
     @dispatch
-    def sequence(self, seq : str ) -> None:
+    def sequence(self, seq ) -> None:
+        """
+        Sets the sequence for the :class:`Motif()` to the supplied string. Warning the input **NOT** validated.
+        
+        :param str seq: the new sequence for the :class:`Motif()`. 
+        """
+        # TODO some kind of validation
         self.__sequence = seq
 
     @dispatch
     def id(self) -> int:
-        return self.id_
+        """
+        Gets the id :class:`int` value for the given :class:`Motif()`.
+        
+        :return: id
+        :rtype: int
+        """
+        return self.__id
 
     @dispatch
-    def id(self, new_id : int) -> None:
-        self.id_ = new_id
+    def id(self, new_id ):
+        """
+        Sets the id for the :class:`Motif()`. Warning: It is **NOT** currently validated.
+        
+        :param int new_id: the new id for the :class:`Motif()`
+        :return: none
+        :rtype: NoneType
+        """
+        # TODO some kind of validation
+        self.__id = new_id
 
     @dispatch
     def depth(self) -> int:
-        return self.depth_
+        """
+        The depth of the :class:`Motif()`, which describes how deep it is in the internal graph.
+
+        :return: depth
+        :rtype: int
+        """
+        return self.__depth
 
     @dispatch
-    def depth(self, value: int) -> None:
-        self.depth_ = value
+    def depth(self, value) -> None:
+        """
+        Sets the depth of the current :class:`Motif()`. 
+
+        :param int value: the new depth value for the current :class:`Motif()`.
+
+        """
+        # TODO some kind of validation
+        self.__depth = value
 
     @abstractmethod
     def buffer(self) -> int:
+        """
+        Buffer refers to the size of the closest adjacent :motif:`Helix()`.
+        Varies by type of motif as seen below:
+
+        - :class:`Helix()` => size of the helix itself
+        - :class:`Hairpin()` =>  size of its parent helix
+        - :class:`SingleStrand()` => -1, meaningless in this context
+        - :class:`Junction()` => a :class:`list()` of the branching helices' length with the parent helix going first the in the direction of increasing nucleotide index.
+
+        :return: buffer
+        :rtype: int
+        """
         pass
 
     def has_children(self) -> bool:
+        """
+        Returns whether the :class:`Motif()` has any children.
+
+        :return:  has_children
+        :rtype: bool 
+        """
         return len(self.__children) > 0
 
     def has_parent(self) -> bool:
+        """
+        Returns whether the :class:`Motif()` has a parent.
+
+        :return: has_parent
+        :rtype: bool
+        """
         return self.__parent is not None
 
     @abstractmethod
     def recursive_sequence(self) -> str:
+        """
+        Builds and returns the continguous sequence of the structure viewing the current
+        :class:`Motif()` as the root of the structure. The returned sequence will be part of 
+        the main sequence.
+
+        :return: sequence
+        :rtype: str
+        """
         pass
 
     @abstractmethod
     def recursive_structure(self) -> str:
+        """
+        Builds and returns the continguous structure of the structure viewing the current
+        :class:`Motif()` as the root of the structure. The returned structure will be part of 
+        the main structure.
+
+        :return: structure
+        :rtype: str
+        """
         pass
 
     @abstractmethod
     def has_non_canonical(self) -> bool:
+        """
+        Checks if the :class:`Motif()` has any non-canonical (i.e. non AU/UA, UG/GU or GC/CG) pairings.
+
+        :return: has_nc
+        :rtype: bool
+        """
         pass
     
     def same_pattern(self, sequence : str) -> bool:
+        """
+        Checks if a template sequence is compatible with an inputted sequence. Specifically if the length
+        and placement of '&' are the same.
+
+        :param str sequence: template string to compare against.
+        
+        :return: is_same
+        :rtype: bool
+        """
         template = '&'.join(['N'*len( s ) for s in self.strands_]) 
         if len( sequence ) != len( template ):
             return False
@@ -301,37 +457,91 @@ class Motif(ABC):
         return True 
 
     def start_pos(self) -> int:
+        """
+        Starting (or lowest) nucleotide index owned by the :class:`Motif()`.
+
+        :return: start_pos
+        :rtype: int
+        """
         return self.__start_pos
 
     def end_pos(self) -> int:
+        """
+        Ending (or highest) nucleotide index owned by the :class:`Motif()`.
+
+        :return: end_pos
+        :rtype: int
+        """
         return self.__end_pos
 
     def contains(self, pos : int) -> bool:
+        """
+        Indicates if a nucleotide index is contained or belongs to the current :class:`Motif()`.
+        
+        :param list[int] pos: the querying index
+
+        :return: is_contained
+        :rtype: bool
+        """
         return pos in self.__positions
 
     # this is for making barcodes
-    def sequences( self, seqs ):
+    def sequences( self, seqs : List[str] ) -> None:
+        """
+        Used to set the internal list of barcode temp sequences.
+
+        :param List[str] seqs: the new barcode sequences to be applied to the current :class:`Motif()`.
+
+        """
+        # TODO some kind of validation
         self.__sequences = seqs
 
-    def number_sequences( self ):
+    def number_sequences( self ) -> int:
+        """
+        Gives the number of barcode sequences that the :class:`Motif()` currently has.
+
+        :return: num_sequence
+        :rtype: int
+        """
         return len( self.__sequences )
 
-    def set_sequence( self, idx ): # TODO maybe this should be a dispatch overload?
-        self.sequence_ = self.__sequences[ idx ]
+    def set_sequence( self, idx : int ) -> None : # TODO maybe this should be a dispatch overload?
+        """
+        Sets the current sequence to the sequence of the existing index from the internal barcodes list.
+        Note that the `Motif.number_sequences()` method should be queried prior so that the index call will
+        be known to be valid.
+
+        :param int idx: The index to be used. 
+        """
+        self.__sequence = self.__sequences[ idx ]
     
     @abstractmethod
     def generate_sequences( self ):
+        """
+        Builds out all possible barcode sequences that fit the known constraints.
+        """
         pass
 
+    def is_barcode( self ) -> bool:
+        """
+        Returns whether the current :class:`Motif()` serves as a barcode.
 
-def traverse(motif):
-    assert not motif.has_non_canonical()
-    for c in motif.children():
-        # print('chilren')
-        # print('\t',c)
-        traverse(c)
+        :return: is_barcode
+        :rtype: bool
+        """
+        return self.__is_barcode
 
-def highest_id( m : Motif, best=0 ):
+
+def highest_id( m : Motif, best : int =0 ) -> int:
+    """
+    Figures out the highest id number in a given :class:`Motif()` graph.
+
+    :param Motif m: motif to start the query on
+    :param int best: current highest or "best" motif id at that recursion level. 
+
+    :return: highest_id
+    :rtype: int
+    """
     best = max( best, m.id() )
 
     for c in m.children():
@@ -339,23 +549,4 @@ def highest_id( m : Motif, best=0 ):
 
     return best
 
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    ss =  "..(((...)))......"
-    seq = "NNGAGAAACUCNNNNNN"
-    #seq = "NNNNNUGAAACANN"
-    barcodes = build_barcodes( ss, seq )
-    pickle.dump( barcodes, open('barcodes-2.p', 'wb'))
-    print(len(barcodes))
-    exit( 0 ) 
-    d1 = SecStruct( '(((...)))', 'GGGAAACCC')
-    d2 = SecStruct( '....', 'AAAA')
-    print( (d1 + d2).sequence )
-    print( (d1 + d2).structure )
 

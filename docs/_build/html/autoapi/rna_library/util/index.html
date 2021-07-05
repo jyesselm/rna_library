@@ -167,32 +167,32 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.satisfies_constraints" title="rna_library.util.satisfies_constraints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">satisfies_constraints</span></code></a>(sequence: str, template: str) → bool</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.satisfies_constraints" title="rna_library.util.satisfies_constraints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">satisfies_constraints</span></code></a>(sequence, template)</p></td>
 <td><p>Confirms whether a sequence and template are the same or not. A template has one of 6</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.pool_with_distance" title="rna_library.util.pool_with_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pool_with_distance</span></code></a>(sequences: List[str], min_dist: int) → List[str]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.pool_with_distance" title="rna_library.util.pool_with_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pool_with_distance</span></code></a>(sequences, min_dist)</p></td>
 <td><p>Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.bp_codes_to_sequence" title="rna_library.util.bp_codes_to_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bp_codes_to_sequence</span></code></a>(bp_code) → str</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.bp_codes_to_sequence" title="rna_library.util.bp_codes_to_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bp_codes_to_sequence</span></code></a>(bp_code)</p></td>
 <td><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePair()</span></code>’s into a sequence string.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.nt_codes_to_sequences" title="rna_library.util.nt_codes_to_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nt_codes_to_sequences</span></code></a>(codes) → str</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.nt_codes_to_sequences" title="rna_library.util.nt_codes_to_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nt_codes_to_sequences</span></code></a>(codes)</p></td>
 <td><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Nucleotide()</span></code>’s into a sequence string.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.get_pair_list" title="rna_library.util.get_pair_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pair_list</span></code></a>(secstruct: str) → List[Tuple[int, int]]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.get_pair_list" title="rna_library.util.get_pair_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_pair_list</span></code></a>(secstruct)</p></td>
 <td><p>Creates a list of pairs of indices from a dot-bracket secstruct string. Note</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.connectivity_list" title="rna_library.util.connectivity_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectivity_list</span></code></a>(structure: str) → List[int]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.util.connectivity_list" title="rna_library.util.connectivity_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectivity_list</span></code></a>(structure)</p></td>
 <td><p>Generates a connectivity list or pairmap from a dot-bracket secondary structure.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.is_circular" title="rna_library.util.is_circular"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_circular</span></code></a>(start: int, connections: List[int]) → bool</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.util.is_circular" title="rna_library.util.is_circular"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_circular</span></code></a>(start, connections)</p></td>
 <td><p>Checks if a starting point in a pairmap is in a circular portion.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt id="rna_library.util.satisfies_constraints">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">satisfies_constraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">template</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.util.satisfies_constraints" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">satisfies_constraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequence</span></em>, <em class="sig-param"><span class="n">template</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.satisfies_constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Confirms whether a sequence and template are the same or not. A template has one of 6
 possible characters at each position: one of the normal A/C/G/U, N for “any” or “B” to indicate
 the position is meant to be part of a barcode. Will return <code class="docutils literal notranslate"><span class="pre">False</span></code> if sequence and template
@@ -212,7 +212,7 @@ are not the same length.</p>
 
 <dl class="py function">
 <dt id="rna_library.util.pool_with_distance">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">pool_with_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequences</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">min_dist</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="headerlink" href="#rna_library.util.pool_with_distance" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">pool_with_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequences</span></em>, <em class="sig-param"><span class="n">min_dist</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.pool_with_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
 Method sorts sequences internally so input order is not relevant to final pool.</p>
 <div class="admonition warning">
@@ -229,12 +229,18 @@ Method sorts sequences internally so input order is not relevant to final pool.<
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list[str]</p>
 </dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>sequences</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – </p></li>
+<li><p><strong>min_dist</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="rna_library.util.bp_codes_to_sequence">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">bp_codes_to_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bp_code</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.util.bp_codes_to_sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">bp_codes_to_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bp_code</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.bp_codes_to_sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">BasePair()</span></code>’s into a sequence string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -248,7 +254,7 @@ Method sorts sequences internally so input order is not relevant to final pool.<
 
 <dl class="py function">
 <dt id="rna_library.util.nt_codes_to_sequences">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">nt_codes_to_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">codes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.util.nt_codes_to_sequences" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">nt_codes_to_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">codes</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.nt_codes_to_sequences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Nucleotide()</span></code>’s into a sequence string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -262,7 +268,7 @@ Method sorts sequences internally so input order is not relevant to final pool.<
 
 <dl class="py function">
 <dt id="rna_library.util.get_pair_list">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">get_pair_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span><span class="p">]</span><a class="headerlink" href="#rna_library.util.get_pair_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">get_pair_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.get_pair_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a list of pairs of indices from a dot-bracket secstruct string. Note
 that the function assumes the incoming structure is valid.</p>
 <dl class="field-list simple">
@@ -280,7 +286,7 @@ that the function assumes the incoming structure is valid.</p>
 
 <dl class="py function">
 <dt id="rna_library.util.connectivity_list">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">connectivity_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">structure</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="headerlink" href="#rna_library.util.connectivity_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">connectivity_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">structure</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.connectivity_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a connectivity list or pairmap from a dot-bracket secondary structure.
 The list has a value of <code class="docutils literal notranslate"><span class="pre">-1</span></code> for unpaired positions else has the index of a
 positions complement.</p>
@@ -299,7 +305,7 @@ positions complement.</p>
 
 <dl class="py function">
 <dt id="rna_library.util.is_circular">
-<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">is_circular</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">connections</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.util.is_circular" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">rna_library.util.</code><code class="sig-name descname">is_circular</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">connections</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.util.is_circular" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a starting point in a pairmap is in a circular portion.
 This can include the closing pairs of both hairpins and junctions.</p>
 <dl class="field-list simple">

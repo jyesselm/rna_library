@@ -199,16 +199,16 @@
 <td><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>, <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>, <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and <a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> all inherit from.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Helix</span></code></a></p></td>
-<td><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,</p></td>
+<td><p>Represents a helix or stack in an RNA structure. Inherits from <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hairpin</span></code></a></p></td>
 <td><p>Represents a hairpin loop in an RNA structure. Inherits from <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Junction</span></code></a></p></td>
-<td><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,</p></td>
+<td><p>Represents a junction of any size in an RNA structure including bulges and multi-loops.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingleStrand</span></code></a></p></td>
-<td><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,</p></td>
+<td><p>Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> or <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.SecStruct" title="rna_library.SecStruct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SecStruct</span></code></a></p></td>
 <td><p></p></td>
@@ -224,10 +224,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.parse_to_motifs" title="rna_library.parse_to_motifs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_to_motifs</span></code></a>(structure: str, sequence: str) → rna_library.motif.Motif</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.parse_to_motifs" title="rna_library.parse_to_motifs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_to_motifs</span></code></a>(structure, sequence)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.build_barcodes" title="rna_library.build_barcodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_barcodes</span></code></a>(secstruct: str, start: Union[str, None] = None, distance: int = 3)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#rna_library.build_barcodes" title="rna_library.build_barcodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_barcodes</span></code></a>(secstruct, start = None, distance = 3)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -542,13 +542,13 @@ as a <cite>str().</cite></p>
 <dt id="rna_library.Motif">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">Motif</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<div class="graphviz"><img src="../../_images/inheritance-20320727755e1284b9dc9fe371e41be8ab716e7e.png" alt="Inheritance diagram of rna_library.Motif" usemap="#inheritanced0d5811ac0" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../_images/inheritance-7b52536a13fafa7d6f3ef34a9df6c87e31f52d36.png" alt="Inheritance diagram of rna_library.Motif" usemap="#inheritanced0d5811ac0" class="inheritance graphviz" /></div>
 <map id="inheritanced0d5811ac0" name="inheritanced0d5811ac0">
-<area shape="rect" id="node2" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
 </map><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>, <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>, <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and <a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> all inherit from.</p>
 <dl class="py method">
 <dt id="rna_library.Motif.link_children">
-<code class="sig-name descname">link_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">depth</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.link_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">link_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">depth</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.link_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method used to link a <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> object to its children and vice versa. Should only be called once by the root <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -562,7 +562,7 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.str">
-<code class="sig-name descname">str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#rna_library.Motif.str" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.str" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a recursive string representation of the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -573,18 +573,21 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.__eq__">
-<code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.__eq__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.__eq__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded <code class="docutils literal notranslate"><span class="pre">==</span></code> operator for <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>. Requires that type of motif, sequence and token are identical.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Param</dt>
-<dd class="field-odd"><p><cite>Motif()</cite> other: Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be compared against.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><em>Motif</em></a>) – Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be compared against.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.__str__">
-<code class="sig-name descname">__str__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#rna_library.Motif.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__str__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>String representation of just the motif at hand.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -598,7 +601,7 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.is_helix">
-<code class="sig-name descname">is_helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.is_helix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.is_helix" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the motif is a helix or not. Overridden by child <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -612,7 +615,7 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.is_singlestrand">
-<code class="sig-name descname">is_singlestrand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.is_singlestrand" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_singlestrand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.is_singlestrand" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the motif is a singlestrand or not. Overridden by child <a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -626,21 +629,21 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.is_hairpin">
-<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.is_hairpin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.is_hairpin" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the motif is a hairpin or not. Overridden by child <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>If the motif is of type <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool()</span></code></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.is_junction">
-<code class="sig-name descname">is_junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.is_junction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.is_junction" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the motif is a junction or not. Overridden by child <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -654,7 +657,7 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.type">
-<code class="sig-name descname">type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; rna_library.util.MotifType<a class="headerlink" href="#rna_library.Motif.type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">type</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the <a class="reference internal" href="#rna_library.MotifType" title="rna_library.MotifType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotifType()</span></code></a> type for the given motif.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -668,11 +671,11 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.children">
-<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; rna_library.util.List<span class="p">[</span><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a><span class="p">]</span><a class="headerlink" href="#rna_library.Motif.children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Getter for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>’s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A <cite>list()</cite> of <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> if the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> has any.</p>
+<dd class="field-odd"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">list()</span></code> of <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> if the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> has any.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list[Motif]</span></code></p>
@@ -682,7 +685,7 @@ as a <cite>str().</cite></p>
 
 <dl class="py method">
 <dt id="rna_library.Motif.add_child">
-<code class="sig-name descname">add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#rna_library.Motif.add_child" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.add_child" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends a new <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to the internal list of children for the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -690,160 +693,459 @@ as a <cite>str().</cite></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Param</dt>
-<dd class="field-odd"><p><cite>Motif()</cite> other: Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be appended to the internal children list.</p>
+<dd class="field-odd"><p>Motif other: Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be appended to the internal children list.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>other</strong> (<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><em>Motif</em></a>) – </p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.set_children">
-<code class="sig-name descname">set_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n">rna_library.util.List<span class="p">[</span><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#rna_library.Motif.set_children" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.set_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the entire list of <cite>Motif()</cite> to the internal list of children for the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Should <strong>NOT</strong> be called directly. Other function calls must occur to ensure that the internal graph is accurate.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Param</dt>
-<dd class="field-odd"><p><cite>Motif()</cite> other: Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be appended to the internal children list.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>List</em><em>[</em><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><em>Motif</em></a><em>]</em>) – Another <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to be appended to the internal children list.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.parent">
-<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#rna_library.Motif.parent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>’s parent to the supplied <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><em>Motif</em></a>) – The new parent for the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoneType</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id0">
-<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif">Motif</a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the parent <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>’s for the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the parent motif</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.token">
-<code class="sig-name descname">token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">tk</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#rna_library.Motif.token" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">tk</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>’s identifying token to an inputted string. Input is <strong>NOT</strong> validated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tk</strong> (<em>str</em>) – the new token for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoneType</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id1">
-<code class="sig-name descname">token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the identifying token for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>token</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.structure">
-<code class="sig-name descname">structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#rna_library.Motif.structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">secstruct</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>’s structure to an inputted string. Input is <strong>NOT</strong> validated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tk</strong> (<em>str</em>) – the new structure for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoneType</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id2">
-<code class="sig-name descname">structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the secondary structure for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>token</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.strands">
-<code class="sig-name descname">strands</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; rna_library.util.List<span class="p">[</span>rna_library.util.List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span><a class="headerlink" href="#rna_library.Motif.strands" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">strands</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.strands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of list of <code class="xref py py-class docutils literal notranslate"><span class="pre">int()</span></code>’ss where each sub list contains a contiguous set of nucleotides that “belong” to the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.
+Output varies by motif type and the expected values are below:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> =&gt; 1</p></li>
+<li><p><a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> =&gt; 2</p></li>
+<li><p><a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> =&gt; 1</p></li>
+<li><p><a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> =&gt; number of branches in <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>strands</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[List[int]]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.sequence">
-<code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#rna_library.Motif.sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the sequence for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.
+Because the nucleotides owned by the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> may not be contiguous, breaks will
+be separated by an ampersand ‘&amp;’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id3">
-<code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">seq</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">seq</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the sequence for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> to the supplied string. Warning the input <strong>NOT</strong> validated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seq</strong> (<em>str</em>) – the new sequence for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.id">
-<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Motif.id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the id <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> value for the given <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>id</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id4">
-<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">new_id</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">new_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the id for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>. Warning: It is <strong>NOT</strong> currently validated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_id</strong> (<em>int</em>) – the new id for the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoneType</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.depth">
-<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Motif.depth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.depth" title="Permalink to this definition">¶</a></dt>
+<dd><p>The depth of the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>, which describes how deep it is in the internal graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>depth</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="id5">
-<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">value</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#id5" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">depth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the depth of the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em>) – the new depth value for the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.buffer">
-<em class="property">abstract </em><code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Motif.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">abstract </em><code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer refers to the size of the closest adjacent <a href="#id6"><span class="problematic" id="id7">:motif:`Helix()`</span></a>.
+Varies by type of motif as seen below:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> =&gt; size of the helix itself</p></li>
+<li><p><a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> =&gt;  size of its parent helix</p></li>
+<li><p><a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> =&gt; -1, meaningless in this context</p></li>
+<li><p><a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> =&gt; a <code class="xref py py-class docutils literal notranslate"><span class="pre">list()</span></code> of the branching helices’ length with the parent helix going first the in the direction of increasing nucleotide index.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.has_children">
-<code class="sig-name descname">has_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.has_children" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">has_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.has_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> has any children.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_children</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.has_parent">
-<code class="sig-name descname">has_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.has_parent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">has_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.has_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> has a parent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_parent</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.recursive_sequence">
-<em class="property">abstract </em><code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#rna_library.Motif.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">abstract </em><code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.recursive_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds and returns the continguous sequence of the structure viewing the current
+<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> as the root of the structure. The returned sequence will be part of
+the main sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.recursive_structure">
-<em class="property">abstract </em><code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a><a class="headerlink" href="#rna_library.Motif.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">abstract </em><code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.recursive_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds and returns the continguous structure of the structure viewing the current
+<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> as the root of the structure. The returned structure will be part of
+the main structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.has_non_canonical">
-<em class="property">abstract </em><code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">abstract </em><code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.has_non_canonical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> has any non-canonical (i.e. non AU/UA, UG/GU or GC/CG) pairings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_nc</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.same_pattern">
-<code class="sig-name descname">same_pattern</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#rna_library.Motif.str" title="rna_library.Motif.str">str</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.same_pattern" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">same_pattern</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">sequence</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.same_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a template sequence is compatible with an inputted sequence. Specifically if the length
+and placement of ‘&amp;’ are the same.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>str</em>) – template string to compare against.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>is_same</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.start_pos">
-<code class="sig-name descname">start_pos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Motif.start_pos" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">start_pos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.start_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starting (or lowest) nucleotide index owned by the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>start_pos</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.end_pos">
-<code class="sig-name descname">end_pos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Motif.end_pos" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">end_pos</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.end_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ending (or highest) nucleotide index owned by the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>end_pos</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.contains">
-<code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pos</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Motif.contains" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates if a nucleotide index is contained or belongs to the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pos</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – the querying index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>is_contained</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.sequences">
 <code class="sig-name descname">sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">seqs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Used to set the internal list of barcode temp sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seqs</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – the new barcode sequences to be applied to the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.number_sequences">
 <code class="sig-name descname">number_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.number_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gives the number of barcode sequences that the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> currently has.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>num_sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.set_sequence">
 <code class="sig-name descname">set_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">idx</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.set_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the current sequence to the sequence of the existing index from the internal barcodes list.
+Note that the <cite>Motif.number_sequences()</cite> method should be queried prior so that the index call will
+be known to be valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em>) – The index to be used.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Motif.generate_sequences">
 <em class="property">abstract </em><code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Builds out all possible barcode sequences that fit the known constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rna_library.Motif.is_barcode">
+<code class="sig-name descname">is_barcode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Motif.is_barcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the current <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> serves as a barcode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is_barcode</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -851,59 +1153,133 @@ as a <cite>str().</cite></p>
 <dt id="rna_library.Helix">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">Helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../_images/inheritance-d5d7ed9569d4aeec7741c0ce5957eb535d191267.png" alt="Inheritance diagram of rna_library.Helix" usemap="#inheritance8ee7d3a54c" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../_images/inheritance-39b4abe3698be0b849b9ee19f0dd8ba15c35c52e.png" alt="Inheritance diagram of rna_library.Helix" usemap="#inheritance8ee7d3a54c" class="inheritance graphviz" /></div>
 <map id="inheritance8ee7d3a54c" name="inheritance8ee7d3a54c">
-<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
-<area shape="rect" id="node2" href="helix/index.html#rna_library.helix.Helix" target="_top" title="Helix" alt="" coords="245,5,317,31"/>
-</map><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,
-<a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>,
-<a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and
-<a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a>
-all inherit from.</p>
+<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="helix/index.html#rna_library.helix.Helix" target="_top" title="Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`." alt="" coords="245,5,317,31"/>
+</map><p>Represents a helix or stack in an RNA structure. Inherits from <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
 <dl class="py method">
 <dt id="rna_library.Helix.size">
 <code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.size" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the size of the <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> which is just the number of
+pairs in the stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>size</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt id="id6">
-<code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="id8">
+<code class="sig-name descname">size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#id8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current size for the <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> (<em>int</em>) – the new size of the helix.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the buffer of the <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> which is just the number of
+pairs in the stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.pairs">
 <code class="sig-name descname">pairs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.pairs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the basepairs in the stack as a list of strings of length 2.
+Pairs are returned in order of lowest 3 prime starting index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>pairs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.is_helix">
 <code class="sig-name descname">is_helix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.is_helix" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Indicates that the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> is of type <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is_helix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.recursive_structure">
 <code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Builds and returns the continguous sequence of the structure viewing the current
+<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> as the root of the structure. The returned sequence will be part of
+the main sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.recursive_sequence">
 <code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Builds and returns the continguous structure of the structure viewing the current
+<a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> as the root of the structure. The returned structure will be part of
+the main structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.has_non_canonical">
 <code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks if any of the basepairs are non-canonical (i.e. non- AU/UA, GU/UG, GC/CG).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_non_canonical</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Helix.generate_sequences">
 <code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Helix.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates all possible sequences for the <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a> that are compatible with
+the constraints for the motif.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -911,40 +1287,90 @@ all inherit from.</p>
 <dt id="rna_library.Hairpin">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">Hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../_images/inheritance-f74057a5616097d43a39951c7c426dfd7798b046.png" alt="Inheritance diagram of rna_library.Hairpin" usemap="#inheritance4a4657efe4" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../_images/inheritance-4f440ae4174b4b1aa92a0ec513dc976c671ac9c3.png" alt="Inheritance diagram of rna_library.Hairpin" usemap="#inheritance4a4657efe4" class="inheritance graphviz" /></div>
 <map id="inheritance4a4657efe4" name="inheritance4a4657efe4">
-<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
 <area shape="rect" id="node2" href="hairpin/index.html#rna_library.hairpin.Hairpin" target="_top" title="Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`." alt="" coords="245,5,317,31"/>
 </map><p>Represents a hairpin loop in an RNA structure. Inherits from <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a>.</p>
 <dl class="py method">
 <dt id="rna_library.Hairpin.buffer">
-<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#rna_library.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>For the <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> type, this is simply the size of the
+closing helix meaning the number of closing pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Hairpin.is_hairpin">
-<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">is_hairpin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.is_hairpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates that the <a class="reference internal" href="#rna_library.Motif" title="rna_library.Motif"><code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code></a> is of type <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is_hairpin</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Hairpin.recursive_structure">
-<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.recursive_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the owned portion of the structure. In this coding of structure
+it is just the loop portion and does not include the closing pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Hairpin.recursive_sequence">
-<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#rna_library.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.recursive_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the owned portion of the sequence. In this coding of sequence
+it is just the loop portion and does not include the closing pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Hairpin.has_non_canonical">
-<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#rna_library.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.has_non_canonical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not the closing pair is canonical (i.e. is AU/UA, CG/GC, GU/UG).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_non_canonical</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Hairpin.generate_sequences">
 <code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Hairpin.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates all possible sequences for the <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a> that are compatible with
+the constraints for the motif.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -952,15 +1378,11 @@ all inherit from.</p>
 <dt id="rna_library.Junction">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">Junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Junction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../_images/inheritance-32475dbeae7e36def357082eee082965cac1ff13.png" alt="Inheritance diagram of rna_library.Junction" usemap="#inheritancec0b5fc0812" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../_images/inheritance-1357f4a55f634ea65fb9c0bd7c2e7f3b4199ac43.png" alt="Inheritance diagram of rna_library.Junction" usemap="#inheritancec0b5fc0812" class="inheritance graphviz" /></div>
 <map id="inheritancec0b5fc0812" name="inheritancec0b5fc0812">
-<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
-<area shape="rect" id="node2" href="junction/index.html#rna_library.junction.Junction" target="_top" title="Junction" alt="" coords="245,5,320,31"/>
-</map><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,
-<a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>,
-<a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and
-<a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a>
-all inherit from.</p>
+<area shape="rect" id="node3" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="junction/index.html#rna_library.junction.Junction" target="_top" title="Represents a junction of any size in an RNA structure including bulges and multi&#45;loops." alt="" coords="245,5,320,31"/>
+</map><p>Represents a junction of any size in an RNA structure including bulges and multi-loops.</p>
 <dl class="py method">
 <dt id="rna_library.Junction.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Junction.buffer" title="Permalink to this definition">¶</a></dt>
@@ -974,7 +1396,16 @@ all inherit from.</p>
 <dl class="py method">
 <dt id="rna_library.Junction.is_junction">
 <code class="sig-name descname">is_junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.Junction.is_junction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>If the motif is a junction or not. Overridden by child <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If the motif is of type <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool()</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.Junction.recursive_structure">
@@ -1017,15 +1448,11 @@ all inherit from.</p>
 <dt id="rna_library.SingleStrand">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">SingleStrand</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SingleStrand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../_images/inheritance-bbe24710595b85b49fb11910f4a2cb00cda109cb.png" alt="Inheritance diagram of rna_library.SingleStrand" usemap="#inheritancec7d8a133f1" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../_images/inheritance-3a22ac872a64fbc0c15a176d168ab52772f8c5f6.png" alt="Inheritance diagram of rna_library.SingleStrand" usemap="#inheritancec7d8a133f1" class="inheritance graphviz" /></div>
 <map id="inheritancec7d8a133f1" name="inheritancec7d8a133f1">
-<area shape="rect" id="node2" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
-<area shape="rect" id="node3" href="singlestrand/index.html#rna_library.singlestrand.SingleStrand" target="_top" title="SingleStrand" alt="" coords="245,5,349,31"/>
-</map><p>Abstract base class that <a class="reference internal" href="#rna_library.Hairpin" title="rna_library.Hairpin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code></a>,
-<a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>,
-<a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and
-<a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a>
-all inherit from.</p>
+<area shape="rect" id="node2" href="motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node3" href="singlestrand/index.html#rna_library.singlestrand.SingleStrand" target="_top" title="Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a :class:`Junction()` or :class:`Helix()`." alt="" coords="245,5,349,31"/>
+</map><p>Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a <a class="reference internal" href="#rna_library.Junction" title="rna_library.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> or <a class="reference internal" href="#rna_library.Helix" title="rna_library.Helix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code></a>.</p>
 <dl class="py method">
 <dt id="rna_library.SingleStrand.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SingleStrand.buffer" title="Permalink to this definition">¶</a></dt>
@@ -1034,7 +1461,16 @@ all inherit from.</p>
 <dl class="py method">
 <dt id="rna_library.SingleStrand.is_singlestrand">
 <code class="sig-name descname">is_singlestrand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SingleStrand.is_singlestrand" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>If the motif is a singlestrand or not. Overridden by child <a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If the motif is of type <a class="reference internal" href="#rna_library.SingleStrand" title="rna_library.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool()</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.SingleStrand.recursive_structure">
@@ -1060,16 +1496,32 @@ all inherit from.</p>
 
 <dl class="py function">
 <dt id="rna_library.parse_to_motifs">
-<code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">parse_to_motifs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">structure</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a><a class="headerlink" href="#rna_library.parse_to_motifs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">parse_to_motifs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">structure</span></em>, <em class="sig-param"><span class="n">sequence</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.parse_to_motifs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>structure</strong> (<em>str</em>) – </p></li>
+<li><p><strong>sequence</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py class">
 <dt id="rna_library.SecStruct">
-<em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">SecStruct</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sequence</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SecStruct" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">SecStruct</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span></em>, <em class="sig-param"><span class="n">sequence</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SecStruct" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="rna_library.SecStruct.set_ids_">
-<code class="sig-name descname">set_ids_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">m</span><span class="p">:</span> <span class="n"><a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SecStruct.set_ids_" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">set_ids_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">m</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SecStruct.set_ids_" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><em>rna_library.motif.Motif</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.SecStruct.display">
@@ -1118,8 +1570,13 @@ all inherit from.</p>
 
 <dl class="py method">
 <dt id="rna_library.SecStruct.get_motif">
-<code class="sig-name descname">get_motif</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a><a class="headerlink" href="#rna_library.SecStruct.get_motif" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">get_motif</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.SecStruct.get_motif" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif">rna_library.motif.Motif</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.SecStruct.get_substructure">
@@ -1170,8 +1627,17 @@ all inherit from.</p>
 
 <dl class="py function">
 <dt id="rna_library.build_barcodes">
-<code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">build_barcodes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>None<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">distance</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.build_barcodes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-prename descclassname">rna_library.</code><code class="sig-name descname">build_barcodes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">secstruct</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">distance</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.build_barcodes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>secstruct</strong> (<em>str</em>) – </p></li>
+<li><p><strong>start</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>None</em><em>]</em>) – </p></li>
+<li><p><strong>distance</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </div>

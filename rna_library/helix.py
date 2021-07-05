@@ -7,6 +7,9 @@ from .util import *
 
 
 class Helix(Motif):
+    """
+    Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`.
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.HELIX
@@ -20,23 +23,65 @@ class Helix(Motif):
 
 
     @dispatch
-    def size(self):
+    def size(self) -> int:
+        """
+        Returns the size of the :class:`Helix()` which is just the number of 
+        pairs in the stack.
+
+        :return: size
+        :rtype: int
+        """
         return self.__size
     
     @dispatch
     def size(self, val ):
+        """
+        Sets the current size for the :class:`Helix()`. 
+
+        :param int val: the new size of the helix.
+
+        """
+        #TODO some kind of validation
         self.__size = val
 
     def buffer(self):
+        """
+        Returns the buffer of the :class:`Helix()` which is just the number of 
+        pairs in the stack.
+
+        :return: buffer
+        :rtype: int
+        """
         return self.__size
 
-    def pairs(self):
+    def pairs(self) -> List[str]:
+        """
+        Returns the basepairs in the stack as a list of strings of length 2.
+        Pairs are returned in order of lowest 3 prime starting index. 
+        
+        :return: pairs
+        :rtype: List[str]
+        """
         return self.__pairs
 
     def is_helix(self):
+        """
+        Indicates that the :class:`Motif()` is of type :class:`Helix()`.
+
+        :return: is_helix
+        :rtype: bool
+        """
         return True
 
     def recursive_structure(self):
+        """
+        Builds and returns the continguous sequence of the structure viewing the current
+        :class:`Motif()` as the root of the structure. The returned sequence will be part of 
+        the main sequence.
+
+        :return: sequence
+        :rtype: str
+        """
         result = self.structure().split("&")
 
         result = result[0] + self.children()[0].recursive_structure() + result[1]
@@ -46,6 +91,14 @@ class Helix(Motif):
         return result
 
     def recursive_sequence(self):
+        """
+        Builds and returns the continguous structure of the structure viewing the current
+        :class:`Motif()` as the root of the structure. The returned structure will be part of 
+        the main structure.
+
+        :return: structure
+        :rtype: str
+        """
         result = self.sequence().split("&")
 
         result = result[0] + self.children()[0].recursive_sequence() + result[1]
@@ -55,12 +108,24 @@ class Helix(Motif):
         return result
 
     def has_non_canonical(self):
+        """
+        Checks if any of the basepairs are non-canonical (i.e. non- AU/UA, GU/UG, GC/CG).
+
+        :return: has_non_canonical
+        :rtype: bool
+        """
+        #TODO should reference ALLOWED_PAIRS
         for pair in self.pairs():
             if pair not in ALLOWED_PAIRS:
                 return True
         return False
 
     def generate_sequences( self ):
+        """
+        Generates all possible sequences for the :class:`Helix()` that are compatible with
+        the constraints for the motif.
+        """
+
         bp_codes = []   
         for idx, bp in enumerate( self.pairs() ):
             n_count = bp.count( 'N' )

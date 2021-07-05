@@ -26,16 +26,17 @@ Classes
       :parts: 1
       :private-bases:
 
-   Abstract base class that :class:`Hairpin()`, 
-   :class:`Helix()`,
-   :class:`Junction()` and
-   :class:`SingleStrand()`
-   all inherit from.
+   Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a :class:`Junction()` or :class:`Helix()`.
 
    .. method:: buffer(self)
 
 
    .. method:: is_singlestrand(self)
+
+      If the motif is a singlestrand or not. Overridden by child :class:`SingleStrand()` class.
+
+      :return: If the motif is of type :class:`SingleStrand()`
+      :rtype: :class:`bool()`
 
 
    .. method:: recursive_structure(self)

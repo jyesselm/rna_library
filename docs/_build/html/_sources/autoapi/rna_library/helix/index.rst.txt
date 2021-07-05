@@ -26,37 +26,82 @@ Classes
       :parts: 1
       :private-bases:
 
-   Abstract base class that :class:`Hairpin()`, 
-   :class:`Helix()`,
-   :class:`Junction()` and
-   :class:`SingleStrand()`
-   all inherit from.
+   Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`.
 
    .. method:: size(self)
+
+      Returns the size of the :class:`Helix()` which is just the number of 
+      pairs in the stack.
+
+      :return: size
+      :rtype: int
 
 
    .. method:: size(self, val)
 
+      Sets the current size for the :class:`Helix()`. 
+
+      :param int val: the new size of the helix.
+
 
    .. method:: buffer(self)
+
+      Returns the buffer of the :class:`Helix()` which is just the number of 
+      pairs in the stack.
+
+      :return: buffer
+      :rtype: int
 
 
    .. method:: pairs(self)
 
+      Returns the basepairs in the stack as a list of strings of length 2.
+      Pairs are returned in order of lowest 3 prime starting index. 
+
+      :return: pairs
+      :rtype: List[str]
+
 
    .. method:: is_helix(self)
+
+      Indicates that the :class:`Motif()` is of type :class:`Helix()`.
+
+      :return: is_helix
+      :rtype: bool
 
 
    .. method:: recursive_structure(self)
 
+      Builds and returns the continguous sequence of the structure viewing the current
+      :class:`Motif()` as the root of the structure. The returned sequence will be part of 
+      the main sequence.
+
+      :return: sequence
+      :rtype: str
+
 
    .. method:: recursive_sequence(self)
+
+      Builds and returns the continguous structure of the structure viewing the current
+      :class:`Motif()` as the root of the structure. The returned structure will be part of 
+      the main structure.
+
+      :return: structure
+      :rtype: str
 
 
    .. method:: has_non_canonical(self)
 
+      Checks if any of the basepairs are non-canonical (i.e. non- AU/UA, GU/UG, GC/CG).
+
+      :return: has_non_canonical
+      :rtype: bool
+
 
    .. method:: generate_sequences(self)
+
+      Generates all possible sequences for the :class:`Helix()` that are compatible with
+      the constraints for the motif.
 
 
 

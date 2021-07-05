@@ -31,6 +31,16 @@ extensions = [
 ]
 extensions.append('autoapi.extension')
 extensions.append('sphinx.ext.inheritance_diagram')
+extensions.append('sphinx.ext.autodoc.typehints')
+extensions.append('sphinx.ext.autodoc')
+
+autodoc_typehints = 'description'
+
+autoapi_modules = {'rna_library': 
+                                {
+                                    'override': True
+                                    }
+        }
 
 autoapi_type = 'python'
 autoapi_dirs = ['../rna_library']

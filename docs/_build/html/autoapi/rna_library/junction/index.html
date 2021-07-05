@@ -167,7 +167,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#rna_library.junction.Junction" title="rna_library.junction.Junction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Junction</span></code></a></p></td>
-<td><p>Abstract base class that <code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code>,</p></td>
+<td><p>Represents a junction of any size in an RNA structure including bulges and multi-loops.</p></td>
 </tr>
 </tbody>
 </table>
@@ -175,15 +175,11 @@
 <dt id="rna_library.junction.Junction">
 <em class="property">class </em><code class="sig-prename descclassname">rna_library.junction.</code><code class="sig-name descname">Junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.junction.Junction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../motif/index.html#rna_library.motif.Motif" title="rna_library.motif.Motif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rna_library.motif.Motif</span></code></a></p>
-<div class="graphviz"><img src="../../../_images/inheritance-3b178d8d159799fe19743454a13ed49fdced5aa9.png" alt="Inheritance diagram of rna_library.junction.Junction" usemap="#inheritance43c6bef711" class="inheritance graphviz" /></div>
+<div class="graphviz"><img src="../../../_images/inheritance-470c3841b8dafe94eeced10066cb7b33d879e4f4.png" alt="Inheritance diagram of rna_library.junction.Junction" usemap="#inheritance43c6bef711" class="inheritance graphviz" /></div>
 <map id="inheritance43c6bef711" name="inheritance43c6bef711">
-<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, " alt="" coords="125,5,197,31"/>
-<area shape="rect" id="node2" href="#rna_library.junction.Junction" target="_top" title="Junction" alt="" coords="245,5,320,31"/>
-</map><p>Abstract base class that <code class="xref py py-class docutils literal notranslate"><span class="pre">Hairpin()</span></code>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Helix()</span></code>,
-<a class="reference internal" href="#rna_library.junction.Junction" title="rna_library.junction.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> and
-<code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code>
-all inherit from.</p>
+<area shape="rect" id="node3" href="../motif/index.html#rna_library.motif.Motif" target="_top" title="Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from." alt="" coords="125,5,197,31"/>
+<area shape="rect" id="node2" href="#rna_library.junction.Junction" target="_top" title="Represents a junction of any size in an RNA structure including bulges and multi&#45;loops." alt="" coords="245,5,320,31"/>
+</map><p>Represents a junction of any size in an RNA structure including bulges and multi-loops.</p>
 <dl class="py method">
 <dt id="rna_library.junction.Junction.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.junction.Junction.buffer" title="Permalink to this definition">¶</a></dt>
@@ -197,7 +193,16 @@ all inherit from.</p>
 <dl class="py method">
 <dt id="rna_library.junction.Junction.is_junction">
 <code class="sig-name descname">is_junction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.junction.Junction.is_junction" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>If the motif is a junction or not. Overridden by child <a class="reference internal" href="#rna_library.junction.Junction" title="rna_library.junction.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If the motif is of type <a class="reference internal" href="#rna_library.junction.Junction" title="rna_library.junction.Junction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Junction()</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool()</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.junction.Junction.recursive_structure">

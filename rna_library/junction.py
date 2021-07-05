@@ -3,6 +3,9 @@ from .motif import Motif
 from .enums import *
 
 class Junction(Motif):
+    """
+    Represents a junction of any size in an RNA structure including bulges and multi-loops.    
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.JUNCTION

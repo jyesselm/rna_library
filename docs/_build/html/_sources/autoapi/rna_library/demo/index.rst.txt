@@ -36,7 +36,7 @@ Attributes
 
    
 
-.. function:: traverse(m: motif.Motif, stats)
+.. function:: traverse(m, stats)
 
    Function that returns number of motifs in the structure
 

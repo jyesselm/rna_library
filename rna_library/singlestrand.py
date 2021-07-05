@@ -1,6 +1,9 @@
 from .motif import Motif
 
 class SingleStrand(Motif):
+    """
+    Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a :class:`Junction()` or :class:`Helix()`.
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.type_ = MotifType.SINGLESTRAND
