@@ -4,6 +4,9 @@ from .enums import *
 from .parser import parse_to_motifs
 
 class SecStruct:
+    """
+    Represents a 
+    """
     # what do we want this to do?
     # 1. serve as a place to hold the motifs
     # 2. allow for insertion and changing of motifs

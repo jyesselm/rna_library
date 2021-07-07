@@ -13,7 +13,7 @@ class Helix(Motif):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.HELIX
-        self.__size = (len(self.sequence()) - 1) // 2
+        self.__size =  (len(self.sequence()) - 1) // 2 
         self.__structure = f'{"("*self.__size}&{")"*self.__size}'
         self.__token = f"Helix{self.__size}"
         self.__pairs = []

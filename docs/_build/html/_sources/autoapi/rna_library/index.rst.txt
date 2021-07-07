@@ -820,37 +820,89 @@ Attributes
 
    .. method:: buffer(self)
 
+      For the :class:`Junction()` type this is a :class:`list()` of :class:`int()`'s where the first
+      is the size of the parent :class:`Helix()` and then they are arranged in 3' to 5' order.
+      Will have the same size as number of branches in the :class:`Jucntion()`.
+
+      :return: buffers
+      :rtype: List[int]
+
 
    .. method:: gaps(self)
+
+      Returns a :class:`list()` of :class:`int()`'s of gap sizes in 3' to 5' order.
+      Will have the same size as number of branches in the :class:`Jucntion()`.
+
+      :return: gaps
+      :rtype: List[int]
 
 
    .. method:: is_junction(self)
 
-      If the motif is a junction or not. Overridden by child :class:`Junction()` class.
+      Indicates that the :class:`Motif()` is of type :class:`Junction()`.
 
-      :return: If the motif is of type :class:`Junction()`
-      :rtype: :class:`bool()`
+      :return: is_hairpin
+      :rtype: bool
 
 
    .. method:: recursive_structure(self)
 
+      Returns the owned portion of the structure. In this coding of structure 
+      it is the closing pairs as well as the child :class:`Helix()`'s and their children.
+
+      :return: recursive_structure
+      :rtype: str
+
 
    .. method:: recursive_sequence(self)
+
+      Returns the owned portion of the sequence. In this coding of structure 
+      it is the closing pairs as well as the child :class:`Helix()`'s and their children.
+
+      :return: recursive_sequence
+      :rtype: str
 
 
    .. method:: closing_pairs(self)
 
+      Returns a :class:`list()` of :class:`str()`'s that correspond to the closing pairs in 
+      the :class:`Junction()` Motif. 
+
+      :return: closing_pairs
+      :rtype: List[str]
+
 
    .. method:: has_non_canonical(self)
+
+      Returns whether or not any of the closing pairs are non-canonical (i.e. not AU/UA, CG/GC, GU/UG).
+
+      :return: has_non_canonical
+      :rtype: bool
 
 
    .. method:: number_branches(self)
 
+      Returns the number of branches in the current :class:`Junction()`.
+
+      :return: number_branches
+      :rtype: int
+
 
    .. method:: symmetric(self)
 
+      Indicates if the current :class:`Junction()` is symmetric, that is the sizes of all of the 
+      gaps are the same.
+
+      :return: is_symmetric
+      :rtype: bool
+
 
    .. method:: generate_sequences(self)
+
+      Would generate all possible sequences for the :class:`Junction()` that are compatible with
+      the constraints for the motif. **Not currently implemented.**
+
+      :raises: TypeError
 
 
 
@@ -867,33 +919,69 @@ Attributes
 
    .. method:: buffer(self)
 
+      For the :class:`SingleStrand()` type, this does not have any meaning and is always the value 
+      ``-1``.
+
+      :return: buffer
+      :rtype: int
+
 
    .. method:: is_singlestrand(self)
 
-      If the motif is a singlestrand or not. Overridden by child :class:`SingleStrand()` class.
+      Indicates that the :class:`Motif()` is of type :class:`SingleStrand()`.
 
-      :return: If the motif is of type :class:`SingleStrand()`
-      :rtype: :class:`bool()`
+      :return: is_singlestrand 
+      :rtype: bool
 
 
    .. method:: recursive_structure(self)
 
+      Returns the owned portion of the structure. In this coding of structure 
+      it is just the nucleotides in the single strand plus its child if it exists.
+
+      :return: recursive_structure
+      :rtype: str
+
 
    .. method:: recursive_sequence(self)
+
+      Returns the owned portion of the sequence. In this coding of sequence 
+      it is just the nucleotides in the single strand plus its child if it exists.
+
+      :return: recursive_sequence
+      :rtype: str
 
 
    .. method:: has_non_canonical(self)
 
+      Because there are no pairs "owned" by :class:`SingleStrand()`'s, it always returns ``False``.
+
+      :return: has_non_canonical
+      :rtype: bool
+
 
    .. method:: generate_sequences(self)
+
+      Generates all possible sequences for the :class:`SingleStrand()` that are compatible with
+      the constraints for the motif.
 
 
 
 .. function:: parse_to_motifs(structure, sequence)
 
+   Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
+
+   :param str structure: a valid dot-bracket structure 
+   :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
+
+   :return: motif
+   :rtype: Motif
+
 
 .. class:: SecStruct(secstruct, sequence)
 
+
+   Represents a 
 
    .. method:: set_ids_(self, m)
 

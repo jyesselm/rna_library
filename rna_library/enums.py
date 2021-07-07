@@ -115,6 +115,7 @@ class MotifType( IntEnum ):
     JUNCTION = 4
 
 TYPE_MAPPER = { #TODO should make this a class of MotifType
+    MotifType.UNASSIGNED: "Unassigned", 
     MotifType.SINGLESTRAND: "SingleStrand",
     MotifType.HELIX: "Helix",
     MotifType.HAIRPIN: "Hairpin",

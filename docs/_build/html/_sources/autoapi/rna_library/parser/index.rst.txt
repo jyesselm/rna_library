@@ -24,19 +24,37 @@ Functions
 
 .. function:: helix_length(connections, start)
 
+   TODO
+
 
 .. function:: get_junction_or_hairpin(sequence, connections, start)
+
+   TODO
 
 
 .. function:: get_helix(sequence, connections, start)
 
+   TODO
+
 
 .. function:: get_singlestrand(sequence, connections, start)
+
+   TODO
 
 
 .. function:: get_motifs(sequence, connections, start)
 
+   Helper method
+
 
 .. function:: parse_to_motifs(structure, sequence)
+
+   Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
+
+   :param str structure: a valid dot-bracket structure 
+   :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
+
+   :return: motif
+   :rtype: Motif
 
 

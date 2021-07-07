@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, Union
 
 from .motif import Motif
 from .helix import Helix
@@ -10,7 +10,10 @@ from .singlestrand import SingleStrand
 from .util import connectivity_list, is_circular
 
 # wrap these into a class or make private with __func_name
-def helix_length(connections, start):
+def helix_length(connections : List[int], start : int) -> int:
+    """
+    TODO
+    """
     complement = connections[start]
     length = 0
     while (
@@ -21,8 +24,10 @@ def helix_length(connections, start):
     return length
 
 
-def get_junction_or_hairpin(sequence, connections, start):
-
+def get_junction_or_hairpin(sequence : str, connections : List[int], start : int) -> Union[Junction, Hairpin]:
+    """
+    TODO
+    """
     strands = []
     offset = 1
     it = start
@@ -52,7 +57,10 @@ def get_junction_or_hairpin(sequence, connections, start):
         return hp
 
 
-def get_helix(sequence, connections, start):
+def get_helix(sequence : str, connections : List[int], start: int) -> Union[Hairpin, Helix, Junction, SingleStrand]:
+    """
+    TODO
+    """
     # figure out how big this current helix i
     helix_len = helix_length(connections, start)
     lhs, rhs = [], []
@@ -72,7 +80,10 @@ def get_helix(sequence, connections, start):
     return helix
 
 
-def get_singlestrand(sequence, connections, start):
+def get_singlestrand(sequence : str, connections : List[int], start : int) -> SingleStrand:
+    """
+    TODO
+    """
     offset = 0
     while start + offset < len(connections) and connections[start + offset] == -1:
         offset += 1
@@ -87,7 +98,10 @@ def get_singlestrand(sequence, connections, start):
 
     return singlestrand
 
-def get_motifs(sequence : str, connections: List[ int ], start : int):
+def get_motifs(sequence : str, connections: List[ int ], start : int) -> Union[ Helix, SingleStrand ]:
+    """
+    Helper method
+    """
     if start >= len(connections):
         return []
     elif connections[start] < 0:
@@ -96,7 +110,17 @@ def get_motifs(sequence : str, connections: List[ int ], start : int):
 
 
 def parse_to_motifs(structure : str, sequence : str) -> Motif:
+    """
+    Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
+
+    :param str structure: a valid dot-bracket structure 
+    :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
+
+    :return: motif
+    :rtype: Motif
+    """
     # basic sanity checks
+    #TODO should probably deal with pseudoknots in here
     assert len(structure) == len(sequence)
     assert len(re.sub("[\(\.\)]", "", structure)) == 0
     assert len(re.sub("[ACGUTNB]", "", sequence)) == 0

@@ -30,25 +30,51 @@ Classes
 
    .. method:: buffer(self)
 
+      For the :class:`SingleStrand()` type, this does not have any meaning and is always the value 
+      ``-1``.
+
+      :return: buffer
+      :rtype: int
+
 
    .. method:: is_singlestrand(self)
 
-      If the motif is a singlestrand or not. Overridden by child :class:`SingleStrand()` class.
+      Indicates that the :class:`Motif()` is of type :class:`SingleStrand()`.
 
-      :return: If the motif is of type :class:`SingleStrand()`
-      :rtype: :class:`bool()`
+      :return: is_singlestrand 
+      :rtype: bool
 
 
    .. method:: recursive_structure(self)
 
+      Returns the owned portion of the structure. In this coding of structure 
+      it is just the nucleotides in the single strand plus its child if it exists.
+
+      :return: recursive_structure
+      :rtype: str
+
 
    .. method:: recursive_sequence(self)
+
+      Returns the owned portion of the sequence. In this coding of sequence 
+      it is just the nucleotides in the single strand plus its child if it exists.
+
+      :return: recursive_sequence
+      :rtype: str
 
 
    .. method:: has_non_canonical(self)
 
+      Because there are no pairs "owned" by :class:`SingleStrand()`'s, it always returns ``False``.
+
+      :return: has_non_canonical
+      :rtype: bool
+
 
    .. method:: generate_sequences(self)
+
+      Generates all possible sequences for the :class:`SingleStrand()` that are compatible with
+      the constraints for the motif.
 
 
 

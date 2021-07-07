@@ -20,6 +20,8 @@ Classes
 .. class:: SecStruct(secstruct, sequence)
 
 
+   Represents a 
+
    .. method:: set_ids_(self, m)
 
 

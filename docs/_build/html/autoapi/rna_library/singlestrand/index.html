@@ -183,18 +183,28 @@
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.buffer">
 <code class="sig-name descname">buffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.buffer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>For the <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> type, this does not have any meaning and is always the value
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.is_singlestrand">
 <code class="sig-name descname">is_singlestrand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.is_singlestrand" title="Permalink to this definition">¶</a></dt>
-<dd><p>If the motif is a singlestrand or not. Overridden by child <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> class.</p>
+<dd><p>Indicates that the <code class="xref py py-class docutils literal notranslate"><span class="pre">Motif()</span></code> is of type <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>If the motif is of type <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a></p>
+<dd class="field-odd"><p>is_singlestrand</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool()</span></code></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,22 +212,53 @@
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.recursive_structure">
 <code class="sig-name descname">recursive_structure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.recursive_structure" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the owned portion of the structure. In this coding of structure
+it is just the nucleotides in the single strand plus its child if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_structure</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.recursive_sequence">
 <code class="sig-name descname">recursive_sequence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.recursive_sequence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the owned portion of the sequence. In this coding of sequence
+it is just the nucleotides in the single strand plus its child if it exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>recursive_sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.has_non_canonical">
 <code class="sig-name descname">has_non_canonical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.has_non_canonical" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Because there are no pairs “owned” by <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a>’s, it always returns <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>has_non_canonical</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="rna_library.singlestrand.SingleStrand.generate_sequences">
 <code class="sig-name descname">generate_sequences</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#rna_library.singlestrand.SingleStrand.generate_sequences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates all possible sequences for the <a class="reference internal" href="#rna_library.singlestrand.SingleStrand" title="rna_library.singlestrand.SingleStrand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleStrand()</span></code></a> that are compatible with
+the constraints for the motif.</p>
+</dd></dl>
 
 </dd></dl>
 

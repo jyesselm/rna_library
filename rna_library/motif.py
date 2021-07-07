@@ -122,7 +122,7 @@ class Motif(ABC):
                     length = len(first_line) - len(first_line.lstrip())
             
             children = "\n".join(contents)
-            return f"{depth}{identification}{self.token_} {self.structure_} {self.sequence_}{children}"
+            return f"{depth}{identification}{self.token()} {self.structure()} {self.sequence()}{children}"
 
     def __eq__(self, other : Motif) -> bool:
         """
@@ -132,9 +132,9 @@ class Motif(ABC):
         
         """
         return (
-            self.type_ == other.type_
-            and self.sequence_ == other.sequence_
-            and self.token_ == other.token_
+            self.type() == other.type()
+            and self.sequence() == other.sequence()
+            and self.token() == other.token()
         )
 
     def __str__(self) -> str:
@@ -220,7 +220,7 @@ class Motif(ABC):
         self.__children = other
 
     @dispatch
-    def parent(self, other : Motif) -> None:
+    def parent(self, other ):
         """ 
         Sets the :class:`Motif()`'s parent to the supplied :class:`Motif()`. 
 
@@ -232,7 +232,7 @@ class Motif(ABC):
         self.__parent = other
     
     @dispatch
-    def parent(self) -> Motif :
+    def parent(self):
         """ 
         Gets the parent :class:`Motif()`'s for the current :class:`Motif()`. 
         
@@ -242,7 +242,7 @@ class Motif(ABC):
         return self.__parent
 
     @dispatch
-    def token(self, tk: str ) -> None:
+    def token(self, tk ):
         """
         Sets the :class:`Motif()`'s identifying token to an inputted string. Input is **NOT** validated.
 
@@ -255,7 +255,7 @@ class Motif(ABC):
         self.__token = tk
     
     @dispatch 
-    def token(self) -> str:
+    def token(self):
         """
         Gets the identifying token for the :class:`Motif()`.
 
@@ -265,7 +265,7 @@ class Motif(ABC):
         return self.__token
     
     @dispatch
-    def structure(self, secstruct : str ) -> None:
+    def structure(self, secstruct  ) :
         """
         Sets the :class:`Motif()`'s structure to an inputted string. Input is **NOT** validated.
 
@@ -279,7 +279,7 @@ class Motif(ABC):
         self.__structure = secstruct
     
     @dispatch
-    def structure(self) -> str:
+    def structure(self):
         """
         Gets the secondary structure for the :class:`Motif()`.
 
@@ -305,7 +305,7 @@ class Motif(ABC):
         return self.__strands
 
     @dispatch
-    def sequence(self) -> str:
+    def sequence(self):
         """
         Gets the sequence for the :class:`Motif()`. 
         Because the nucleotides owned by the :class:`Motif()` may not be contiguous, breaks will 
@@ -317,7 +317,7 @@ class Motif(ABC):
         return self.__sequence
     
     @dispatch
-    def sequence(self, seq ) -> None:
+    def sequence(self, seq ):
         """
         Sets the sequence for the :class:`Motif()` to the supplied string. Warning the input **NOT** validated.
         
@@ -327,7 +327,7 @@ class Motif(ABC):
         self.__sequence = seq
 
     @dispatch
-    def id(self) -> int:
+    def id(self):
         """
         Gets the id :class:`int` value for the given :class:`Motif()`.
         
@@ -349,7 +349,7 @@ class Motif(ABC):
         self.__id = new_id
 
     @dispatch
-    def depth(self) -> int:
+    def depth(self):
         """
         The depth of the :class:`Motif()`, which describes how deep it is in the internal graph.
 
@@ -359,7 +359,7 @@ class Motif(ABC):
         return self.__depth
 
     @dispatch
-    def depth(self, value) -> None:
+    def depth(self, value):
         """
         Sets the depth of the current :class:`Motif()`. 
 
@@ -447,7 +447,7 @@ class Motif(ABC):
         :return: is_same
         :rtype: bool
         """
-        template = '&'.join(['N'*len( s ) for s in self.strands_]) 
+        template = '&'.join(['N'*len( s ) for s in self.strands()]) 
         if len( sequence ) != len( template ):
             return False
 

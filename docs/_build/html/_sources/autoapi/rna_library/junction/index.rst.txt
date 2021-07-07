@@ -30,37 +30,89 @@ Classes
 
    .. method:: buffer(self)
 
+      For the :class:`Junction()` type this is a :class:`list()` of :class:`int()`'s where the first
+      is the size of the parent :class:`Helix()` and then they are arranged in 3' to 5' order.
+      Will have the same size as number of branches in the :class:`Jucntion()`.
+
+      :return: buffers
+      :rtype: List[int]
+
 
    .. method:: gaps(self)
+
+      Returns a :class:`list()` of :class:`int()`'s of gap sizes in 3' to 5' order.
+      Will have the same size as number of branches in the :class:`Jucntion()`.
+
+      :return: gaps
+      :rtype: List[int]
 
 
    .. method:: is_junction(self)
 
-      If the motif is a junction or not. Overridden by child :class:`Junction()` class.
+      Indicates that the :class:`Motif()` is of type :class:`Junction()`.
 
-      :return: If the motif is of type :class:`Junction()`
-      :rtype: :class:`bool()`
+      :return: is_hairpin
+      :rtype: bool
 
 
    .. method:: recursive_structure(self)
 
+      Returns the owned portion of the structure. In this coding of structure 
+      it is the closing pairs as well as the child :class:`Helix()`'s and their children.
+
+      :return: recursive_structure
+      :rtype: str
+
 
    .. method:: recursive_sequence(self)
+
+      Returns the owned portion of the sequence. In this coding of structure 
+      it is the closing pairs as well as the child :class:`Helix()`'s and their children.
+
+      :return: recursive_sequence
+      :rtype: str
 
 
    .. method:: closing_pairs(self)
 
+      Returns a :class:`list()` of :class:`str()`'s that correspond to the closing pairs in 
+      the :class:`Junction()` Motif. 
+
+      :return: closing_pairs
+      :rtype: List[str]
+
 
    .. method:: has_non_canonical(self)
+
+      Returns whether or not any of the closing pairs are non-canonical (i.e. not AU/UA, CG/GC, GU/UG).
+
+      :return: has_non_canonical
+      :rtype: bool
 
 
    .. method:: number_branches(self)
 
+      Returns the number of branches in the current :class:`Junction()`.
+
+      :return: number_branches
+      :rtype: int
+
 
    .. method:: symmetric(self)
 
+      Indicates if the current :class:`Junction()` is symmetric, that is the sizes of all of the 
+      gaps are the same.
+
+      :return: is_symmetric
+      :rtype: bool
+
 
    .. method:: generate_sequences(self)
+
+      Would generate all possible sequences for the :class:`Junction()` that are compatible with
+      the constraints for the motif. **Not currently implemented.**
+
+      :raises: TypeError
 
 
 

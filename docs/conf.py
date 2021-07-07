@@ -41,13 +41,40 @@ autoapi_modules = {'rna_library':
                                     'override': True
                                     }
         }
-
+suppress_warnings = ['autoapi', 'all',
+'duplicate.object',
+'autosectionlabel.*',
+"app.add_node",
+"app.add_directive",
+"app.add_role",
+"app.add_generic_role",
+"app.add_source_parser",
+"download.not_readable",
+"image.not_readable",
+"ref.term",
+"ref.ref",
+"ref.numref",
+"ref.keyword",
+"ref.option",
+"ref.citation",
+"ref.footnote",
+"ref.doc",
+"ref.python",
+"misc.highlighting_failure",
+"toc.circular",
+"toc.secnum",
+"epub.unknown_project_files",
+"epub.duplicated_toc_entry"]
 autoapi_type = 'python'
-autoapi_dirs = ['../rna_library']
-autoapi_options = ['members', 'undoc-members', 'private-members', 'show-inheritance', 'show-module-summary', 'special-members', 'imported-members']
+autoapi_dirs = ['../rna_library/']
+autoapi_options = ['members',
+        'undoc-members', 'private-members', 'show-inheritance',
+        'show-module-summary',
+        'special-members', 'imported-members']
 autoapi_options.append('members')
 autoapi_options.append('show-inheritance-diagram')
 autoapi_options.append('show-module-summary')
+
 #autoapi_options = [ 'show-inheritance-diagram']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -56,7 +83,6 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -69,3 +95,4 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+

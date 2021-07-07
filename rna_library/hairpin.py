@@ -60,7 +60,8 @@ class Hairpin(Motif):
         :return: has_non_canonical
         :rtype: bool
         """
-        pair = self.__sequence[0] + self.__sequence[-1]
+        seq = self.sequence()
+        pair = seq[0] + seq[-1]
         return pair not in ALLOWED_PAIRS
     
     def generate_sequences( self ):
