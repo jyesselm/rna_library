@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import re
+import numpy as np
 import pandas as pd
+from glob import glob
 from typing import List
 from rna_library.core import dsci
 from collections import defaultdict
@@ -19,7 +21,7 @@ def add_reactivity( row : pd.Series, output_directory: str, col_name: str='misma
 	:rtype: List[float]
     """
     #TODO the output directory should probably be indicated somewhere as a param
-    raw_data = list(glob(f'{params.populations}/{row["construct"]}_*popavg_reacts.csv'))
+    raw_data = list(glob(f'{output_directory}/{row["construct"]}_*popavg_reacts.csv'))
     assert len(raw_data) == 1, len(raw_data)
     df = pd.read_csv( raw_data[0] )
     num_rows = len(df.index)
@@ -129,6 +131,52 @@ def collect_junction_entries( m : Motif, reactivity:List[float], construct:str, 
         holder[ je.key() ].append( je )
 
     for c in m.children():
+        collect_junction_entries( c, reactivity, construct, sn, reads, score, holder )
 
-        collect_two_way( c, reactivity, construct, sn, reads, score, holder )
+
+def row_normalize_hairpin( row : pd.Series, norm_seq: str, norm_ss: str, factor: float, nts:List[str]) -> List[float]:
+    """
+    Function that performs a hairpin normalization on a pd.Series representing a construct.
+    Returns the normalized reactivity series.
+
+    :param: pd.Series row: dataframe row describing a construct. must have 'RNA', 'structure' and 'reactivity' columns
+    :param: str norm_seq: normalization hairpin sequence
+    :param: str norm_ss: normalize hairpin secondary structure
+    :param: float factor: factor to which the reference value will be set
+    :param: List[str] nts: nucleotides to be considered in the normalization scheme. must be unpaired!
+    :rtype: List[float]
+	"""
+    seq, ss, react = row['RNA'], row['structure'], row['reactivity']
+    assert seq.count( norm_seq ) 
+    assert ss.count( norm_ss )
+
+    for idx, it in enumerate( re.finditer(norm_seq, seq ) ):
+        if ss[ it.start():it.end() ] == norm_ss:
+            idx = it.start()
+            break
+
+    assert idx
+
+    vals = []
+
+    for ii in range(idx, idx+len(norm_seq)):
+        if ss[ii] == '.' and seq[ii] in nts:
+            vals.append( react[ii] )
+
+    assert len( vals ) > 1
+    
+    vals = np.array( vals )
+    react = np.array( react )
+    avg = np.mean( vals )
+
+    return factor*react / avg
+
+
+
+
+
+
+
+
+
 

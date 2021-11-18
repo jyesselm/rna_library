@@ -1,4 +1,6 @@
 """Contains the JunctionEntry and JunctionData objects"""
+import matplotlib
+import numpy as np
 import seaborn as sns
 from typing import List, Tuple
 import matplotlib.pyplot as plt
@@ -9,9 +11,6 @@ class JunctionEntry:
     """Represents a single junction entry from an RNA construct"""
 
     def __init__(self, **kwargs):
-        # some basic size checks
-        assert len(structure) == len(sequence) and len(sequence) == len(reactivity)
-        assert len(sequence)
         # now do the variable assigment
         self.__sequence = kwargs.get('sequence', None)
         self.__structure = kwargs.get('structure', None)
@@ -20,8 +19,18 @@ class JunctionEntry:
         self.__sn = kwargs.get('sn', None)
         self.__reads = kwargs.get('reads', None)
         self.__score = kwargs.get('score', None)
-        self.__symmetrical = is_symmetrical(self.sequence)
+        self.__symmetrical = is_symmetrical(self.__sequence)
         # argument validation
+        self.validate_arguments_()
+
+    def validate_arguments_( self ):
+        """
+        Helper method that validates arguments in the constructor.
+        """
+        # some basic size checks
+        assert len(self.__structure) == len(self.__sequence)
+        assert len(self.__sequence) == len(self.__reactivity)
+        assert len(self.__sequence)
         invalid_args, error_msg = 0, ''
         if not self.__sequence:
             invalid_args += 1
@@ -47,6 +56,7 @@ class JunctionEntry:
 
         if invalid_args:
             raise InvalidArgument(error_msg)
+
 
     def key(self) -> Tuple[str, str]:
         """
@@ -76,10 +86,12 @@ class JunctionData:
         self.sequence = kwargs.get('sequence', None)
         self.structure = kwargs.get('structure', None)
         self.entries = kwargs.get('entries', None )
-        self.symmetrical = is_symmetrical(sequence)
+        self.symmetrical = is_symmetrical(self.sequence)
         self.data = [[] for _ in self.sequence]
         
-		if not self.sequence:
+        invalid_args = 0 #TODO create a validation function for this
+        error_msg = ''
+        if not self.sequence:
             invalid_args += 1
             error_msg += f'no value supplied for sequence\n'
         if not self.structure:
@@ -89,7 +101,7 @@ class JunctionData:
             invalid_args += 1
             error_msg += f'no value supplied for entries\n'
         
-		if invalid_args:
+        if invalid_args:
             raise InvalidArgument(error_msg)
       
         self.rebuild_data()

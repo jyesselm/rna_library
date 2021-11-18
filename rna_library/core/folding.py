@@ -73,7 +73,7 @@ def fold_cache( sequence : str, params : Tuple[str]=_DEFAULT_PARAMS) -> FoldResu
     safe_rm('dot.ps')
     safe_rm('rna.ps')
     raw_result = list(map(lambda raw: raw.strip(),raw_result))
-    folded, _,raw_nrg = raw_result[1].split()
+    folded, raw_nrg = raw_result[1].split(' ',1)
     fold_result = FoldResult(seq=raw_result[0],ss=folded, mfe=get_mfe(raw_nrg), ed=float(raw_result[4].split()[-1]),params=params)
     _CACHE[sequence] = fold_result
     _CURRENT_SIZE += 1

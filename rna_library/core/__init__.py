@@ -27,7 +27,11 @@ from .util import (
 	valid_db,
 	connectivity_list,
 	is_circular,
-	load_fasta
+	load_fasta,
+	is_symmetrical,
+	safe_mkdir,
+	safe_rm,
+	dsci
 )
 
 from .folding import (
