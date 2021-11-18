@@ -2,7 +2,7 @@
 
 import re
 import sys
-import RNA
+import vienna
 import math
 import pickle
 import itertools
@@ -161,3 +161,17 @@ def is_circular( start : int, connections : List[ int ] ) -> bool:
         it = connections[it] + 1
         if it == start or it < start:
             return True
+
+
+
+def is_symmetrical( token : str ) -> bool:
+    """
+    Checks if a sequence or secondary structure is well-formed and symmetrical.
+    
+    :param: str token: sequence or secondary structure to test
+    :rtype: bool
+    """
+    it = token.find('&')
+    assert it != -1 and token.count('&') == 1, f"must have one ampersand"
+    return (it*2 + 1) == len(token)
+

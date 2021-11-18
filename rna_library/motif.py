@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import re
 import sys
-import RNA
+import vienna
 import math
 import pickle
 import itertools
