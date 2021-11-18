@@ -16,11 +16,9 @@ Classes
 
 
 
+.. py:class:: Helix(**kwargs)
 
-.. class:: Helix(**kwargs)
-
-
-   Bases: :py:obj:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.helix.Helix
       :parts: 1
@@ -28,7 +26,7 @@ Classes
 
    Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`.
 
-   .. method:: size(self)
+   .. method:: size(self) -> int
 
       Returns the size of the :class:`Helix()` which is just the number of 
       pairs in the stack.
@@ -53,7 +51,7 @@ Classes
       :rtype: int
 
 
-   .. method:: pairs(self)
+   .. method:: pairs(self) -> List[str]
 
       Returns the basepairs in the stack as a list of strings of length 2.
       Pairs are returned in order of lowest 3 prime starting index. 

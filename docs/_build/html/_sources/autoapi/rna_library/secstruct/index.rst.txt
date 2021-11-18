@@ -16,13 +16,11 @@ Classes
 
 
 
-
-.. class:: SecStruct(secstruct, sequence)
-
+.. py:class:: SecStruct(secstruct: str, sequence: str)
 
    Represents a 
 
-   .. method:: set_ids_(self, m)
+   .. method:: set_ids_(self, m: Motif)
 
 
    .. method:: display(self)
@@ -54,7 +52,7 @@ Classes
    .. method:: get_ids(self, motif_type)
 
 
-   .. method:: get_motif(self, id)
+   .. method:: get_motif(self, id) -> Motif
 
 
    .. method:: get_substructure(self, id1, id2=None)

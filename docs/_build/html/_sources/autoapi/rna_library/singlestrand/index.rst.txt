@@ -16,11 +16,9 @@ Classes
 
 
 
+.. py:class:: SingleStrand(**kwargs)
 
-.. class:: SingleStrand(**kwargs)
-
-
-   Bases: :py:obj:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.singlestrand.SingleStrand
       :parts: 1
@@ -28,7 +26,7 @@ Classes
 
    Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a :class:`Junction()` or :class:`Helix()`.
 
-   .. method:: buffer(self)
+   .. method:: buffer(self) -> int
 
       For the :class:`SingleStrand()` type, this does not have any meaning and is always the value 
       ``-1``.
@@ -37,7 +35,7 @@ Classes
       :rtype: int
 
 
-   .. method:: is_singlestrand(self)
+   .. method:: is_singlestrand(self) -> bool
 
       Indicates that the :class:`Motif()` is of type :class:`SingleStrand()`.
 
@@ -45,7 +43,7 @@ Classes
       :rtype: bool
 
 
-   .. method:: recursive_structure(self)
+   .. method:: recursive_structure(self) -> str
 
       Returns the owned portion of the structure. In this coding of structure 
       it is just the nucleotides in the single strand plus its child if it exists.
@@ -54,7 +52,7 @@ Classes
       :rtype: str
 
 
-   .. method:: recursive_sequence(self)
+   .. method:: recursive_sequence(self) -> str
 
       Returns the owned portion of the sequence. In this coding of sequence 
       it is just the nucleotides in the single strand plus its child if it exists.

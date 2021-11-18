@@ -175,3 +175,12 @@ def is_symmetrical( token : str ) -> bool:
     assert it != -1 and token.count('&') == 1, f"must have one ampersand"
     return (it*2 + 1) == len(token)
 
+
+def safe_rm( fname : str) -> None:
+    """
+    Removes a file only if the file already exists.
+    :param: str fname: name of file to be removed
+    """
+    if os.path.exists( fname ):
+        os.remove( fname )
+

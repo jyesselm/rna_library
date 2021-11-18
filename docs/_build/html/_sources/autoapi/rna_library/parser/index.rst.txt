@@ -21,33 +21,32 @@ Functions
    rna_library.parser.parse_to_motifs
 
 
-
-.. function:: helix_length(connections, start)
-
-   TODO
-
-
-.. function:: get_junction_or_hairpin(sequence, connections, start)
+.. function:: helix_length(connections: List[int], start: int) -> int
 
    TODO
 
 
-.. function:: get_helix(sequence, connections, start)
+.. function:: get_junction_or_hairpin(sequence: str, connections: List[int], start: int) -> Union[Junction, Hairpin]
 
    TODO
 
 
-.. function:: get_singlestrand(sequence, connections, start)
+.. function:: get_helix(sequence: str, connections: List[int], start: int) -> Union[Hairpin, Helix, Junction, SingleStrand]
 
    TODO
 
 
-.. function:: get_motifs(sequence, connections, start)
+.. function:: get_singlestrand(sequence: str, connections: List[int], start: int) -> SingleStrand
+
+   TODO
+
+
+.. function:: get_motifs(sequence: str, connections: List[int], start: int) -> Union[Helix, SingleStrand]
 
    Helper method
 
 
-.. function:: parse_to_motifs(structure, sequence)
+.. function:: parse_to_motifs(structure: str, sequence: str) -> Motif
 
    Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
 

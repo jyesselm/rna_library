@@ -16,11 +16,9 @@ Classes
 
 
 
+.. py:class:: Hairpin(**kwargs)
 
-.. class:: Hairpin(**kwargs)
-
-
-   Bases: :py:obj:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.hairpin.Hairpin
       :parts: 1
@@ -28,7 +26,7 @@ Classes
 
    Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`.
 
-   .. method:: buffer(self)
+   .. method:: buffer(self) -> int
 
       For the :class:`Hairpin()` type, this is simply the size of the 
       closing helix meaning the number of closing pairs.
@@ -37,7 +35,7 @@ Classes
       :rtype: int
 
 
-   .. method:: is_hairpin(self)
+   .. method:: is_hairpin(self) -> bool
 
       Indicates that the :class:`Motif()` is of type :class:`Hairpin()`.
 
@@ -45,7 +43,7 @@ Classes
       :rtype: bool
 
 
-   .. method:: recursive_structure(self)
+   .. method:: recursive_structure(self) -> str
 
       Returns the owned portion of the structure. In this coding of structure 
       it is just the loop portion and does not include the closing pair.
@@ -54,7 +52,7 @@ Classes
       :rtype: str
 
 
-   .. method:: recursive_sequence(self)
+   .. method:: recursive_sequence(self) -> str
 
       Returns the owned portion of the sequence. In this coding of sequence 
       it is just the loop portion and does not include the closing pair.
@@ -63,7 +61,7 @@ Classes
       :rtype: str
 
 
-   .. method:: has_non_canonical(self)
+   .. method:: has_non_canonical(self) -> bool
 
       Returns whether or not the closing pair is canonical (i.e. is AU/UA, CG/GC, GU/UG).
 

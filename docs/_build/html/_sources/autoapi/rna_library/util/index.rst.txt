@@ -25,10 +25,11 @@ Functions
    rna_library.util.get_pair_list
    rna_library.util.connectivity_list
    rna_library.util.is_circular
+   rna_library.util.is_symmetrical
+   rna_library.util.safe_rm
 
 
-
-.. function:: satisfies_constraints(sequence, template)
+.. function:: satisfies_constraints(sequence: str, template: str) -> bool
 
    Confirms whether a sequence and template are the same or not. A template has one of 6
    possible characters at each position: one of the normal A/C/G/U, N for "any" or "B" to indicate
@@ -40,7 +41,7 @@ Functions
    :rtype: bool
 
 
-.. function:: pool_with_distance(sequences, min_dist)
+.. function:: pool_with_distance(sequences: List[str], min_dist: int) -> List[str]
 
    Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
    Method sorts sequences internally so input order is not relevant to final pool.
@@ -52,7 +53,7 @@ Functions
    :rtype: list[str]
 
 
-.. function:: bp_codes_to_sequence(bp_code)
+.. function:: bp_codes_to_sequence(bp_code) -> str
 
    Converts a list of :class:`BasePair()`'s into a sequence string.
 
@@ -60,7 +61,7 @@ Functions
    :rtype: str
 
 
-.. function:: nt_codes_to_sequences(codes)
+.. function:: nt_codes_to_sequences(codes) -> str
 
    Converts a list of :class:`Nucleotide()`'s into a sequence string.
 
@@ -68,7 +69,7 @@ Functions
    :rtype: str
 
 
-.. function:: get_pair_list(secstruct)
+.. function:: get_pair_list(secstruct: str) -> List[Tuple[int, int]]
 
    Creates a list of pairs of indices from a dot-bracket secstruct string. Note 
    that the function assumes the incoming structure is valid. 
@@ -78,7 +79,7 @@ Functions
    :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
 
 
-.. function:: connectivity_list(structure)
+.. function:: connectivity_list(structure: str) -> List[int]
 
    Generates a connectivity list or pairmap from a dot-bracket secondary structure. 
    The list has a value of ``-1`` for unpaired positions else has the index of a 
@@ -89,7 +90,7 @@ Functions
    :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
 
 
-.. function:: is_circular(start, connections)
+.. function:: is_circular(start: int, connections: List[int]) -> bool
 
    Checks if a starting point in a pairmap is in a circular portion.
    This can include the closing pairs of both hairpins and junctions.
@@ -97,5 +98,19 @@ Functions
    :param int start: staring index in the pairmap
    :param list[int] connections: pairmap generated from ``util.connectivity_list()``
    :rtype: bool
+
+
+.. function:: is_symmetrical(token: str) -> bool
+
+   Checks if a sequence or secondary structure is well-formed and symmetrical.
+
+   :param: str token: sequence or secondary structure to test
+   :rtype: bool
+
+
+.. function:: safe_rm(fname: str) -> None
+
+   Removes a file only if the file already exists.
+   :param: str fname: name of file to be removed
 
 

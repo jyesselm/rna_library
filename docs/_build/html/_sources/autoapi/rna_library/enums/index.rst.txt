@@ -25,23 +25,6 @@ Classes
 
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   rna_library.enums.ALLOWED_PAIRS
-   rna_library.enums.BPS
-   rna_library.enums.LEGAL_BPS
-   rna_library.enums.NTS
-   rna_library.enums.BP_VALS
-   rna_library.enums.BASEPAIR_MAPPER
-   rna_library.enums.NT_VALS
-   rna_library.enums.NUCLEOTIDE_MAPPER
-   rna_library.enums.TYPE_MAPPER
-
-
 .. data:: ALLOWED_PAIRS
    
 
@@ -68,10 +51,9 @@ Attributes
    for each conversion by the :class:`Nucleotide()` class.
 
 
-.. class:: BasePair
+.. py:class:: BasePair
 
-
-   Bases: :py:obj:`enum.IntEnum`
+   Bases: :class:`enum.IntEnum`
 
    .. autoapi-inheritance-diagram:: rna_library.enums.BasePair
       :parts: 1
@@ -154,10 +136,9 @@ Attributes
    :class:`BasePair()` value.
 
 
-.. class:: Nucleotide
+.. py:class:: Nucleotide
 
-
-   Bases: :py:obj:`enum.IntEnum`
+   Bases: :class:`enum.IntEnum`
 
    .. autoapi-inheritance-diagram:: rna_library.enums.Nucleotide
       :parts: 1
@@ -206,10 +187,9 @@ Attributes
    :class:`Nucleotide()` value.
 
 
-.. class:: MotifType
+.. py:class:: MotifType
 
-
-   Bases: :py:obj:`enum.IntEnum`
+   Bases: :class:`enum.IntEnum`
 
    .. autoapi-inheritance-diagram:: rna_library.enums.MotifType
       :parts: 1

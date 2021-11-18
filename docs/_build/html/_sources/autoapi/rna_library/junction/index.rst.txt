@@ -16,11 +16,9 @@ Classes
 
 
 
+.. py:class:: Junction(**kwargs)
 
-.. class:: Junction(**kwargs)
-
-
-   Bases: :py:obj:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.junction.Junction
       :parts: 1
@@ -28,7 +26,7 @@ Classes
 
    Represents a junction of any size in an RNA structure including bulges and multi-loops.    
 
-   .. method:: buffer(self)
+   .. method:: buffer(self) -> List[int]
 
       For the :class:`Junction()` type this is a :class:`list()` of :class:`int()`'s where the first
       is the size of the parent :class:`Helix()` and then they are arranged in 3' to 5' order.
@@ -38,7 +36,7 @@ Classes
       :rtype: List[int]
 
 
-   .. method:: gaps(self)
+   .. method:: gaps(self) -> List[int]
 
       Returns a :class:`list()` of :class:`int()`'s of gap sizes in 3' to 5' order.
       Will have the same size as number of branches in the :class:`Jucntion()`.
@@ -47,7 +45,7 @@ Classes
       :rtype: List[int]
 
 
-   .. method:: is_junction(self)
+   .. method:: is_junction(self) -> bool
 
       Indicates that the :class:`Motif()` is of type :class:`Junction()`.
 
@@ -55,7 +53,7 @@ Classes
       :rtype: bool
 
 
-   .. method:: recursive_structure(self)
+   .. method:: recursive_structure(self) -> str
 
       Returns the owned portion of the structure. In this coding of structure 
       it is the closing pairs as well as the child :class:`Helix()`'s and their children.
@@ -64,7 +62,7 @@ Classes
       :rtype: str
 
 
-   .. method:: recursive_sequence(self)
+   .. method:: recursive_sequence(self) -> str
 
       Returns the owned portion of the sequence. In this coding of structure 
       it is the closing pairs as well as the child :class:`Helix()`'s and their children.
@@ -73,7 +71,7 @@ Classes
       :rtype: str
 
 
-   .. method:: closing_pairs(self)
+   .. method:: closing_pairs(self) -> List[str]
 
       Returns a :class:`list()` of :class:`str()`'s that correspond to the closing pairs in 
       the :class:`Junction()` Motif. 
@@ -82,7 +80,7 @@ Classes
       :rtype: List[str]
 
 
-   .. method:: has_non_canonical(self)
+   .. method:: has_non_canonical(self) -> bool
 
       Returns whether or not any of the closing pairs are non-canonical (i.e. not AU/UA, CG/GC, GU/UG).
 
@@ -90,7 +88,7 @@ Classes
       :rtype: bool
 
 
-   .. method:: number_branches(self)
+   .. method:: number_branches(self) -> int
 
       Returns the number of branches in the current :class:`Junction()`.
 
@@ -98,7 +96,7 @@ Classes
       :rtype: int
 
 
-   .. method:: symmetric(self)
+   .. method:: symmetric(self) -> bool
 
       Indicates if the current :class:`Junction()` is symmetric, that is the sizes of all of the 
       gaps are the same.

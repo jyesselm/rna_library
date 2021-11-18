@@ -24,31 +24,30 @@ Functions
    rna_library.barcode.build_barcodes
 
 
-
-.. function:: generate_sequences(m)
-
-
-.. function:: get_idxs(m, idxs)
+.. function:: generate_sequences(m: Motif)
 
 
-.. function:: make_sequences(m)
+.. function:: get_idxs(m: Motif, idxs: List[int])
 
 
-.. function:: set_sequence(m, perm, ii=0)
+.. function:: make_sequences(m: Motif)
+
+
+.. function:: set_sequence(m: Motif, perm, ii=0)
 
 
 .. function:: longest_repeat(nums)
 
 
-.. function:: contains_jct(m)
+.. function:: contains_jct(m: Motif)
 
 
 .. function:: check_pairs(sequence, indices)
 
 
-.. function:: validate_barcode_constraints(secstruct, sequence)
+.. function:: validate_barcode_constraints(secstruct: str, sequence: str)
 
 
-.. function:: build_barcodes(secstruct, start = None, distance = 3)
+.. function:: build_barcodes(secstruct: str, start: Union[str, None] = None, distance: int = 3)
 
 

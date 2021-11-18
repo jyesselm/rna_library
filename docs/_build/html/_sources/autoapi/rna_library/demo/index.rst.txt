@@ -16,16 +16,6 @@ Functions
    rna_library.demo.traverse
 
 
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   rna_library.demo.root
-   rna_library.demo.stats
-
-
 .. data:: root
    
 
@@ -36,7 +26,7 @@ Attributes
 
    
 
-.. function:: traverse(m, stats)
+.. function:: traverse(m: motif.Motif, stats)
 
    Function that returns number of motifs in the structure
 

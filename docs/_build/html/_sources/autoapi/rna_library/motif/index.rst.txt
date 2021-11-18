@@ -29,11 +29,9 @@ Functions
    rna_library.motif.highest_id
 
 
+.. py:class:: Motif(**kwargs)
 
-.. class:: Motif(**kwargs)
-
-
-   Bases: :py:obj:`abc.ABC`
+   Bases: :class:`abc.ABC`
 
    .. autoapi-inheritance-diagram:: rna_library.motif.Motif
       :parts: 1
@@ -41,7 +39,7 @@ Functions
 
    Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
 
-   .. method:: link_children(self, depth = 0)
+   .. method:: link_children(self, depth: int = 0)
 
       Method used to link a :class:`Motif()` object to its children and vice versa. Should only be called once by the root :class:`Motif()`.
 
@@ -49,21 +47,21 @@ Functions
       :rtype: None
 
 
-   .. method:: str(self)
+   .. method:: str(self) -> str
 
       Creates a recursive string representation of the current :class:`Motif()` object.
 
       :rtype: :class:`str()`
 
 
-   .. method:: __eq__(self, other)
+   .. method:: __eq__(self, other: Motif) -> bool
 
       Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
 
       :param Motif other: Another :class:`Motif()` to be compared against.
 
 
-   .. method:: __str__(self)
+   .. method:: __str__(self) -> str
 
       String representation of just the motif at hand.
 
@@ -71,7 +69,7 @@ Functions
       :rtype: :class:`str()`
 
 
-   .. method:: is_helix(self)
+   .. method:: is_helix(self) -> bool
 
       If the motif is a helix or not. Overridden by child :class:`Helix()` class.
 
@@ -79,7 +77,7 @@ Functions
       :rtype: :class:`bool()`
 
 
-   .. method:: is_singlestrand(self)
+   .. method:: is_singlestrand(self) -> bool
 
       If the motif is a singlestrand or not. Overridden by child :class:`SingleStrand()` class.
 
@@ -87,14 +85,14 @@ Functions
       :rtype: :class:`bool()`
 
 
-   .. method:: is_hairpin(self)
+   .. method:: is_hairpin(self) -> bool
 
       If the motif is a hairpin or not. Overridden by child :class:`Hairpin()` class.
 
       :return: If the motif is of type :class:`Hairpin()`
 
 
-   .. method:: is_junction(self)
+   .. method:: is_junction(self) -> bool
 
       If the motif is a junction or not. Overridden by child :class:`Junction()` class.
 
@@ -102,7 +100,7 @@ Functions
       :rtype: :class:`bool()`
 
 
-   .. method:: type(self)
+   .. method:: type(self) -> MotifType
 
       Returns the :class:`MotifType()` type for the given motif.
 
@@ -110,7 +108,7 @@ Functions
       :rtype: :class:`MotifType()`
 
 
-   .. method:: children(self)
+   .. method:: children(self) -> List[Motif]
 
       Getter for the :class:`Motif()`'s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.
 
@@ -118,7 +116,7 @@ Functions
       :rtype: :class:`list[Motif]`
 
 
-   .. method:: add_child(self, other)
+   .. method:: add_child(self, other: Motif) -> None
 
       Appends a new :class:`Motif()` to the internal list of children for the current :class:`Motif()`.
 
@@ -127,7 +125,7 @@ Functions
       :param: Motif other: Another :class:`Motif()` to be appended to the internal children list.
 
 
-   .. method:: set_children(self, other)
+   .. method:: set_children(self, other: List[Motif]) -> None
 
       Sets the entire list of `Motif()` to the internal list of children for the current :class:`Motif()`.
 
@@ -190,7 +188,7 @@ Functions
       :rtype: str
 
 
-   .. method:: strands(self)
+   .. method:: strands(self) -> List[List[int]]
 
       Returns a list of list of :class:`int()`'ss where each sub list contains a contiguous set of nucleotides that "belong" to the :class:`Motif()`.
       Output varies by motif type and the expected values are below:
@@ -253,7 +251,7 @@ Functions
       :param int value: the new depth value for the current :class:`Motif()`.
 
 
-   .. method:: buffer(self)
+   .. method:: buffer(self) -> int
       :abstractmethod:
 
       Buffer refers to the size of the closest adjacent :motif:`Helix()`.
@@ -268,7 +266,7 @@ Functions
       :rtype: int
 
 
-   .. method:: has_children(self)
+   .. method:: has_children(self) -> bool
 
       Returns whether the :class:`Motif()` has any children.
 
@@ -276,7 +274,7 @@ Functions
       :rtype: bool 
 
 
-   .. method:: has_parent(self)
+   .. method:: has_parent(self) -> bool
 
       Returns whether the :class:`Motif()` has a parent.
 
@@ -284,7 +282,7 @@ Functions
       :rtype: bool
 
 
-   .. method:: recursive_sequence(self)
+   .. method:: recursive_sequence(self) -> str
       :abstractmethod:
 
       Builds and returns the continguous sequence of the structure viewing the current
@@ -295,7 +293,7 @@ Functions
       :rtype: str
 
 
-   .. method:: recursive_structure(self)
+   .. method:: recursive_structure(self) -> str
       :abstractmethod:
 
       Builds and returns the continguous structure of the structure viewing the current
@@ -306,7 +304,7 @@ Functions
       :rtype: str
 
 
-   .. method:: has_non_canonical(self)
+   .. method:: has_non_canonical(self) -> bool
       :abstractmethod:
 
       Checks if the :class:`Motif()` has any non-canonical (i.e. non AU/UA, UG/GU or GC/CG) pairings.
@@ -315,7 +313,7 @@ Functions
       :rtype: bool
 
 
-   .. method:: same_pattern(self, sequence)
+   .. method:: same_pattern(self, sequence: str) -> bool
 
       Checks if a template sequence is compatible with an inputted sequence. Specifically if the length
       and placement of '&' are the same.
@@ -326,7 +324,7 @@ Functions
       :rtype: bool
 
 
-   .. method:: start_pos(self)
+   .. method:: start_pos(self) -> int
 
       Starting (or lowest) nucleotide index owned by the :class:`Motif()`.
 
@@ -334,7 +332,7 @@ Functions
       :rtype: int
 
 
-   .. method:: end_pos(self)
+   .. method:: end_pos(self) -> int
 
       Ending (or highest) nucleotide index owned by the :class:`Motif()`.
 
@@ -342,7 +340,7 @@ Functions
       :rtype: int
 
 
-   .. method:: contains(self, pos)
+   .. method:: contains(self, pos: int) -> bool
 
       Indicates if a nucleotide index is contained or belongs to the current :class:`Motif()`.
 
@@ -352,14 +350,14 @@ Functions
       :rtype: bool
 
 
-   .. method:: sequences(self, seqs)
+   .. method:: sequences(self, seqs: List[str]) -> None
 
       Used to set the internal list of barcode temp sequences.
 
       :param List[str] seqs: the new barcode sequences to be applied to the current :class:`Motif()`.
 
 
-   .. method:: number_sequences(self)
+   .. method:: number_sequences(self) -> int
 
       Gives the number of barcode sequences that the :class:`Motif()` currently has.
 
@@ -367,7 +365,7 @@ Functions
       :rtype: int
 
 
-   .. method:: set_sequence(self, idx)
+   .. method:: set_sequence(self, idx: int) -> None
 
       Sets the current sequence to the sequence of the existing index from the internal barcodes list.
       Note that the `Motif.number_sequences()` method should be queried prior so that the index call will
@@ -382,7 +380,7 @@ Functions
       Builds out all possible barcode sequences that fit the known constraints.
 
 
-   .. method:: is_barcode(self)
+   .. method:: is_barcode(self) -> bool
 
       Returns whether the current :class:`Motif()` serves as a barcode.
 
@@ -391,7 +389,7 @@ Functions
 
 
 
-.. function:: highest_id(m, best = 0)
+.. function:: highest_id(m: Motif, best: int = 0) -> int
 
    Figures out the highest id number in a given :class:`Motif()` graph.
 
