@@ -1,26 +1,26 @@
 import itertools
 from plum import dispatch
 
-from .motif import Motif
-from .enums import *
-from .util import *
+from rna_library.structure.motif import Motif
+from rna_library.core.enums import *
+from rna_library.core.util import *
 
 
 class Helix(Motif):
     """
     Represents a helix or stack in an RNA structure. Inherits from :class:`Motif()`.
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.HELIX
-        self.__size =  (len(self.sequence()) - 1) // 2 
+        self.__size = (len(self.sequence()) - 1) // 2
         self.__structure = f'{"("*self.__size}&{")"*self.__size}'
         self.__token = f"Helix{self.__size}"
         self.__pairs = []
 
         for index in range(self.__size):
             self.__pairs.append(self.sequence()[index] + self.sequence()[-index - 1])
-
 
     @dispatch
     def size(self) -> int:
@@ -32,16 +32,16 @@ class Helix(Motif):
         :rtype: int
         """
         return self.__size
-    
+
     @dispatch
-    def size(self, val ):
+    def size(self, val):
         """
         Sets the current size for the :class:`Helix()`. 
 
         :param int val: the new size of the helix.
 
         """
-        #TODO some kind of validation
+        # TODO some kind of validation
         self.__size = val
 
     def buffer(self):
@@ -114,34 +114,35 @@ class Helix(Motif):
         :return: has_non_canonical
         :rtype: bool
         """
-        #TODO should reference ALLOWED_PAIRS
+        # TODO should reference ALLOWED_PAIRS
         for pair in self.pairs():
             if pair not in ALLOWED_PAIRS:
                 return True
         return False
 
-    def generate_sequences( self ):
+    def generate_sequences(self):
         """
         Generates all possible sequences for the :class:`Helix()` that are compatible with
         the constraints for the motif.
         """
 
-        bp_codes = []   
-        for idx, bp in enumerate( self.pairs() ):
-            n_count = bp.count( 'N' )
+        bp_codes = []
+        for idx, bp in enumerate(self.pairs()):
+            n_count = bp.count("N")
             if n_count == 0:
-                bp_codes.append( [ int(BASEPAIR_MAPPER[ bp ]) ] )
+                bp_codes.append([int(BASEPAIR_MAPPER[bp])])
             elif n_count == 2:
-                bp_codes.append( BP_VALS )
+                bp_codes.append(BP_VALS)
             elif n_count == 1:
                 (left, right) = bp
                 allowed = []
-                if left != 'N':
-                    allowed = list(filter( lambda pr: pr[0] == left, BPS))
-                elif right != 'N':
-                    allowed = list(filter( lambda pr: pr[1] == right, BPS))
-                bp_codes.append( list(map( lambda code: int(BASEPAIR_MAPPER[ code ]), allowed )) )
-        nt_combos = list(itertools.product( *bp_codes ))
-        sequences = list(map( bp_codes_to_sequence, nt_combos ))
-        self.sequences( sequences ) 
-
+                if left != "N":
+                    allowed = list(filter(lambda pr: pr[0] == left, BPS))
+                elif right != "N":
+                    allowed = list(filter(lambda pr: pr[1] == right, BPS))
+                bp_codes.append(
+                    list(map(lambda code: int(BASEPAIR_MAPPER[code]), allowed))
+                )
+        nt_combos = list(itertools.product(*bp_codes))
+        sequences = list(map(bp_codes_to_sequence, nt_combos))
+        self.sequences(sequences)

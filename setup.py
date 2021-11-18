@@ -13,5 +13,10 @@ setup(name='rna_library',
         description='TODO',
         author='Chris Jurich',
         author_email='cjurich2@huskers.unl.edu',
-        packages=['rna_library'],
+        packages=['rna_library',
+		'rna_library.core',
+		'rna_library.design',
+		'rna_library.structure',
+		'rna_library.processing'
+		],
         )

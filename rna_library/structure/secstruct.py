@@ -1,12 +1,13 @@
+from rna_library.structure.motif import *
+from rna_library.core import *
+from rna_library.structure.parser import parse_to_motifs
 
-from .motif import *
-from .enums import *
-from .parser import parse_to_motifs
-
+#TODO documentation
 class SecStruct:
     """
     Represents a 
     """
+
     # what do we want this to do?
     # 1. serve as a place to hold the motifs
     # 2. allow for insertion and changing of motifs
@@ -21,7 +22,7 @@ class SecStruct:
         self.total_structures_ = 1
 
         assert len(secstruct) == len(sequence) and len(secstruct) > 0
-        assert len(re.sub("[\(\.\)]", "", secstruct)) == 0
+        assert valid_db( secstruct )
         assert len(re.sub("[ACGUTN]", "", sequence)) == 0
         assert secstruct.count("(") == secstruct.count(")")
 
@@ -32,9 +33,9 @@ class SecStruct:
         # helpe for recusion
         self.counter_ = 0
         self.set_ids_(self.root_)
-         
+
         self.it_ = self.root_
-        self.__end_id = highest_id( self.root_ )
+        self.__end_id = highest_id(self.root_)
 
     def set_ids_(self, m: Motif):
         m.id(self.counter_)
@@ -67,17 +68,17 @@ class SecStruct:
 
         if motif.has_parent():
             # reset the parent of the new motif
-            new_motif.parent( motif.parent() )
-            motif.parent( None )
+            new_motif.parent(motif.parent())
+            motif.parent(None)
 
             cleaned_children = []
             for child in motif.parent().children():
                 if child.id() == id:
-                    cleaned_children.append( new_motif           )
+                    cleaned_children.append(new_motif)
                 else:
-                    cleaned_children.append( child               )
+                    cleaned_children.append(child)
 
-            new_motif.parent().set_children( cleaned_children    )
+            new_motif.parent().set_children(cleaned_children)
 
         else:
             # this is the case where you are actually just replacing the root? seems like a dumb thing to do
@@ -148,51 +149,49 @@ class SecStruct:
         # make
         pass
 
-
-    def get(self, id ):
-        return self.id_mapping_[ id ]
+    def get(self, id):
+        return self.id_mapping_[id]
 
     def __iter__(self):
         for m in self.id_mapping_.values():
             yield m
-    
-    def hairpins( self, **kwargs ):
+
+    def hairpins(self, **kwargs):
         for m in self.id_mapping_.values():
-            if m.is_hairpin(): 
-                yield m
-     
-    def helix( self ):
-        for m in self.id_mapping_.values():
-            if m.is_helix(): 
-                yield m
-   
-    def junctions( self ):
-        for m in self.id_mapping_.values():
-            if m.is_junction(): 
+            if m.is_hairpin():
                 yield m
 
-    def singlestrands( self ):
+    def helix(self):
         for m in self.id_mapping_.values():
-            if m.is_singlestrand(): 
+            if m.is_helix():
                 yield m
-    
-    def set_barcode( self, m_id, bc_seq ):
-        m : Motif 
-        m = self.id_mapping_[ m_id ]
+
+    def junctions(self):
+        for m in self.id_mapping_.values():
+            if m.is_junction():
+                yield m
+
+    def singlestrands(self):
+        for m in self.id_mapping_.values():
+            if m.is_singlestrand():
+                yield m
+
+    def set_barcode(self, m_id, bc_seq):
+        m: Motif
+        m = self.id_mapping_[m_id]
         if not m.is_singlestrand() and not m.is_helix():
             raise TypeError(f"Barcode motif must be either a singlestrand or helix")
-        
-        if not m.same_pattern( bc_seq ):
-            raise TypeError(f"The supplied barcode \"{bc_seq}\" is not compatible with the selected motif")
-        
-        m.sequence( bc_seq )
+
+        if not m.same_pattern(bc_seq):
+            raise TypeError(
+                f'The supplied barcode "{bc_seq}" is not compatible with the selected motif'
+            )
+
+        m.sequence(bc_seq)
         self.sequence_ = self.root_.recursive_sequence()
 
-
-    def __add__( self, other ):
-        
+    def __add__(self, other):
         seq_total = self.sequence + other.sequence
         ss_total = self.structure + other.structure
-        #TODO bring over barcode info        
-        return SecStruct( ss_total, seq_total )
-
+        # TODO bring over barcode info
+        return SecStruct(ss_total, seq_total)

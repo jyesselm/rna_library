@@ -1,8 +1,6 @@
 import pytest
 
-from rna_library import util
-
-
+from rna_library.core import util
 
 
 

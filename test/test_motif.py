@@ -1,8 +1,8 @@
 import sys
 import pytest
 
-from rna_library.motif import Motif, highest_id
-from rna_library.enums import MotifType
+from rna_library import Motif, highest_id
+from rna_library import MotifType
 
 class BaseTest( Motif ):
     """Test class that inherits from :class:`Motif()` designed to test basic functionality since :class:`Motif()` has abstract methods."""

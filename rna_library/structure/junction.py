@@ -1,13 +1,15 @@
-from .motif import Motif
+from rna_library.structure.motif import Motif
 
-from .enums import *
+from rna_library.core.enums import *
 
 from typing import List
+
 
 class Junction(Motif):
     """
     Represents a junction of any size in an RNA structure including bulges and multi-loops.    
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.JUNCTION
@@ -29,10 +31,10 @@ class Junction(Motif):
         secstruct[0] = "("
         secstruct[-1] = ")"
 
-        self.structure( "".join( secstruct ) )
+        self.structure("".join(secstruct))
         self.__token = f"Junction{len(self.strands())}_" + "|".join(
             [str(len(strand) - 2) for strand in self.strands()]
-        ) 
+        )
         self.__num_branches = len(self.strands())
         self.__symmetric = len(set([len(strand) - 2 for strand in self.strands()])) == 1
 
@@ -141,13 +143,14 @@ class Junction(Motif):
         :rtype: bool
         """
         return self.__symmetric
-    
-    def generate_sequences( self ):
+
+    def generate_sequences(self):
         """
         Would generate all possible sequences for the :class:`Junction()` that are compatible with
         the constraints for the motif. **Not currently implemented.**
 
         :raises: TypeError
         """
-        raise TypeError(f"The method generate_sequences() is not supported for the Junction type")
-
+        raise TypeError(
+            f"The method generate_sequences() is not supported for the Junction type"
+        )

@@ -1,6 +1,7 @@
 """Utility functions for the ``rna_library`` module"""
 
 import re
+import os
 import sys
 import vienna
 import math
@@ -8,14 +9,16 @@ import pickle
 import itertools
 import pandas as pd
 import editdistance
-from .enums import * 
+from .enums import *
+from .error import *
+from pathlib import Path
 from abc import ABC, abstractmethod
 from plum import dispatch
 
 from typing import List, Tuple
 
 
-def satisfies_constraints( sequence : str, template : str ) -> bool:
+def satisfies_constraints(sequence: str, template: str) -> bool:
     """
     Confirms whether a sequence and template are the same or not. A template has one of 6
     possible characters at each position: one of the normal A/C/G/U, N for "any" or "B" to indicate
@@ -25,19 +28,19 @@ def satisfies_constraints( sequence : str, template : str ) -> bool:
     :param str sequence: sequence in question
     :param str template: templated sequence
     :rtype: bool
-    """    
-    if len( sequence ) != len( template ):
+    """
+    if len(sequence) != len(template):
         return False
 
-    for s, t in zip( sequence, template):
-        if t == 'N' or t == 'B': 
+    for s, t in zip(sequence, template):
+        if t == "N" or t == "B":
             continue
         elif t != s:
             return False
     return True
 
 
-def pool_with_distance( sequences : List[ str ], min_dist : int ) -> List[ str ] :
+def pool_with_distance(sequences: List[str], min_dist: int) -> List[str]:
     """
     Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
     Method sorts sequences internally so input order is not relevant to final pool.
@@ -49,35 +52,35 @@ def pool_with_distance( sequences : List[ str ], min_dist : int ) -> List[ str ]
     :rtype: list[str]
     """
     result = []
-    for seq in sorted( sequences ):
-        for ii in range(len(result)-1, -1, -1):
-            if editdistance.eval( seq, result[ii] ) < min_dist:
+    for seq in sorted(sequences):
+        for ii in range(len(result) - 1, -1, -1):
+            if editdistance.eval(seq, result[ii]) < min_dist:
                 break
         else:
-            result.append( seq )
+            result.append(seq)
 
     return result
 
 
-def bp_codes_to_sequence( bp_code ) -> str:
+def bp_codes_to_sequence(bp_code) -> str:
     """
     Converts a list of :class:`BasePair()`'s into a sequence string.
     
     :param list[BasePair] bp_code: a list of basepairs to be converted. Basepairs are in order of nesting.
     :rtype: str
     """
-    size = len( bp_code )
-    left, right = ['N']*size, ['N']*size
-    
-    for idx, bp in enumerate( bp_code ):
-        string = BasePair( bp ).to_str()
-        left[ idx ] = string[0]
-        right[ size - idx -1 ] = string[1]
-    
-    return f"{''.join(left)}&{''.join(right)}" 
+    size = len(bp_code)
+    left, right = ["N"] * size, ["N"] * size
+
+    for idx, bp in enumerate(bp_code):
+        string = BasePair(bp).to_str()
+        left[idx] = string[0]
+        right[size - idx - 1] = string[1]
+
+    return f"{''.join(left)}&{''.join(right)}"
 
 
-def nt_codes_to_sequences( codes ) -> str:
+def nt_codes_to_sequences(codes) -> str:
     """
     Converts a list of :class:`Nucleotide()`'s into a sequence string.
     
@@ -86,11 +89,11 @@ def nt_codes_to_sequences( codes ) -> str:
     """
     resulu = []
     for c in codes:
-        result.append( Nucleotide(c).to_str())
-    return ''.join( result )
+        result.append(Nucleotide(c).to_str())
+    return "".join(result)
 
 
-def get_pair_list( secstruct : str ) -> List[ Tuple[int, int] ]:
+def get_pair_list(secstruct: str) -> List[Tuple[int, int]]:
     """
     Creates a list of pairs of indices from a dot-bracket secstruct string. Note 
     that the function assumes the incoming structure is valid. 
@@ -99,21 +102,21 @@ def get_pair_list( secstruct : str ) -> List[ Tuple[int, int] ]:
     :rtype: list[tuple(int,int)]
     :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
     """
-    result = [] 
-    lparens = [] 
-    for ii, db in enumerate( secstruct ):
-        if db == '(':
-            lparens.append( ii )
-        elif db == ')':
-            result.append((lparens.pop(), ii ))
-    
-    if len( lparens ):
+    result = []
+    lparens = []
+    for ii, db in enumerate(secstruct):
+        if db == "(":
+            lparens.append(ii)
+        elif db == ")":
+            result.append((lparens.pop(), ii))
+
+    if len(lparens):
         raise TypeError("Unbalanced parentheses in structure")
-    
+
     return result
 
 
-def connectivity_list( structure : str ) -> List[ int ] :
+def connectivity_list(structure: str) -> List[int]:
     """
     Generates a connectivity list or pairmap from a dot-bracket secondary structure. 
     The list has a value of ``-1`` for unpaired positions else has the index of a 
@@ -132,14 +135,14 @@ def connectivity_list( structure : str ) -> List[ int ] :
             complement = pairs.pop()
             connections[complement] = index
             connections[index] = complement
-    
-    if len( pairs ):
+
+    if len(pairs):
         raise TypeError("Unbalanced parentheses in structure")
 
     return connections
 
 
-def is_circular( start : int, connections : List[ int ] ) -> bool:
+def is_circular(start: int, connections: List[int]) -> bool:
     """
     Checks if a starting point in a pairmap is in a circular portion.
     This can include the closing pairs of both hairpins and junctions.
@@ -148,8 +151,8 @@ def is_circular( start : int, connections : List[ int ] ) -> bool:
     :param list[int] connections: pairmap generated from ``util.connectivity_list()``
     :rtype: bool
     """
-    if connections[ start ] != -1:
-        return abs( start - connections[ start] ) == 1
+    if connections[start] != -1:
+        return abs(start - connections[start]) == 1
 
     it = start + 1
     while True:
@@ -163,24 +166,57 @@ def is_circular( start : int, connections : List[ int ] ) -> bool:
             return True
 
 
-
-def is_symmetrical( token : str ) -> bool:
+def is_symmetrical(token: str) -> bool:
     """
     Checks if a sequence or secondary structure is well-formed and symmetrical.
     
     :param: str token: sequence or secondary structure to test
     :rtype: bool
     """
-    it = token.find('&')
-    assert it != -1 and token.count('&') == 1, f"must have one ampersand"
-    return (it*2 + 1) == len(token)
+    it = token.find("&")
+    assert it != -1 and token.count("&") == 1, f"must have one ampersand"
+    return (it * 2 + 1) == len(token)
 
 
-def safe_rm( fname : str) -> None:
+def safe_rm(fname: str) -> None:
     """
     Removes a file only if the file already exists.
     :param: str fname: name of file to be removed
+    :rtype: NoneType
     """
-    if os.path.exists( fname ):
-        os.remove( fname )
+    if os.path.exists(fname):
+        os.remove(fname)
 
+def safe_mkdir(dirname: str) -> None:
+    """
+    Creates a directory if it does not already exist.
+    :param: str dirname: name of the directory to create
+    :rtype: NoneType
+    """
+    if not os.path.isdir( dirname ):
+        Path( dirname ).mkdir( parents=True, exist_ok=True )
+
+def valid_db( structure : str ) -> bool:
+	"""
+	Checks if a structure is a valid dot-bracket structure containing only '(', '.' or ')' characters.
+    :param: str structure: dot bracket structure
+    :rtype: bool
+	"""
+	lparen_ct = 0
+	for ch in structure:
+		if ch == '(':
+			lparen_ct += 1
+		elif ch == ')':
+			lparen_ct -= 1
+		elif ch == '.':
+			continue
+		else:
+			raise InvalidDotBracket(f"{ch} is invalid in a dot-bracket structure. Only '(', '.' and ')' are allowed")
+
+		if lparen_ct < 0:
+			raise InvalidDotBracket(f"{structure} is an unbalanced structure")
+	
+	if lparen_ct != 0:
+		raise InvalidDotBracket(f"{structure} is an unbalanced structure")
+
+	return True

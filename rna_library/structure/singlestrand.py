@@ -1,9 +1,11 @@
 from .motif import Motif
 
+
 class SingleStrand(Motif):
     """
     Represents a single stranded region in an RNA structure. Does not include unpaired regions that are part of a :class:`Junction()` or :class:`Helix()`.
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type_ = MotifType.SINGLESTRAND
@@ -64,19 +66,18 @@ class SingleStrand(Motif):
         :rtype: bool
         """
         return False
-    
-    def generate_sequences( self ):
+
+    def generate_sequences(self):
         """
         Generates all possible sequences for the :class:`SingleStrand()` that are compatible with
         the constraints for the motif.
         """
         nts = []
         for nt in self.sequence():
-            if nt == 'N':
-                nts.append( NT_VALS )
+            if nt == "N":
+                nts.append(NT_VALS)
             else:
-                nts.append( [ int( NUCLEOTIDE_MAPPER[ nt ] )] )
-        nt_combos = list(itertools.product( *nts ))
-        sequences = list(map( nt_codes_to_sequences, nt_combos ))
-        self.sequences( sequences )
-
+                nts.append([int(NUCLEOTIDE_MAPPER[nt])])
+        nt_combos = list(itertools.product(*nts))
+        sequences = list(map(nt_codes_to_sequences, nt_combos))
+        self.sequences(sequences)

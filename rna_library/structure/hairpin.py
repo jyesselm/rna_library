@@ -1,11 +1,13 @@
 import itertools
 
-from .util import * 
-from .motif import Motif
-from .enums import *
+from rna_library.core.util import *
+from rna_library.core.enums import *
+from rna_library.structure.motif import Motif
+
 
 class Hairpin(Motif):
     """Represents a hairpin loop in an RNA structure. Inherits from :class:`Motif()`."""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._Motif__type = MotifType.HAIRPIN
@@ -43,7 +45,7 @@ class Hairpin(Motif):
         """
         return self.sequence()[1:-1]
 
-    def recursive_sequence(self) -> str :
+    def recursive_sequence(self) -> str:
         """
         Returns the owned portion of the sequence. In this coding of sequence 
         it is just the loop portion and does not include the closing pair.
@@ -63,19 +65,18 @@ class Hairpin(Motif):
         seq = self.sequence()
         pair = seq[0] + seq[-1]
         return pair not in ALLOWED_PAIRS
-    
-    def generate_sequences( self ):
+
+    def generate_sequences(self):
         """
         Generates all possible sequences for the :class:`Hairpin()` that are compatible with
         the constraints for the motif.
         """
         nts = []
         for n in self.recursive_sequence():
-            if n != 'N':
-                nts.append( [int( NUCLEOTIDE_MAPPER[ n ] )])
+            if n != "N":
+                nts.append([int(NUCLEOTIDE_MAPPER[n])])
             else:
-                nts.append( NT_VALS )
-        nt_combos = list(itertools.product( *nts ))
-        sequences = list(map( nt_codes_to_sequences, nt_combos ))
-        self.sequences( ['N'+seq+'N' for seq in sequences] )
-
+                nts.append(NT_VALS)
+        nt_combos = list(itertools.product(*nts))
+        sequences = list(map(nt_codes_to_sequences, nt_combos))
+        self.sequences(["N" + seq + "N" for seq in sequences])

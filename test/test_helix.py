@@ -1,7 +1,7 @@
 import pytest
 
-from rna_library.helix import Helix
-from rna_library.enums import MotifType
+from rna_library import Helix
+from rna_library import MotifType
 
 
 def test_constant_data():

@@ -15,16 +15,18 @@ import itertools
 import pandas as pd
 import editdistance
 from enum import Enum, IntEnum
-from .enums import * 
-from .util import *
+from rna_library.core.enums import *
+from rna_library.core.util import *
 from abc import ABC, abstractmethod
-from plum import dispatch 
+from plum import dispatch
+
 
 class Motif(ABC):
     """
     Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
     
     """
+
     def __init__(self, **kwargs):
         """
         Constructor for ``Motif``.
@@ -60,7 +62,7 @@ class Motif(ABC):
         strand_seqs = []
         for strand in self.__strands:
             self.start_pos_ = min(min(strand), self.__start_pos)
-            self.end_pos_ = max(max(strand), self.__end_pos) 
+            self.end_pos_ = max(max(strand), self.__end_pos)
             for pos in strand:
                 self.__positions.add(pos)
 
@@ -68,13 +70,13 @@ class Motif(ABC):
 
         self.__sequence = "&".join(strand_seqs)
 
-    def link_children(self, depth : int = 0):
+    def link_children(self, depth: int = 0):
         """
         Method used to link a :class:`Motif()` object to its children and vice versa. Should only be called once by the root :class:`Motif()`.
 
         :param int depth: depth of the current :class:`Motif()` object. defaults to 0
         :rtype: None
-        """            
+        """
         if depth < 0:
             raise TypeError(f"Depth supplied to Motf.link_children() must be >= 0")
 
@@ -120,11 +122,11 @@ class Motif(ABC):
                     tks = contents[-1].splitlines()[0]
                     first_line = contents[-1].splitlines()[0]
                     length = len(first_line) - len(first_line.lstrip())
-            
+
             children = "\n".join(contents)
             return f"{depth}{identification}{self.token()} {self.structure()} {self.sequence()}{children}"
 
-    def __eq__(self, other : Motif) -> bool:
+    def __eq__(self, other: Motif) -> bool:
         """
         Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
         
@@ -144,7 +146,9 @@ class Motif(ABC):
         :return: The :class:`str()` representation of the :class:`Motif()`.
         :rtype: :class:`str()`
         """
-        return f"{ TYPE_MAPPER[ self.__type ] },{ self.__sequence },{ self.__structure }"
+        return (
+            f"{ TYPE_MAPPER[ self.__type ] },{ self.__sequence },{ self.__structure }"
+        )
 
     def is_helix(self) -> bool:
         """
@@ -190,7 +194,7 @@ class Motif(ABC):
         """
         return self.__type
 
-    def children(self) -> List[ Motif ]:
+    def children(self) -> List[Motif]:
         """
         Getter for the :class:`Motif()`'s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.
         
@@ -199,7 +203,7 @@ class Motif(ABC):
         """
         return self.__children
 
-    def add_child(self, other : Motif) -> None:
+    def add_child(self, other: Motif) -> None:
         """
         Appends a new :class:`Motif()` to the internal list of children for the current :class:`Motif()`.
 
@@ -207,9 +211,9 @@ class Motif(ABC):
         
         :param: Motif other: Another :class:`Motif()` to be appended to the internal children list.
         """
-        self.__children.append( other )
+        self.__children.append(other)
 
-    def set_children(self, other : List[Motif]) -> None:
+    def set_children(self, other: List[Motif]) -> None:
         """
         Sets the entire list of `Motif()` to the internal list of children for the current :class:`Motif()`.
 
@@ -220,7 +224,7 @@ class Motif(ABC):
         self.__children = other
 
     @dispatch
-    def parent(self, other ):
+    def parent(self, other):
         """ 
         Sets the :class:`Motif()`'s parent to the supplied :class:`Motif()`. 
 
@@ -230,7 +234,7 @@ class Motif(ABC):
         :rtype: NoneType
         """
         self.__parent = other
-    
+
     @dispatch
     def parent(self):
         """ 
@@ -242,7 +246,7 @@ class Motif(ABC):
         return self.__parent
 
     @dispatch
-    def token(self, tk ):
+    def token(self, tk):
         """
         Sets the :class:`Motif()`'s identifying token to an inputted string. Input is **NOT** validated.
 
@@ -253,8 +257,8 @@ class Motif(ABC):
         """
         # TODO add some kind of validation
         self.__token = tk
-    
-    @dispatch 
+
+    @dispatch
     def token(self):
         """
         Gets the identifying token for the :class:`Motif()`.
@@ -263,9 +267,9 @@ class Motif(ABC):
         :rtype: str
         """
         return self.__token
-    
+
     @dispatch
-    def structure(self, secstruct  ) :
+    def structure(self, secstruct):
         """
         Sets the :class:`Motif()`'s structure to an inputted string. Input is **NOT** validated.
 
@@ -277,7 +281,7 @@ class Motif(ABC):
         # TODO add some kind of validation... maybe the level of validation
         # should be checked as well
         self.__structure = secstruct
-    
+
     @dispatch
     def structure(self):
         """
@@ -287,7 +291,6 @@ class Motif(ABC):
         :rtype: str
         """
         return self.__structure
-    
 
     def strands(self) -> List[List[int]]:
         """
@@ -315,9 +318,9 @@ class Motif(ABC):
         :rtype: str
         """
         return self.__sequence
-    
+
     @dispatch
-    def sequence(self, seq ):
+    def sequence(self, seq):
         """
         Sets the sequence for the :class:`Motif()` to the supplied string. Warning the input **NOT** validated.
         
@@ -337,7 +340,7 @@ class Motif(ABC):
         return self.__id
 
     @dispatch
-    def id(self, new_id ):
+    def id(self, new_id):
         """
         Sets the id for the :class:`Motif()`. Warning: It is **NOT** currently validated.
         
@@ -436,8 +439,8 @@ class Motif(ABC):
         :rtype: bool
         """
         pass
-    
-    def same_pattern(self, sequence : str) -> bool:
+
+    def same_pattern(self, sequence: str) -> bool:
         """
         Checks if a template sequence is compatible with an inputted sequence. Specifically if the length
         and placement of '&' are the same.
@@ -447,14 +450,14 @@ class Motif(ABC):
         :return: is_same
         :rtype: bool
         """
-        template = '&'.join(['N'*len( s ) for s in self.strands()]) 
-        if len( sequence ) != len( template ):
+        template = "&".join(["N" * len(s) for s in self.strands()])
+        if len(sequence) != len(template):
             return False
 
-        for s, t in zip( sequence, template ):
-            if (s == '&' and t != '&') or (s != '&' and t == '&'):
+        for s, t in zip(sequence, template):
+            if (s == "&" and t != "&") or (s != "&" and t == "&"):
                 return False
-        return True 
+        return True
 
     def start_pos(self) -> int:
         """
@@ -474,7 +477,7 @@ class Motif(ABC):
         """
         return self.__end_pos
 
-    def contains(self, pos : int) -> bool:
+    def contains(self, pos: int) -> bool:
         """
         Indicates if a nucleotide index is contained or belongs to the current :class:`Motif()`.
         
@@ -486,7 +489,7 @@ class Motif(ABC):
         return pos in self.__positions
 
     # this is for making barcodes
-    def sequences( self, seqs : List[str] ) -> None:
+    def sequences(self, seqs: List[str]) -> None:
         """
         Used to set the internal list of barcode temp sequences.
 
@@ -496,16 +499,18 @@ class Motif(ABC):
         # TODO some kind of validation
         self.__sequences = seqs
 
-    def number_sequences( self ) -> int:
+    def number_sequences(self) -> int:
         """
         Gives the number of barcode sequences that the :class:`Motif()` currently has.
 
         :return: num_sequence
         :rtype: int
         """
-        return len( self.__sequences )
+        return len(self.__sequences)
 
-    def set_sequence( self, idx : int ) -> None : # TODO maybe this should be a dispatch overload?
+    def set_sequence(
+        self, idx: int
+    ) -> None:  # TODO maybe this should be a dispatch overload?
         """
         Sets the current sequence to the sequence of the existing index from the internal barcodes list.
         Note that the `Motif.number_sequences()` method should be queried prior so that the index call will
@@ -513,16 +518,16 @@ class Motif(ABC):
 
         :param int idx: The index to be used. 
         """
-        self.__sequence = self.__sequences[ idx ]
-    
+        self.__sequence = self.__sequences[idx]
+
     @abstractmethod
-    def generate_sequences( self ):
+    def generate_sequences(self):
         """
         Builds out all possible barcode sequences that fit the known constraints.
         """
         pass
 
-    def is_barcode( self ) -> bool:
+    def is_barcode(self) -> bool:
         """
         Returns whether the current :class:`Motif()` serves as a barcode.
 
@@ -532,7 +537,7 @@ class Motif(ABC):
         return self.__is_barcode
 
 
-def highest_id( m : Motif, best : int =0 ) -> int:
+def highest_id(m: Motif, best: int = 0) -> int:
     """
     Figures out the highest id number in a given :class:`Motif()` graph.
 
@@ -542,11 +547,9 @@ def highest_id( m : Motif, best : int =0 ) -> int:
     :return: highest_id
     :rtype: int
     """
-    best = max( best, m.id() )
+    best = max(best, m.id())
 
     for c in m.children():
         best = highest_id(c, best)
 
     return best
-
-
