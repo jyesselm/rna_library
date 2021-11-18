@@ -146,9 +146,7 @@ class Motif(ABC):
         :return: The :class:`str()` representation of the :class:`Motif()`.
         :rtype: :class:`str()`
         """
-        return (
-            f"{ TYPE_MAPPER[ self.type_ ] },{ self.sequence_ },{ self.structure_ }"
-        )
+        return f"{ TYPE_MAPPER[ self.type_ ] },{ self.sequence_ },{ self.structure_ }"
 
     def is_helix(self) -> bool:
         """

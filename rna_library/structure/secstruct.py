@@ -2,7 +2,7 @@ from rna_library.structure.motif import *
 from rna_library.core import *
 from .parser import parse_to_motifs
 
-#TODO documentation
+# TODO documentation
 class SecStruct:
     """
     Represents a 
@@ -22,7 +22,7 @@ class SecStruct:
         self.total_structures_ = 1
 
         assert len(secstruct) == len(sequence) and len(secstruct) > 0
-        assert valid_db( secstruct )
+        assert valid_db(secstruct)
         assert len(re.sub("[ACGUTN]", "", sequence)) == 0
         assert secstruct.count("(") == secstruct.count(")")
 

@@ -12,18 +12,18 @@ class JunctionEntry:
 
     def __init__(self, **kwargs):
         # now do the variable assigment
-        self.__sequence = kwargs.get('sequence', None)
-        self.__structure = kwargs.get('structure', None)
-        self.__reactivity = kwargs.get('reactivity', None)
-        self.__construct = kwargs.get('construct', None)
-        self.__sn = kwargs.get('sn', None)
-        self.__reads = kwargs.get('reads', None)
-        self.__score = kwargs.get('score', None)
+        self.__sequence = kwargs.get("sequence", None)
+        self.__structure = kwargs.get("structure", None)
+        self.__reactivity = kwargs.get("reactivity", None)
+        self.__construct = kwargs.get("construct", None)
+        self.__sn = kwargs.get("sn", None)
+        self.__reads = kwargs.get("reads", None)
+        self.__score = kwargs.get("score", None)
         self.__symmetrical = is_symmetrical(self.__sequence)
         # argument validation
         self.validate_arguments_()
 
-    def validate_arguments_( self ):
+    def validate_arguments_(self):
         """
         Helper method that validates arguments in the constructor.
         """
@@ -31,32 +31,31 @@ class JunctionEntry:
         assert len(self.__structure) == len(self.__sequence)
         assert len(self.__sequence) == len(self.__reactivity)
         assert len(self.__sequence)
-        invalid_args, error_msg = 0, ''
+        invalid_args, error_msg = 0, ""
         if not self.__sequence:
             invalid_args += 1
-            error_msg += f'no value supplied for sequence\n'
+            error_msg += f"no value supplied for sequence\n"
         if not self.__structure:
             invalid_args += 1
-            error_msg += f'no value supplied for structure\n'
+            error_msg += f"no value supplied for structure\n"
         if not self.__reactivity:
             invalid_args += 1
-            error_msg += f'no value supplied for reactivity\n'
+            error_msg += f"no value supplied for reactivity\n"
         if not self.__construct:
             invalid_args += 1
-            error_msg += f'no value supplied for construct\n'
+            error_msg += f"no value supplied for construct\n"
         if not self.__sn:
             invalid_args += 1
-            error_msg += f'no value supplied for sn\n'
+            error_msg += f"no value supplied for sn\n"
         if not self.__reads:
             invalid_args += 1
-            error_msg += f'no value supplied for reads\n'
+            error_msg += f"no value supplied for reads\n"
         if not self.__score:
             invalid_args += 1
-            error_msg += f'no value supplied for score\n'
+            error_msg += f"no value supplied for score\n"
 
         if invalid_args:
             raise InvalidArgument(error_msg)
-
 
     def key(self) -> Tuple[str, str]:
         """
@@ -72,7 +71,6 @@ class JunctionEntry:
         """
         return sel.__symmetrical
 
-
     def __getitem__(self, idx: int) -> float:
         return self.__reactivity[idx]
 
@@ -81,29 +79,30 @@ class JunctionData:
     """
     Composite class that represents a collection of JunctionEntry objects in an experiment.
     """
+
     def __init__(self, **kwargs):
-		#sequence, structure, entries
-        self.sequence = kwargs.get('sequence', None)
-        self.structure = kwargs.get('structure', None)
-        self.entries = kwargs.get('entries', None )
+        # sequence, structure, entries
+        self.sequence = kwargs.get("sequence", None)
+        self.structure = kwargs.get("structure", None)
+        self.entries = kwargs.get("entries", None)
         self.symmetrical = is_symmetrical(self.sequence)
         self.data = [[] for _ in self.sequence]
-        
-        invalid_args = 0 #TODO create a validation function for this
-        error_msg = ''
+
+        invalid_args = 0  # TODO create a validation function for this
+        error_msg = ""
         if not self.sequence:
             invalid_args += 1
-            error_msg += f'no value supplied for sequence\n'
+            error_msg += f"no value supplied for sequence\n"
         if not self.structure:
             invalid_args += 1
-            error_msg += f'no value supplied for structure\n'
+            error_msg += f"no value supplied for structure\n"
         if not self.entries:
             invalid_args += 1
-            error_msg += f'no value supplied for entries\n'
-        
+            error_msg += f"no value supplied for entries\n"
+
         if invalid_args:
             raise InvalidArgument(error_msg)
-      
+
         self.rebuild_data()
 
     def rebuild_data(self) -> None:
@@ -128,22 +127,21 @@ class JunctionData:
         """
         return self.symmetrical
 
-
-    def plot(self, plot_dir:str) -> None:
+    def plot(self, plot_dir: str) -> None:
         """
         Method that saves a plot of the JunctionData's data points to the supplied directory. 
 
         :param: str plot_dir: The directory where the plot will be saved. Does not have to exist.
         :rtype: NoneType
         """
-        safe_mkdir( plot_dir )
+        safe_mkdir(plot_dir)
         fname = f"{plot_dir}/{self.structure}_{self.sequence}.png"
         if os.path.isfile(fname):
             return
 
         fig, axes = plt.subplots(1, 1, figsize=(15, 10))
         fig.suptitle(name)
-        self.bind( axes )
+        self.bind(axes)
         axes.set_ylim((0, ymax * 1.25))
         plt.savefig(fname)
         plt.clf()
@@ -158,12 +156,11 @@ class JunctionData:
 
         fig, axes = plt.subplots(1, 1, figsize=(9, 6))
         fig.suptitle(f"N={len(self.entries)}")
-        self.bind( axes )
+        self.bind(axes)
         axes.set_ylim((0, ymax * 1.25))
         plt.show()
 
-
-    def bind(self, ax : matplotlib.axes.Axes) -> None:
+    def bind(self, ax: matplotlib.axes.Axes) -> None:
         """
         Method that binds the JunctionData points to a supplied matplotlib Axes object.
 

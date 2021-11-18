@@ -25,7 +25,7 @@ from rna_library.structure import (
     SingleStrand,
     SecStruct,
     parse_to_motifs,
-	highest_id
+    highest_id,
 )
 
 from rna_library.processing import (
@@ -34,5 +34,5 @@ from rna_library.processing import (
     process_histos,
     build_react_df,
     build_motif_df,
-	normalize_hairpin
+    normalize_hairpin,
 )

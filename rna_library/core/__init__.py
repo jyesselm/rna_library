@@ -17,26 +17,17 @@ from .enums import (
     TYPE_MAPPER,
 )
 
-from .error import (
-	InvalidDotBracket,
-	MissingDependency,
-	InvalidArgument
-)
+from .error import InvalidDotBracket, MissingDependency, InvalidArgument
 
 from .util import (
-	valid_db,
-	connectivity_list,
-	is_circular,
-	load_fasta,
-	is_symmetrical,
-	safe_mkdir,
-	safe_rm,
-	dsci
+    valid_db,
+    connectivity_list,
+    is_circular,
+    load_fasta,
+    is_symmetrical,
+    safe_mkdir,
+    safe_rm,
+    dsci,
 )
 
-from .folding import (
-	fold_cache,
-	FoldResult,
-	save_cache,
-	folding_params
-)
+from .folding import fold_cache, FoldResult, save_cache, folding_params

@@ -3,12 +3,6 @@ from .junction_data import (
     JunctionEntry,
 )
 
-from .process_histos import (
-    process_histos,
-    build_react_df,
-    build_motif_df
-)
+from .process_histos import process_histos, build_react_df, build_motif_df
 
-from .normalize import (
-	normalize_hairpin
-)
+from .normalize import normalize_hairpin

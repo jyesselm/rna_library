@@ -11,7 +11,10 @@ from collections import defaultdict
 from rna_library.structure import Motif
 from .junction_data import JunctionEntry
 
-def add_reactivity( row : pd.Series, output_directory: str, col_name: str='mismatches' ) -> List[float] :
+
+def add_reactivity(
+    row: pd.Series, output_directory: str, col_name: str = "mismatches"
+) -> List[float]:
     """
     Function that gets the raw reactivities for a given construct
 
@@ -20,16 +23,16 @@ def add_reactivity( row : pd.Series, output_directory: str, col_name: str='misma
 	:param: str col_name: column name to get values from, defaults to 'mismatches'
 	:rtype: List[float]
     """
-    #TODO the output directory should probably be indicated somewhere as a param
+    # TODO the output directory should probably be indicated somewhere as a param
     raw_data = list(glob(f'{output_directory}/{row["construct"]}_*popavg_reacts.csv'))
     assert len(raw_data) == 1, len(raw_data)
-    df = pd.read_csv( raw_data[0] )
+    df = pd.read_csv(raw_data[0])
     num_rows = len(df.index)
-    assert num_rows == len(row['RNA'])
+    assert num_rows == len(row["RNA"])
     return df[col_name].to_list()
 
 
-def block_commons( row : pd.Series, start : str, end : str) -> str:
+def block_commons(row: pd.Series, start: str, end: str) -> str:
     """
     Function that blocks off the common start and sequence of an RNA construct with N's
 	
@@ -38,14 +41,15 @@ def block_commons( row : pd.Series, start : str, end : str) -> str:
 	:param: str end: the common end sequence
 	:rtype: str
     """
-    sequence = row['RNA']
-    assert sequence.startswith( start )
-    assert sequence.endswith( end )
-    sequence = re.sub(f"^{start}", "N"*len(start), sequence)
-    sequence = re.sub(f"{end}$", "N"*len(end), sequence)
+    sequence = row["RNA"]
+    assert sequence.startswith(start)
+    assert sequence.endswith(end)
+    sequence = re.sub(f"^{start}", "N" * len(start), sequence)
+    sequence = re.sub(f"{end}$", "N" * len(end), sequence)
     return sequence
 
-def score( row : pd.Series) -> float:
+
+def score(row: pd.Series) -> float:
     """
     Function that generates a dsci score for an RNA and its reactivity values. Value is on 
     the range [0,1] with 0.95 being a common quality cutoff.
@@ -54,10 +58,10 @@ def score( row : pd.Series) -> float:
     :rtype: float
     """
     # ok now we actually have all of the values needed to find the dsci score
-    return dsci( row['blocked'], row['structure'], row['reactivity'] )[ 0 ]
+    return dsci(row["blocked"], row["structure"], row["reactivity"])[0]
 
 
-def signal_to_noise( row : pd.Series) -> float:
+def signal_to_noise(row: pd.Series) -> float:
     """
     Function that calculates the signal to noise ratio for a DMS entry by using the 
     ratio of mutations for (A + C)/(G + U).
@@ -65,16 +69,16 @@ def signal_to_noise( row : pd.Series) -> float:
 	:param: pandas.Series row: row to get sn ratio for  
     :rtype: float
     """
-    reactivity = row['reactivity']
+    reactivity = row["reactivity"]
 
-    seq = row['blocked'] 
+    seq = row["blocked"]
     AC = 0
     GU = 0
     AC_count = seq.count("A") + seq.count("C")
     GU_count = seq.count("G") + seq.count("U") + seq.count("T")
-    
-    for idx, nt in enumerate( seq ):
-        if nt == 'N':
+
+    for idx, nt in enumerate(seq):
+        if nt == "N":
             continue
 
         if nt == "A" or nt == "C":
@@ -84,11 +88,11 @@ def signal_to_noise( row : pd.Series) -> float:
 
     AC /= float(AC_count)
     GU /= float(GU_count)
-    
+
     return round(float(AC / GU), 2)
 
 
-def num_reads( row : pd.Series, histos : Dict[str,any]) -> int:
+def num_reads(row: pd.Series, histos: Dict[str, any]) -> int:
     """
     Function that finds the number of reads for a given DMS entry row.
 
@@ -96,12 +100,20 @@ def num_reads( row : pd.Series, histos : Dict[str,any]) -> int:
     :param: Dict[str,dreem.MutationHistogram] histos: histogram dictionary that has read information
     :rytype; int
     """
-    #TODO get this type hint actually right
-    hist = histos[ row['construct'] ]
+    # TODO get this type hint actually right
+    hist = histos[row["construct"]]
     return hist.num_reads
 
 
-def collect_junction_entries( m : Motif, reactivity:List[float], construct:str, sn:float, reads:int, score:float, holder:Dict[str,List[JunctionEntry]] ) -> None:
+def collect_junction_entries(
+    m: Motif,
+    reactivity: List[float],
+    construct: str,
+    sn: float,
+    reads: int,
+    score: float,
+    holder: Dict[str, List[JunctionEntry]],
+) -> None:
     """
     Utility function that gets all JunctionEntry objects across a reactivity dataframe.
 
@@ -114,10 +126,14 @@ def collect_junction_entries( m : Motif, reactivity:List[float], construct:str, 
 	:param: Dict[str,List[JunctionEntry]] holder: temporary holder for all of the JunctionEntry objects 
     """
     if m.is_junction():
-        m : Junction
+        m: Junction
         strands = m.strands()
-        assert len( strands ) == 2
-        reacts = [ reactivity[idx] for idx in strands[0]] + [-1] + [ reactivity[idx] for idx in strands[1]]
+        assert len(strands) == 2
+        reacts = (
+            [reactivity[idx] for idx in strands[0]]
+            + [-1]
+            + [reactivity[idx] for idx in strands[1]]
+        )
         je = JunctionEntry(
             sequence=m.sequence(),
             structure=m.structure(),
@@ -125,16 +141,18 @@ def collect_junction_entries( m : Motif, reactivity:List[float], construct:str, 
             construct=construct,
             sn=sn,
             reads=reads,
-            score=score
-                )
+            score=score,
+        )
 
-        holder[ je.key() ].append( je )
+        holder[je.key()].append(je)
 
     for c in m.children():
-        collect_junction_entries( c, reactivity, construct, sn, reads, score, holder )
+        collect_junction_entries(c, reactivity, construct, sn, reads, score, holder)
 
 
-def row_normalize_hairpin( row : pd.Series, norm_seq: str, norm_ss: str, factor: float, nts:List[str]) -> List[float]:
+def row_normalize_hairpin(
+    row: pd.Series, norm_seq: str, norm_ss: str, factor: float, nts: List[str]
+) -> List[float]:
     """
     Function that performs a hairpin normalization on a pd.Series representing a construct.
     Returns the normalized reactivity series.
@@ -146,12 +164,12 @@ def row_normalize_hairpin( row : pd.Series, norm_seq: str, norm_ss: str, factor:
     :param: List[str] nts: nucleotides to be considered in the normalization scheme. must be unpaired!
     :rtype: List[float]
 	"""
-    seq, ss, react = row['RNA'], row['structure'], row['reactivity']
-    assert seq.count( norm_seq ) 
-    assert ss.count( norm_ss )
+    seq, ss, react = row["RNA"], row["structure"], row["reactivity"]
+    assert seq.count(norm_seq)
+    assert ss.count(norm_ss)
 
-    for idx, it in enumerate( re.finditer(norm_seq, seq ) ):
-        if ss[ it.start():it.end() ] == norm_ss:
+    for idx, it in enumerate(re.finditer(norm_seq, seq)):
+        if ss[it.start() : it.end()] == norm_ss:
             idx = it.start()
             break
 
@@ -159,24 +177,14 @@ def row_normalize_hairpin( row : pd.Series, norm_seq: str, norm_ss: str, factor:
 
     vals = []
 
-    for ii in range(idx, idx+len(norm_seq)):
-        if ss[ii] == '.' and seq[ii] in nts:
-            vals.append( react[ii] )
+    for ii in range(idx, idx + len(norm_seq)):
+        if ss[ii] == "." and seq[ii] in nts:
+            vals.append(react[ii])
 
-    assert len( vals ) > 1
-    
-    vals = np.array( vals )
-    react = np.array( react )
-    avg = np.mean( vals )
+    assert len(vals) > 1
 
-    return factor*react / avg
+    vals = np.array(vals)
+    react = np.array(react)
+    avg = np.mean(vals)
 
-
-
-
-
-
-
-
-
-
+    return factor * react / avg

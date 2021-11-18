@@ -126,7 +126,7 @@ def parse_to_motifs(structure: str, sequence: str) -> Motif:
     """
     # basic sanity checks
     # TODO should probably deal with pseudoknots in here
-    valid_db( structure )
+    valid_db(structure)
     assert len(structure) == len(sequence)
     assert len(re.sub("[ACGUTNB]", "", sequence)) == 0
     assert structure.count("(") == structure.count(")")
