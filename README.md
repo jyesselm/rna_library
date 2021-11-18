@@ -1,6 +1,12 @@
 # RNA Library 
 [![Documentation Status](https://readthedocs.org/projects/rna-library/badge/?version=latest)](https://rna-library.readthedocs.io/en/latest/?badge=latest)
 
+## Installation
+1. Dependencies
+	`$ pip install -r requirements.txt`
+1. package installation
+	`$ python setup.py install`
+
 ## Basic Usage
 
 ### Parsing Structures
