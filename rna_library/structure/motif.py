@@ -34,41 +34,41 @@ class Motif(ABC):
         .. warning:: Should **NOT** be called directly. All instantiations are handled by ``rna_library.parser.parse_to_motifs()``
 
         """
-        self.__type = MotifType.UNASSIGNED
-        self.__parent = None
-        self.__sequence = str()
-        self.__children = []
-        self.__strands = []
-        self.__depth = int()
-        self.__structure = str()
-        self.__token = str()
-        self.__start_pos = math.inf
-        self.__end_pos = -1
-        self.__positions = set()
-        self.__id = None
-        self.__is_barcode = False
+        self.type_ = MotifType.UNASSIGNED
+        self.parent_ = None
+        self.sequence_ = str()
+        self.children_ = []
+        self.strands_ = []
+        self.depth_ = int()
+        self.structure_ = str()
+        self.token_ = str()
+        self.start_pos_ = math.inf
+        self.end_pos_ = -1
+        self.positions_ = set()
+        self.id_ = None
+        self.is_barcode_ = False
         # these are used for making barcodes... should probably be changed
-        self.__sequences = []
+        self.sequences_ = []
 
         if "sequence" in kwargs:
-            self.__sequence = kwargs["sequence"]
+            self.sequence_ = kwargs["sequence"]
 
         if "strands" in kwargs:
-            self.__strands = kwargs["strands"]
+            self.strands_ = kwargs["strands"]
 
-        if len(self.__sequence) == 0:
+        if len(self.sequence_) == 0:
             return
 
         strand_seqs = []
-        for strand in self.__strands:
-            self.start_pos_ = min(min(strand), self.__start_pos)
-            self.end_pos_ = max(max(strand), self.__end_pos)
+        for strand in self.strands_:
+            self.start_pos_ = min(min(strand), self.start_pos_)
+            self.end_pos_ = max(max(strand), self.end_pos_)
             for pos in strand:
-                self.__positions.add(pos)
+                self.positions_.add(pos)
 
-            strand_seqs.append("".join([self.__sequence[index] for index in strand]))
+            strand_seqs.append("".join([self.sequence_[index] for index in strand]))
 
-        self.__sequence = "&".join(strand_seqs)
+        self.sequence_ = "&".join(strand_seqs)
 
     def link_children(self, depth: int = 0):
         """
@@ -86,7 +86,7 @@ class Motif(ABC):
         self.depth(depth)
 
         # there might be empty lists in here... remove them if that is the case
-        self.__children = [
+        self.children_ = [
             child for child in self.children() if not isinstance(child, list)
         ]
 
@@ -147,7 +147,7 @@ class Motif(ABC):
         :rtype: :class:`str()`
         """
         return (
-            f"{ TYPE_MAPPER[ self.__type ] },{ self.__sequence },{ self.__structure }"
+            f"{ TYPE_MAPPER[ self.type_ ] },{ self.sequence_ },{ self.structure_ }"
         )
 
     def is_helix(self) -> bool:
@@ -192,7 +192,7 @@ class Motif(ABC):
         :return: The :class:`MotifType()` enum value for the given motif.
         :rtype: :class:`MotifType()`
         """
-        return self.__type
+        return self.type_
 
     def children(self) -> List[Motif]:
         """
@@ -201,7 +201,7 @@ class Motif(ABC):
         :return: A :class:`list()` of :class:`Motif()` if the current :class:`Motif()` has any.
         :rtype: :class:`list[Motif]`
         """
-        return self.__children
+        return self.children_
 
     def add_child(self, other: Motif) -> None:
         """
@@ -211,7 +211,7 @@ class Motif(ABC):
         
         :param: Motif other: Another :class:`Motif()` to be appended to the internal children list.
         """
-        self.__children.append(other)
+        self.children_.append(other)
 
     def set_children(self, other: List[Motif]) -> None:
         """
@@ -221,7 +221,7 @@ class Motif(ABC):
         
         :param  List[Motif] other: Another :class:`Motif()` to be appended to the internal children list.
         """
-        self.__children = other
+        self.children_ = other
 
     @dispatch
     def parent(self, other):
@@ -233,7 +233,7 @@ class Motif(ABC):
         :return: None
         :rtype: NoneType
         """
-        self.__parent = other
+        self.parent_ = other
 
     @dispatch
     def parent(self):
@@ -243,7 +243,7 @@ class Motif(ABC):
         :return: the parent motif 
         :rtype: :class:`Motif()`
         """
-        return self.__parent
+        return self.parent_
 
     @dispatch
     def token(self, tk):
@@ -256,7 +256,7 @@ class Motif(ABC):
         :rtype: NoneType
         """
         # TODO add some kind of validation
-        self.__token = tk
+        self.token_ = tk
 
     @dispatch
     def token(self):
@@ -266,7 +266,7 @@ class Motif(ABC):
         :return: token
         :rtype: str
         """
-        return self.__token
+        return self.token_
 
     @dispatch
     def structure(self, secstruct):
@@ -280,7 +280,7 @@ class Motif(ABC):
         """
         # TODO add some kind of validation... maybe the level of validation
         # should be checked as well
-        self.__structure = secstruct
+        self.structure_ = secstruct
 
     @dispatch
     def structure(self):
@@ -290,7 +290,7 @@ class Motif(ABC):
         :return: token
         :rtype: str
         """
-        return self.__structure
+        return self.structure_
 
     def strands(self) -> List[List[int]]:
         """
@@ -305,7 +305,7 @@ class Motif(ABC):
         :return: strands
         :rtype: List[List[int]]
         """
-        return self.__strands
+        return self.strands_
 
     @dispatch
     def sequence(self):
@@ -317,7 +317,7 @@ class Motif(ABC):
         :return: sequence
         :rtype: str
         """
-        return self.__sequence
+        return self.sequence_
 
     @dispatch
     def sequence(self, seq):
@@ -327,7 +327,7 @@ class Motif(ABC):
         :param str seq: the new sequence for the :class:`Motif()`. 
         """
         # TODO some kind of validation
-        self.__sequence = seq
+        self.sequence_ = seq
 
     @dispatch
     def id(self):
@@ -337,7 +337,7 @@ class Motif(ABC):
         :return: id
         :rtype: int
         """
-        return self.__id
+        return self.id_
 
     @dispatch
     def id(self, new_id):
@@ -349,7 +349,7 @@ class Motif(ABC):
         :rtype: NoneType
         """
         # TODO some kind of validation
-        self.__id = new_id
+        self.id_ = new_id
 
     @dispatch
     def depth(self):
@@ -359,7 +359,7 @@ class Motif(ABC):
         :return: depth
         :rtype: int
         """
-        return self.__depth
+        return self.depth_
 
     @dispatch
     def depth(self, value):
@@ -370,7 +370,7 @@ class Motif(ABC):
 
         """
         # TODO some kind of validation
-        self.__depth = value
+        self.depth_ = value
 
     @abstractmethod
     def buffer(self) -> int:
@@ -395,7 +395,7 @@ class Motif(ABC):
         :return:  has_children
         :rtype: bool 
         """
-        return len(self.__children) > 0
+        return len(self.children_) > 0
 
     def has_parent(self) -> bool:
         """
@@ -404,7 +404,7 @@ class Motif(ABC):
         :return: has_parent
         :rtype: bool
         """
-        return self.__parent is not None
+        return self.parent_ is not None
 
     @abstractmethod
     def recursive_sequence(self) -> str:
@@ -466,7 +466,7 @@ class Motif(ABC):
         :return: start_pos
         :rtype: int
         """
-        return self.__start_pos
+        return self.start_pos_
 
     def end_pos(self) -> int:
         """
@@ -475,7 +475,7 @@ class Motif(ABC):
         :return: end_pos
         :rtype: int
         """
-        return self.__end_pos
+        return self.end_pos_
 
     def contains(self, pos: int) -> bool:
         """
@@ -486,7 +486,7 @@ class Motif(ABC):
         :return: is_contained
         :rtype: bool
         """
-        return pos in self.__positions
+        return pos in self.positions_
 
     # this is for making barcodes
     def sequences(self, seqs: List[str]) -> None:
@@ -497,7 +497,7 @@ class Motif(ABC):
 
         """
         # TODO some kind of validation
-        self.__sequences = seqs
+        self.sequences_ = seqs
 
     def number_sequences(self) -> int:
         """
@@ -506,7 +506,7 @@ class Motif(ABC):
         :return: num_sequence
         :rtype: int
         """
-        return len(self.__sequences)
+        return len(self.sequences_)
 
     def set_sequence(
         self, idx: int
@@ -518,7 +518,7 @@ class Motif(ABC):
 
         :param int idx: The index to be used. 
         """
-        self.__sequence = self.__sequences[idx]
+        self.sequence_ = self.sequences_[idx]
 
     @abstractmethod
     def generate_sequences(self):
@@ -534,7 +534,7 @@ class Motif(ABC):
         :return: is_barcode
         :rtype: bool
         """
-        return self.__is_barcode
+        return self.is_barcode_
 
 
 def highest_id(m: Motif, best: int = 0) -> int:

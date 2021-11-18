@@ -13,14 +13,14 @@ class Helix(Motif):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._Motif__type = MotifType.HELIX
-        self.__size = (len(self.sequence()) - 1) // 2
-        self.__structure = f'{"("*self.__size}&{")"*self.__size}'
-        self.__token = f"Helix{self.__size}"
-        self.__pairs = []
+        self.type_ = MotifType.HELIX
+        self.size_ = (len(self.sequence()) - 1) // 2
+        self.structure_ = f'{"("*self.size_}&{")"*self.size_}'
+        self.token_ = f"Helix{self.size_}"
+        self.pairs_ = []
 
-        for index in range(self.__size):
-            self.__pairs.append(self.sequence()[index] + self.sequence()[-index - 1])
+        for index in range(self.size_):
+            self.pairs_.append(self.sequence()[index] + self.sequence()[-index - 1])
 
     @dispatch
     def size(self) -> int:
@@ -31,7 +31,7 @@ class Helix(Motif):
         :return: size
         :rtype: int
         """
-        return self.__size
+        return self.size_
 
     @dispatch
     def size(self, val):
@@ -42,7 +42,7 @@ class Helix(Motif):
 
         """
         # TODO some kind of validation
-        self.__size = val
+        self.size_ = val
 
     def buffer(self):
         """
@@ -52,7 +52,7 @@ class Helix(Motif):
         :return: buffer
         :rtype: int
         """
-        return self.__size
+        return self.size_
 
     def pairs(self) -> List[str]:
         """
@@ -62,7 +62,7 @@ class Helix(Motif):
         :return: pairs
         :rtype: List[str]
         """
-        return self.__pairs
+        return self.pairs_
 
     def is_helix(self):
         """

@@ -52,7 +52,7 @@ def get_junction_or_hairpin(
         # JUNCTION
         junction = Junction(strands=strands, sequence=sequence)
         for strand in strands[:-1]:
-            junction.add_child(get_motifs(sequence, connections, strand[-1]))
+            junction.children_.append(get_motifs(sequence, connections, strand[-1]))
         return junction
     else:
         hp = Hairpin(sequence=sequence, strands=strands)
@@ -75,12 +75,12 @@ def get_helix(
     helix = Helix(sequence=sequence, strands=[lhs, rhs])
     # figure out what is at the other end of the junction
     if connections[start + helix_len - 1] > start:
-        helix.add_child(
+        helix.children_.append(
             get_junction_or_hairpin(sequence, connections, start + helix_len - 1)
         )
 
     if not is_circular(rhs[-1], connections):
-        helix.add_child(get_motifs(sequence, connections, rhs[-1] + 1))
+        helix.children_.append(get_motifs(sequence, connections, rhs[-1] + 1))
     return helix
 
 

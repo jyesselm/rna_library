@@ -10,11 +10,11 @@ class Hairpin(Motif):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._Motif__type = MotifType.HAIRPIN
+        self.type_ = MotifType.HAIRPIN
 
         size = len(self.sequence()) - 2
-        self.__structure = "(" + "." * size + ")"
-        self.__token = f"Hairpin{size}"
+        self.structure_ = "(" + "." * size + ")"
+        self.token_ = f"Hairpin{size}"
 
     def buffer(self) -> int:
         """

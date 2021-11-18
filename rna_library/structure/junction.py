@@ -12,19 +12,19 @@ class Junction(Motif):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._Motif__type = MotifType.JUNCTION
-        self.__closing_pairs = []
-        self.__gaps = [len(strand) - 2 for strand in self.strands()]
+        self.type_ = MotifType.JUNCTION
+        self.closing_pairs_ = []
+        self.gaps_ = [len(strand) - 2 for strand in self.strands()]
 
         secstruct = ["."] * len(self.sequence())
-        self.__closing_pairs.append(self.sequence()[0] + self.sequence()[-1])
+        self.closing_pairs_.append(self.sequence()[0] + self.sequence()[-1])
 
         for index, nt in enumerate(self.sequence()):
             if nt == "&":
                 secstruct[index - 1] = "("
                 secstruct[index] = "&"
                 secstruct[index + 1] = ")"
-                self.__closing_pairs.append(
+                self.closing_pairs_.append(
                     self.sequence()[index - 1] + self.sequence()[index + 1]
                 )
 
@@ -32,11 +32,11 @@ class Junction(Motif):
         secstruct[-1] = ")"
 
         self.structure("".join(secstruct))
-        self.__token = f"Junction{len(self.strands())}_" + "|".join(
+        self.token_ = f"Junction{len(self.strands())}_" + "|".join(
             [str(len(strand) - 2) for strand in self.strands()]
         )
-        self.__num_branches = len(self.strands())
-        self.__symmetric = len(set([len(strand) - 2 for strand in self.strands()])) == 1
+        self.num_branches_ = len(self.strands())
+        self.symmetric_ = len(set([len(strand) - 2 for strand in self.strands()])) == 1
 
     def buffer(self) -> List[int]:
         """
@@ -60,7 +60,7 @@ class Junction(Motif):
         :return: gaps
         :rtype: List[int]
         """
-        return self.__gaps
+        return self.gaps_
 
     def is_junction(self) -> bool:
         """
@@ -111,7 +111,7 @@ class Junction(Motif):
         :return: closing_pairs
         :rtype: List[str]
         """
-        return self.__closing_pairs
+        return self.closing_pairs_
 
     def has_non_canonical(self) -> bool:
         """
@@ -132,7 +132,7 @@ class Junction(Motif):
         :return: number_branches
         :rtype: int
         """
-        return self.__num_branches
+        return self.num_branches_
 
     def symmetric(self) -> bool:
         """
@@ -142,7 +142,7 @@ class Junction(Motif):
         :return: is_symmetric
         :rtype: bool
         """
-        return self.__symmetric
+        return self.symmetric_
 
     def generate_sequences(self):
         """

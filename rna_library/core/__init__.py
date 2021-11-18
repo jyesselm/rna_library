@@ -18,11 +18,21 @@ from .enums import (
 )
 
 from .error import (
-	InvalidDotBracket
+	InvalidDotBracket,
+	MissingDependency,
+	InvalidArgument
 )
 
 from .util import (
 	valid_db,
 	connectivity_list,
-	is_circular
+	is_circular,
+	load_fasta
+)
+
+from .folding import (
+	fold_cache,
+	FoldResult,
+	save_cache,
+	folding_params
 )

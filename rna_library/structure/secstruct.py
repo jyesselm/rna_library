@@ -1,6 +1,6 @@
 from rna_library.structure.motif import *
 from rna_library.core import *
-from rna_library.structure.parser import parse_to_motifs
+from .parser import parse_to_motifs
 
 #TODO documentation
 class SecStruct:
@@ -28,8 +28,7 @@ class SecStruct:
 
         self.structure_ = secstruct
         self.sequence_ = sequence
-
-        self.root_ = parse_to_motifs(secstruct, sequence)
+        self.root_ = parse_to_motifs(self.structure_, self.sequence_)
         # helpe for recusion
         self.counter_ = 0
         self.set_ids_(self.root_)

@@ -1,3 +1,4 @@
+from rna_library.core import *
 from .motif import Motif
 
 
@@ -8,10 +9,10 @@ class SingleStrand(Motif):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._Motif__type_ = MotifType.SINGLESTRAND
+        self.type_ = MotifType.SINGLESTRAND
 
-        self.__structure = "." * len(self.sequence_)
-        self.__token = f"SingleStrand{len(self.sequence_)}"
+        self.structure_ = "." * len(self.sequence())
+        self.token_ = f"SingleStrand{len(self.sequence())}"
 
     def buffer(self) -> int:
         """

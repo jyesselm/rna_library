@@ -1,7 +1,11 @@
 import dreem
 import pickle
-from rna_library.core import safe_rm, safe_mkdir
-
+import pandas as pd
+from rna_library.core import InvalidArgument
+from rna_library.structure import parse_to_motifs
+from rna_library.core import safe_rm, safe_mkdir, load_fasta, fold_cache, save_cache
+from .row_utils import add_reactivity, block_commons, score, signal_to_noise, num_reads, collect_junction_entries 
+from .junction_data import JunctionData
 
 def process_histos(mut_hist_file: str, output_directory: str, remove_html: bool = True) -> None:
     """
@@ -26,3 +30,82 @@ def process_histos(mut_hist_file: str, output_directory: str, remove_html: bool 
         
         to_remove = list(glob(f"{pop_dir}/*html"))
         _ = list(map(safe_rm, to_remove))
+
+def build_react_df( **kwargs ) -> pd.DataFrame:
+    """
+    Builds the reactivity dataframe from the supplied arguments. Here each row reprsents a construct.
+	Note that all arguments are supplied as kwargs.
+    
+    :params: str out_dir: base output directory where rna_library.process_histos was called
+	:params: str start_seq: common start sequence for the RNA constructs
+    :params: str end_seq: common end sequence for the RNA constructs
+    :params: str fasta_file: path to the fast file for the construct
+	:rtype: pd.DataFrame
+    """
+    out_dir = kwargs.get('out_dir', None)
+    if not out_dir:
+        raise InvalidArgument('out_dir was not supplied')
+
+    start_seq = kwargs.get('start_seq', None)
+    if not start_seq:
+        raise InvalidArgument('start_seq was not supplied')
+ 
+	end_seq = kwargs.get('end_seq', None)
+    if not end_seq:
+        raise InvalidArgument('end_seq was not supplied')
+	
+	fasta_file = kwargs.get('fasta_file', None)
+    if not fasta_file:
+        raise InvalidArgument('fasta_file was not supplied')
+
+
+    fasta = load_fasta( fasta_file )
+    df = pd.DataFrame()
+	h_fh = open( histos_file, 'rb')
+    histos = pickle.load(h_fh)
+    h_fh.close()
+    # variables to get
+    df['construct'] = list(fasta.keys())
+    df['RNA'] = list(fasta.values())
+    df['structure'] = df.apply( lambda row: fold_cache( row['RNA'] ).ss, axis=1 )
+    save_cache()
+    df['reactivity'] = df.apply( lambda row: add_reactivity( row, out_dir ), axis=1 )
+    df['blocked'] = df.apply( lambda row: block_commons( row, start_seq, end_seq), axis=1 )
+    df['score'] = df.apply( lambda row: score( row ), axis=1 )
+    df['sn'] = df.apply( lambda row: signal_to_noise( row ), axis=1 )
+    df['num_reads'] = df.apply( lambda row: num_reads( row, histos ), axis=1 )
+    df['motif'] = df.apply( lambda row: parse_to_motifs( row['structure'], row['RNA'] ), axis=1 )
+    
+    return df
+
+def normalize_df( ):
+    pass
+
+
+def motif_df( df :pd.DataFrame ) -> pd.DataFrame:
+    """
+    Function that creates a motif dataframe from a reactivity dataframe. Here each row represents a Motif.
+
+    :param: pd.DataFrame df: reactivity dataframe which is generated from build_react_df()
+	:rtype: pd.DataFrame
+    """
+    holder = defaultdict( list )
+
+    _ = df.apply( lambda row: collect_junction_entries( row['motif'], row['normed'], row['construct'], row['sn'], row['num_reads'], row['score'], holder ), axis=1 )
+    
+    data = {
+        'sequence' : [],
+        'structure' : [],
+        'data' : [],
+        'n':    [],
+        'symmetrical': []
+            }
+    
+	for seq, entries in holder.items():
+		data['sequence'].append( seq )
+    	data['structure'].append( ss )
+    	data['data'].append( JunctionData(sequence=seq, structure=ss, entries=entries) )
+    	data['n'].append(len( entries ))
+    	data['symmetrical'].append( data['data'][-1].is_symmetrical() )
+
+    return pd.DataFrame( data ) 
