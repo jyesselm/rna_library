@@ -1,11 +1,14 @@
 """Contains the JunctionEntry and JunctionData objects"""
+from __future__ import annotations
 import matplotlib
 import numpy as np
+import pandas as pd
 import seaborn as sns
-from typing import List, Tuple
+from .stats import EXCESS_MAPPER
 import matplotlib.pyplot as plt
+from typing import List, Tuple, Dict
 from rna_library.core import is_symmetrical, InvalidArgument, safe_mkdir
-
+#TODO finish documentaiton here
 
 class JunctionEntry:
     """Represents a single junction entry from an RNA construct"""
@@ -105,6 +108,14 @@ class JunctionData:
 
         self.rebuild_data()
 
+
+    def get_active_data( self ):
+        active = []
+        for row, nt in zip( self.data, self.sequence ):
+            if nt == 'A' or nt == 'C':
+                active.append( row )	
+        return active
+
     def rebuild_data(self) -> None:
         """
         Method that rebuilds the internal data representation from the JunctionEntry objects.
@@ -142,7 +153,6 @@ class JunctionData:
         fig, axes = plt.subplots(1, 1, figsize=(15, 10))
         fig.suptitle(name)
         self.bind(axes)
-        axes.set_ylim((0, ymax * 1.25))
         plt.savefig(fname)
         plt.clf()
         plt.close(fig)
@@ -157,7 +167,6 @@ class JunctionData:
         fig, axes = plt.subplots(1, 1, figsize=(9, 6))
         fig.suptitle(f"N={len(self.entries)}")
         self.bind(axes)
-        axes.set_ylim((0, ymax * 1.25))
         plt.show()
 
     def bind(self, ax: matplotlib.axes.Axes) -> None:
@@ -200,3 +209,19 @@ class JunctionData:
             [f"{s}\n{nt}" for s, nt in zip(self.sequence, self.structure)]
         )
         ax.set_ylim((0, ymax * 1.25))
+
+
+    def measure_variance( self ) -> Dict[str,float]:
+        
+        result = dict()		
+        active_data = self.get_active_data()
+        for method, func in EXCESS_MAPPER.items():
+            temp = 0
+            for row in active_data:
+                temp += func( row )
+            result[ method ] = temp
+            
+        return result 
+
+
+
