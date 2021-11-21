@@ -39,7 +39,11 @@ autodoc_typehints = 'description'
 autoapi_modules = {'rna_library': 
                                 {
                                     'override': True
-                                    }
+                                    },
+									'rna_library.core': {'override':True},
+									'rna_library.design': {'override':True},
+									'rna_library.structure': {'override':True},
+									'rna_library.processing': {'override':True},
         }
 suppress_warnings = ['autoapi', 'all',
 'duplicate.object',

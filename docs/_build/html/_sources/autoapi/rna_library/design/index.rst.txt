@@ -4,3 +4,28 @@
 .. py:module:: rna_library.design
 
 
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   barcode/index.rst
+   library/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   rna_library.design.build_barcodes
+
+
+.. function:: build_barcodes(secstruct: str, start: Union[str, None] = None, distance: int = 3)
+
+

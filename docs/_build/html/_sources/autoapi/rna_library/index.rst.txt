@@ -4,26 +4,16 @@
 .. py:module:: rna_library
 
 
-Submodules
-----------
+Subpackages
+-----------
 .. toctree::
    :titlesonly:
-   :maxdepth: 1
+   :maxdepth: 3
 
-   barcode/index.rst
-   demo/index.rst
-   enums/index.rst
-   hairpin/index.rst
-   helix/index.rst
-   junction/index.rst
-   junction_data/index.rst
-   library/index.rst
-   motif/index.rst
-   parser/index.rst
-   process_histos/index.rst
-   secstruct/index.rst
-   singlestrand/index.rst
-   util/index.rst
+   core/index.rst
+   design/index.rst
+   processing/index.rst
+   structure/index.rst
 
 
 Package Contents
@@ -43,6 +33,8 @@ Classes
    rna_library.Junction
    rna_library.SingleStrand
    rna_library.SecStruct
+   rna_library.JunctionData
+   rna_library.JunctionEntry
 
 
 
@@ -52,6 +44,11 @@ Functions
 .. autoapisummary::
 
    rna_library.parse_to_motifs
+   rna_library.highest_id
+   rna_library.build_react_df
+   rna_library.build_motif_df
+   rna_library.normalize_hairpin
+   rna_library.normalize_coeff_fit
    rna_library.build_barcodes
 
 
@@ -637,7 +634,7 @@ Functions
 
 .. py:class:: Helix(**kwargs)
 
-   Bases: :class:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.structure.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.Helix
       :parts: 1
@@ -724,7 +721,7 @@ Functions
 
 .. py:class:: Hairpin(**kwargs)
 
-   Bases: :class:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.structure.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.Hairpin
       :parts: 1
@@ -784,13 +781,16 @@ Functions
 
 .. py:class:: Junction(**kwargs)
 
-   Bases: :class:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.structure.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.Junction
       :parts: 1
       :private-bases:
 
    Represents a junction of any size in an RNA structure including bulges and multi-loops.    
+
+   .. method:: dms_active_idxs(self)
+
 
    .. method:: buffer(self) -> List[int]
 
@@ -882,7 +882,7 @@ Functions
 
 .. py:class:: SingleStrand(**kwargs)
 
-   Bases: :class:`rna_library.motif.Motif`
+   Bases: :class:`rna_library.structure.motif.Motif`
 
    .. autoapi-inheritance-diagram:: rna_library.SingleStrand
       :parts: 1
@@ -940,17 +940,6 @@ Functions
 
 
 
-.. function:: parse_to_motifs(structure: str, sequence: str) -> Motif
-
-   Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
-
-   :param str structure: a valid dot-bracket structure 
-   :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
-
-   :return: motif
-   :rtype: Motif
-
-
 .. py:class:: SecStruct(secstruct: str, sequence: str)
 
    Represents a 
@@ -999,6 +988,9 @@ Functions
    .. method:: __iter__(self)
 
 
+   .. method:: itermotifs(self)
+
+
    .. method:: hairpins(self, **kwargs)
 
 
@@ -1016,6 +1008,136 @@ Functions
 
    .. method:: __add__(self, other)
 
+
+
+.. function:: parse_to_motifs(structure: str, sequence: str) -> Motif
+
+   Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
+
+   :param str structure: a valid dot-bracket structure 
+   :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
+
+   :return: motif
+   :rtype: Motif
+
+
+.. function:: highest_id(m: Motif, best: int = 0) -> int
+
+   Figures out the highest id number in a given :class:`Motif()` graph.
+
+   :param Motif m: motif to start the query on
+   :param int best: current highest or "best" motif id at that recursion level. 
+
+   :return: highest_id
+   :rtype: int
+
+
+.. py:class:: JunctionData(**kwargs)
+
+   Composite class that represents a collection of JunctionEntry objects in an experiment.
+
+   .. method:: get_active_data(self)
+
+
+   .. method:: rebuild_data(self) -> None
+
+      Method that rebuilds the internal data representation from the JunctionEntry objects.
+
+      :rtype: NoneType
+
+
+   .. method:: is_symmetrical(self)
+
+      Getter that tells if the current JunctionData object models a symmetrical junction.
+      :rtype: bool
+
+
+   .. method:: plot(self, plot_dir: str, overwrite=False) -> None
+
+      Method that saves a plot of the JunctionData's data points to the supplied directory. 
+
+      :param: str plot_dir: The directory where the plot will be saved. Does not have to exist.
+      :rtype: NoneType
+
+
+   .. method:: show(self) -> None
+
+      Method that brings up a plot of the JunctionData's data points
+
+      :rtype: NoneType
+
+
+   .. method:: bind(self, ax: matplotlib.axes.Axes) -> None
+
+      Method that binds the JunctionData points to a supplied matplotlib Axes object.
+
+      :param: matplotlib.axes.Axes ax: the Axes object which the plot will be bound to
+      :rtype: NoneType
+
+
+   .. method:: measure_variance(self) -> Dict[str, float]
+
+
+
+.. py:class:: JunctionEntry(**kwargs)
+
+   Represents a single junction entry from an RNA construct
+
+   .. method:: validate_arguments_(self)
+
+      Helper method that validates arguments in the constructor.
+
+
+   .. method:: key(self) -> Tuple[str, str]
+
+      Getter that accesses the (sequence, structure) key for the JunctionEntry
+
+      :rtype: Tuple[str,str]
+
+
+   .. method:: is_symmetrical(self) -> bool
+
+      Getter that checks if the JunctionEntry is for a symmetrical unction.
+
+
+   .. method:: __getitem__(self, idx: int) -> float
+
+
+
+.. function:: build_react_df(**kwargs) -> pd.DataFrame
+
+   Builds the reactivity dataframe from the supplied arguments. Here each row reprsents a construct.
+       Note that all arguments are supplied as kwargs.
+
+   :params: str out_dir: base output directory where rna_library.process_histos was called
+       :params: str start_seq: common start sequence for the RNA constructs
+   :params: str end_seq: common end sequence for the RNA constructs
+   :params: str fasta_file: path to the fast file for the construct
+   :params: str histos_file: path to histogram file from DREEM analysis
+       :rtype: pd.DataFrame
+
+
+.. function:: build_motif_df(df: pd.DataFrame) -> pd.DataFrame
+
+   Function that creates a motif dataframe from a reactivity dataframe. Here each row represents a Motif.
+
+   :param: pd.DataFrame df: reactivity dataframe which is generated from build_react_df()
+       :rtype: pd.DataFrame
+
+
+.. function:: normalize_hairpin(df: pd.DataFrame, seq: str, ss: str, **kwargs) -> List[List[float]]
+
+   Normalizes a reactivity pattern to a normalization hairpin. Creates fully normalize values
+   for an entire pd.DataFrame
+
+   :param: pd.DataFrame df: reactivity_df created from rna_library.build_react_df 
+   :param: str seq: reference hairpin sequence
+   :param: str ss: reference hairpin structure
+   :param: float factor: factor to set the hairpin values to, is a keyword argument
+   :param: str nts: string of nucleotide's to be used for calc, is a keywrod argument
+
+
+.. function:: normalize_coeff_fit(reactivity_df)
 
 
 .. function:: build_barcodes(secstruct: str, start: Union[str, None] = None, distance: int = 3)

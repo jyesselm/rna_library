@@ -37,3 +37,7 @@ from rna_library.processing import (
     normalize_hairpin,
     normalize_coeff_fit,
 )
+
+from rna_library.design import (
+	build_barcodes
+)
