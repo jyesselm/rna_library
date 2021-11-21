@@ -156,7 +156,7 @@ class SecStruct:
             yield m
 
 
-	def itermotifs(self):
+    def itermotifs(self):
         for (idx,motif) in self.id_mapping_.items():
             yield (idx, motif)
 

@@ -10,8 +10,8 @@ ss = rna_library.SecStruct(
     '((((((...)))(((...)))(((...))))))',
     'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
-for m in ss:
-    print( m) 
+for idx,m in ss.itermotifs():
+    print( idx,m) 
 
 
 
