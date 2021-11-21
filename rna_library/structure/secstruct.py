@@ -155,6 +155,11 @@ class SecStruct:
         for m in self.id_mapping_.values():
             yield m
 
+
+	def itermotifs(self):
+        for (idx,motif) in self.id_mapping_.items():
+            yield (idx, motif)
+
     def hairpins(self, **kwargs):
         for m in self.id_mapping_.values():
             if m.is_hairpin():
