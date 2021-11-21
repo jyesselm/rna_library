@@ -3,11 +3,7 @@ import numpy as np
 from typing import List
 from scipy.stats import median_absolute_deviation
 
-
-
-
-
-def iqr_excess( data : List[float]) -> float:
+def iqr_excess(data: List[float]) -> float:
     """
     Finds the inter-quartiles excess, or the sum of excess range outside of the 
     first quartile or third quartile minus and plus the inter-quartile range, respectively.
@@ -16,47 +12,43 @@ def iqr_excess( data : List[float]) -> float:
     :rtype: float
     """
     if not len(data):
-    	return 0 
-    (first, third) = np.percentile( data, [25,75] )
+        return 0
+    (first, third) = np.percentile(data, [25, 75])
     iqr = third - first
     lower, upper = first - iqr, third + iqr
     total = 0
     for d in data:
         if d <= lower:
-            total += abs(lower-d)
+            total += abs(lower - d)
         elif d >= upper:
-            total += abs(upper-d)
-    
+            total += abs(upper - d)
+
     return total
 
 
-def sigma_excess( data ):
-	if not len(data):
-		return 0
-	mean, std = np.mean(data), np.std(data)
-	return np.sum( np.abs(data - mean)/std)
+def sigma_excess(data):
+    if not len(data):
+        return 0
+    mean, std = np.mean(data), np.std(data)
+    return np.sum(np.abs(data - mean) / std)
 
 
-def sigma_excess_normed( data ):
-	if not len(data):
-		return 0
-	mean, std = np.mean(data), np.std(data)
-	std /= mean
-	return np.sum( np.abs(data - 1 )/std)
+def sigma_excess_normed(data):
+    if not len(data):
+        return 0
+    mean, std = np.mean(data), np.std(data)
+    std /= mean
+    return np.sum(np.abs(data - 1) / std)
 
-
-def mad_excess( data ):
-	if not len(data):
-		return 0
-	return median_absolute_deviation( data )
-
-
+def mad_excess(data):
+    if not len(data):
+        return 0
+    return median_absolute_deviation(data)
 
 
 EXCESS_MAPPER = {
-    'iqr_excess': iqr_excess,
-    'sigma_excess': sigma_excess,
-    'sigma_excess_normed': sigma_excess_normed,
-    'mad_excess': mad_excess,
+    "iqr_excess": iqr_excess,
+    "sigma_excess": sigma_excess,
+    "sigma_excess_normed": sigma_excess_normed,
+    "mad_excess": mad_excess,
 }
-

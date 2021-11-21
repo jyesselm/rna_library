@@ -8,6 +8,10 @@ try:
 except ImportError:
     from distutils.core import setup
 
+with open('requirements.txt', 'r') as f:
+	requirements = f.read().splitlines()
+
+
 setup(name='rna_library',
         version='0.1.0',
         description='TODO',
@@ -19,4 +23,5 @@ setup(name='rna_library',
 		'rna_library.structure',
 		'rna_library.processing'
 		],
+		install_requirements=requirements
         )

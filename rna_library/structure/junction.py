@@ -1,7 +1,7 @@
 from rna_library.structure.motif import Motif
 
 from rna_library.core.enums import *
-
+import numpy as np
 from typing import List
 
 
@@ -37,6 +37,21 @@ class Junction(Motif):
         )
         self.num_branches_ = len(self.strands())
         self.symmetric_ = len(set([len(strand) - 2 for strand in self.strands()])) == 1
+
+    def dms_active_idxs(self):
+        # TODO make this for all Motif Types
+        idxs = []
+        for s in self.strands():
+            idxs.extend(s)
+            idxs.append(-1)
+        idxs.pop()
+        res = []
+        assert len(idxs) == len(self.sequence())
+        for nt, ii in zip(self.sequence(), idxs):
+            if nt == "A" or nt == "C":
+                res.append(ii)
+        assert np.min(res) >= 0
+        return res
 
     def buffer(self) -> List[int]:
         """

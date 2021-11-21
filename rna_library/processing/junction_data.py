@@ -1,5 +1,6 @@
 """Contains the JunctionEntry and JunctionData objects"""
 from __future__ import annotations
+import os
 import matplotlib
 import numpy as np
 import pandas as pd
@@ -8,7 +9,9 @@ from .stats import EXCESS_MAPPER
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict
 from rna_library.core import is_symmetrical, InvalidArgument, safe_mkdir
-#TODO finish documentaiton here
+
+# TODO finish documentaiton here
+
 
 class JunctionEntry:
     """Represents a single junction entry from an RNA construct"""
@@ -108,12 +111,11 @@ class JunctionData:
 
         self.rebuild_data()
 
-
-    def get_active_data( self ):
+    def get_active_data(self):
         active = []
-        for row, nt in zip( self.data, self.sequence ):
-            if nt == 'A' or nt == 'C':
-                active.append( row )	
+        for row, nt in zip(self.data, self.sequence):
+            if nt == "A" or nt == "C":
+                active.append(row)
         return active
 
     def rebuild_data(self) -> None:
@@ -138,7 +140,7 @@ class JunctionData:
         """
         return self.symmetrical
 
-    def plot(self, plot_dir: str) -> None:
+    def plot(self, plot_dir: str, overwrite=False) -> None:
         """
         Method that saves a plot of the JunctionData's data points to the supplied directory. 
 
@@ -147,9 +149,9 @@ class JunctionData:
         """
         safe_mkdir(plot_dir)
         fname = f"{plot_dir}/{self.structure}_{self.sequence}.png"
-        if os.path.isfile(fname):
+        if not overwrite and os.path.isfile(fname):
             return
-
+        name = f"{self.structure}_{self.sequence}, N={len(self.entries)}"
         fig, axes = plt.subplots(1, 1, figsize=(15, 10))
         fig.suptitle(name)
         self.bind(axes)
@@ -210,18 +212,14 @@ class JunctionData:
         )
         ax.set_ylim((0, ymax * 1.25))
 
+    def measure_variance(self) -> Dict[str, float]:
 
-    def measure_variance( self ) -> Dict[str,float]:
-        
-        result = dict()		
+        result = dict()
         active_data = self.get_active_data()
         for method, func in EXCESS_MAPPER.items():
             temp = 0
             for row in active_data:
-                temp += func( row )
-            result[ method ] = temp
-            
-        return result 
+                temp += func(row)
+            result[method] = temp
 
-
-
+        return result

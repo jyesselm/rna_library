@@ -35,4 +35,5 @@ from rna_library.processing import (
     build_react_df,
     build_motif_df,
     normalize_hairpin,
+    normalize_coeff_fit,
 )
