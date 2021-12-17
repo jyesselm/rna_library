@@ -7,7 +7,10 @@ from collections import namedtuple
 from typing import List, Tuple
 from .util import safe_rm
 
-_CACHE_FILE = f"{os.path.dirname(os.path.realpath(__file__))}.vienna_cache"
+FoldResult = namedtuple("FoldResult", "seq ss mfe ed params")
+"""namedtuple that holds sequence, structure, ensembled defect and folding parameters for an RNAfold prediction."""
+
+_CACHE_FILE = f"{os.path.expandvars('$HOME')}/.vienna_cache"
 """Value where the cached fold results will be stored. Set to {_CACHE_FILE} in current system."""
 
 _DEFAULT_PARAMS = ("-p", "--noLP", "-d2")
@@ -27,14 +30,12 @@ try:
     _CACHE = pickle.load(open(_CACHE_FILE, "rb"))
     _CURRENT_SIZE = len(_CACHE)
     _LAST_SIZE = len(_CACHE)
-except:
+except FileNotFoundError:
     _CACHE = dict()
     _CURRENT_SIZE = 0
     _LAST_SIZE = 0
 
 
-FoldResult = namedtuple("FoldResult", "seq ss mfe ed params")
-"""namedtuple that holds sequence, structure, ensembled defect and folding parameters for an RNAfold prediction."""
 
 
 def folding_params() -> Tuple[str]:
@@ -55,6 +56,7 @@ def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResul
     """
     global _LAST_SIZE
     global _CURRENT_SIZE
+    global _CACHE
 
     def get_mfe(raw):
         tk = ""
@@ -65,8 +67,8 @@ def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResul
 
     if sequence in _CACHE:
         cached = _CACHE[sequence]
-        if cached.params == params:
-            return cached
+        #if cached.params == params: TODO this seems to not work
+        return cached
 
     raw_result = (
         os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}").read().splitlines()
@@ -95,5 +97,7 @@ def save_cache() -> None:
     """
     global _LAST_SIZE
     global _CURRENT_SIZE
+    if _LAST_SIZE == len(_CACHE):
+        return
     _LAST_SIZE = _CURRENT_SIZE
     pickle.dump(_CACHE, open(_CACHE_FILE, "wb"))

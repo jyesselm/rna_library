@@ -6,8 +6,11 @@ from typing import List, Tuple
 from .stats import EXCESS_MAPPER
 from itertools import accumulate
 from scipy.optimize import minimize
+from scipy.stats import zscore
+from .process_histos import build_motif_df
 from .row_utils import row_normalize_hairpin
 from collections import namedtuple, defaultdict
+import matplotlib.pyplot as plt
 
 # seed the rng
 np.random.seed( 100 ) 
@@ -53,10 +56,35 @@ class OptimizeJunction:
         return total
         #return accumulate(func, self.data )
 
+def remove_outliers( reactivity_df, z_cutoff=2 ):
+    """
+    """
+    motif_df = build_motif_df( reactivity_df )
+    
+    con_names = reactivity_df['construct'].to_list()
+    total_variance = dict(
+       zip( con_names, [0]*len( con_names ))
+    )
+    
+    for jd in motif_df.data:
+        temp = jd.measure_variance() 
+        for cname, val in temp.items():
+            total_variance[cname] += val
+    
+    variances = np.array(list(total_variance.values())) 
+    mask = zscore(variances)<z_cutoff
+
+    kept_constructs = np.array(con_names)[mask]
+    
+    reactivity_df = reactivity_df[reactivity_df.construct.isin(kept_constructs)].reset_index(drop=True)
+    motif_df = build_motif_df( reactivity_df )
+    
+    return (reactivity_df,motif_df)
 
 NormJob = namedtuple("NormJob", "c_idx m_idx idxs data_idx")
 
 def normalize_coeff_fit(reactivity_df):
+    raise Exception('Don\'t use this!')
     # what do we want to do?
     def get_junctions(m, holder):
         if m.is_junction():

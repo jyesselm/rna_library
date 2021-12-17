@@ -5,7 +5,7 @@ import matplotlib
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from .stats import EXCESS_MAPPER
+from .stats import EXCESS_MAPPER, comparative_variance
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict
 from rna_library.core import is_symmetrical, InvalidArgument, safe_mkdir
@@ -77,6 +77,34 @@ class JunctionEntry:
         """
         return sel.__symmetrical
 
+    def reactivity( self ) -> List[float]: 
+        """
+        Getter for the reactivity values.
+        """
+        return self.__reactivity
+    
+    def sequence( self ) -> str: 
+        """
+        Getter for the sequence value.
+        """
+        return self.__sequence
+    
+    def construct( self ) -> str: 
+        """
+        Getter for the construct value.
+        """
+        return self.__construct
+
+
+    def get_dms_active( self ):
+        result = []
+        assert len(self.__reactivity) == len(self.__sequence)
+        for react, nt in zip( self.__reactivity, self.__sequence ):
+            if nt == 'A' or nt == 'C':
+                result.append( react )
+
+        return np.array( result )
+
     def __getitem__(self, idx: int) -> float:
         return self.__reactivity[idx]
 
@@ -133,12 +161,29 @@ class JunctionData:
 
         self.data = [np.array(vals) for vals in self.data]
 
-    def is_symmetrical(self):
+    def is_symmetrical(self) -> bool:
         """
         Getter that tells if the current JunctionData object models a symmetrical junction.
         :rtype: bool
         """
         return self.symmetrical
+
+    def measure_variance( self ) -> Dict[str,float]:
+        """
+	    Measures the pairwise variance between the different value series for each JunctionEntry.
+        """
+        result = dict()
+        constructs = list(map(lambda e: e.construct(), self.entries))
+        reacts = list(map(lambda e: e.get_dms_active(), self.entries))
+        for idx1, con1 in enumerate( constructs ):
+            for idx2, con2 in enumerate( constructs ):
+                if idx1 == idx2:
+                    continue
+                variance = comparative_variance( reacts[idx1], reacts[idx2] )
+                result[con1] = variance
+                result[con2] = variance
+        return result
+
 
     def plot(self, plot_dir: str, overwrite=False) -> None:
         """
@@ -212,14 +257,16 @@ class JunctionData:
         )
         ax.set_ylim((0, ymax * 1.25))
 
-    def measure_variance(self) -> Dict[str, float]:
-
-        result = dict()
-        active_data = self.get_active_data()
-        for method, func in EXCESS_MAPPER.items():
-            temp = 0
-            for row in active_data:
-                temp += func(row)
-            result[method] = temp
-
-        return result
+    def num_entries(self):
+        return len(self.entries)
+#    def measure_variance(self) -> Dict[str, float]:
+#
+#        result = dict()
+#        active_data = self.get_active_data()
+#        for method, func in EXCESS_MAPPER.items():
+#            temp = 0
+#            for row in active_data:
+#                temp += func(row)
+#            result[method] = temp
+#
+#        return result

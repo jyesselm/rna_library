@@ -36,6 +36,7 @@ from rna_library.processing import (
     build_motif_df,
     normalize_hairpin,
     normalize_coeff_fit,
+	remove_outliers
 )
 
 from rna_library.design import (

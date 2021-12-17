@@ -45,6 +45,15 @@ def mad_excess(data):
         return 0
     return median_absolute_deviation(data)
 
+def comparative_variance( data1, data2 ):
+    assert len(data1) == len(data2)
+    total = 0.
+    for d1, d2 in zip(data1, data2):
+        if not (d1 + d2):
+            continue
+        total += abs(d1-d2)/(d1+d2)
+    return total
+
 
 EXCESS_MAPPER = {
     "iqr_excess": iqr_excess,

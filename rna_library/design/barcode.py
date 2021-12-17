@@ -2,10 +2,9 @@ import re
 import itertools
 from typing import Union, List
 
-from .util import *
-from .motif import Motif
-from .enums import LEGAL_BPS
-from .parser import parse_to_motifs
+from rna_library.core import *
+from rna_library.structure	 import Motif, parse_to_motifs
+#from .parser import parse_to_motifs
 
 
 def generate_sequences(m: Motif):

@@ -169,7 +169,6 @@ class SecStruct:
         for m in self.id_mapping_.values():
             if m.is_helix():
                 yield m
-
     def junctions(self):
         for m in self.id_mapping_.values():
             if m.is_junction():
