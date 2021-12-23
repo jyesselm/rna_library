@@ -11,10 +11,10 @@ FoldResult = namedtuple("FoldResult", "seq ss mfe ed params")
 """namedtuple that holds sequence, structure, ensembled defect and folding parameters for an RNAfold prediction."""
 
 _CACHE_FILE = f"{os.path.expandvars('$HOME')}/.vienna_cache"
-"""Value where the cached fold results will be stored. Set to {_CACHE_FILE} in current system."""
+"""Value where the cached fold results will be stored. Set to $HOME/.vienna_cache in current system."""
 
 _DEFAULT_PARAMS = ("-p", "--noLP", "-d2")
-"""Default folding parameters for Vienna's RNAfold. Default values are {_DEFAULT_PARAMS}"""
+"""Default folding parameters for Vienna's RNAfold. Default values are ("-p", "--noLP", "-d2")"""
 
 _CACHE = None
 """Cache that holds folding results."""
@@ -45,6 +45,38 @@ def folding_params() -> Tuple[str]:
     """
     return _DEFAULT_PARAMS
 
+def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
+    """
+    Uses RNAfold to predict the mfe for a structure. Does NOT cache the result.
+    
+    :param: str sequence: RNA sequence ot be folded.
+    :param: Tuple[str] params: default folding params for RNAfold, defaults to ('-p','--noLP','-d2')
+	:rtype: FoldResult
+    """
+
+    def get_mfe(raw):
+        tk = ""
+        for ch in raw:
+            if ch != ")" and ch != "(":
+                tk += ch
+        return float(tk)
+
+
+    raw_result = (
+        os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}").read().splitlines()
+    )
+    safe_rm("dot.ps")
+    safe_rm("rna.ps")
+    raw_result = list(map(lambda raw: raw.strip(), raw_result))
+    folded, raw_nrg = raw_result[1].split(" ", 1)
+    fold_result = FoldResult(
+        seq=raw_result[0],
+        ss=folded,
+        mfe=get_mfe(raw_nrg),
+        ed=float(raw_result[4].split()[-1]),
+        params=params,
+    )
+    return fold_result
 
 def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
     """
@@ -52,6 +84,7 @@ def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResul
     
     :param: str sequence: RNA sequence ot be folded.
     :param: Tuple[str] params: default folding params for RNAfold, defaults to ('-p','--noLP','-d2')
+
 	:rtype: FoldResult
     """
     global _LAST_SIZE

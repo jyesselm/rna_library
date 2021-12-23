@@ -28,28 +28,28 @@ class BasePair(IntEnum):
     GC = 4
     CG = 5
 
-    def is_GU(self):
+    def is_GU(self) -> bool:
         """
         :return: If the instance is a UG or GU pair.
         :rtype: :class:`bool()`
         """
         return self == BasePair.GU or self == BasePair.UG
 
-    def is_AU(self):
+    def is_AU(self) -> bool:
         """
         :return: If the instance is a UA or AU pair.
         :rtype: :class:`bool()`
         """
         return self == BasePair.AU or self == BasePair.UA
 
-    def is_GC(self):
+    def is_GC(self) -> bool:
         """
         :return: If the instance is a CG or GC pair.
         :rtype: :class:`bool()`
         """
         return self == BasePair.CG or self == BasePair.GC
 
-    def is_canoncial(self):
+    def is_canoncial(self) -> bool:
         """
         :return: If the instance is a canonical Watson-Crick basepair.
         :rtype: :class:`bool()`
@@ -57,7 +57,7 @@ class BasePair(IntEnum):
 
         return self.is_AU() or self.is_GC()
 
-    def to_str(self):
+    def to_str(self) -> str:
         """
         :return: The :class:`BasePair()` instance in text form.
         :rtype: :class:`str()`
@@ -129,5 +129,5 @@ TYPE_MAPPER = {  # TODO should make this a class of MotifType
     MotifType.HAIRPIN: "Hairpin",
     MotifType.JUNCTION: "Junction",
 }
-"""A :class: `dict()` object that maps a :class: `MotifType` to its value
+"""A :class:`dict()` object that maps a :class:`MotifType` to its value
 as a `str().`"""

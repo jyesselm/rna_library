@@ -1,5 +1,5 @@
 """
-Error classes.
+Error classes to be inherited from.
 """
 
 
@@ -13,13 +13,13 @@ class InvalidDotBracket(Exception):
 
 class MissingDependency(Exception):
     """
-    Exception for when a dependency is missing in the system
+    Exception for when a dependency is missing in the system.
     """
 
     pass
 
 
 class InvalidArgument(Exception):
-    """
+   """
    Exception for a bad argument being supplied.
    """

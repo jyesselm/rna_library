@@ -49,8 +49,8 @@ def pool_with_distance(sequences: List[str], min_dist: int) -> List[str]:
     
     .. warning:: This function can runs in polynomial time so large pools **WILL** take a significant amount of time to run. For reference, pools on the order of hundreds of thousands took multiple hours to run on an i7 in 2021.
 
-    :param: list[str] sequences: A list of starting RNA sequences.
-    :param: int min_dist: Minimum edit distance between each sequence in the pool. Must be >= 0.
+    :param list[str] sequences: A list of starting RNA sequences.
+    :param int min_dist: Minimum edit distance between each sequence in the pool. Must be >= 0.
     :rtype: list[str]
     """
     result = []
