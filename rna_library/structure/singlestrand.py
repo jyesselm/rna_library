@@ -54,7 +54,7 @@ class SingleStrand(Motif):
         :return: recursive_sequence
         :rtype: str
         """
-        result = self.structure()
+        result = self.sequence()
         for child in self.children():
             result += child.recursive_sequence()
         return result

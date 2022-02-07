@@ -5,7 +5,7 @@ from .parser import parse_to_motifs
 # TODO documentation
 class SecStruct:
     """
-    Represents a 
+    Represents a secondary structure composed of both a dot-bracket struture and a sequene.
     """
 
     # what do we want this to do?
@@ -36,7 +36,7 @@ class SecStruct:
         self.it_ = self.root_
         self.__end_id = highest_id(self.root_)
 
-    def set_ids_(self, m: Motif):
+    def set_ids_(self, m: Motif) -> None:
         m.id(self.counter_)
         self.id_mapping_[self.counter_] = m
 
@@ -45,15 +45,15 @@ class SecStruct:
         for child in m.children():
             self.set_ids_(child)
 
-    def display(self):
+    def display(self) -> None:
         print(self.root_.str())
 
     @property
-    def sequence(self):
+    def sequence(self) -> str:
         return self.sequence_
 
     @property
-    def structure(self):
+    def structure(self) -> str:
         return self.structure_
 
     def helix_replace_(self, id, secstruct, sequence):
@@ -84,41 +84,72 @@ class SecStruct:
             # but who knows what people will try these days
             pass
 
-    def change_motif(self, id, new_secstruct, new_sequence):
+    def change_motif_sequence(self, id: int, new_secstruct: str, new_sequence: str) -> None:
         # performing some basic checks
         assert len(new_sequence) == len(new_secstruct)
         assert len(re.sub("[AUCGT&]", "", new_sequence)) == 0
         assert len(re.sub("[.)(&]", "", new_secstruct)) == 0
         assert (
-            new_secstruct.count("&") == new_sequence.count("&")
-            and new_sequence.count("&") <= 1
+            new_secstruct.count("&")
+            == new_sequence.count("&")
+            # and new_sequence.count("&") <= 1
         )
         assert id in self.id_mapping_
-
-        helix_replace = new_secstruct.find("&") != -1
-
-        if helix_replace:
-            self.helix_replace_(id, new_secstruct, new_sequence)
-        else:
-            self.motif_replace_(id, new_secstruct, new_sequence)
-
+        
+        self.id_mapping_[id].sequence( new_sequence )
+        
         full_secstruct, full_sequence = (
             self.root_.recursive_structure(),
             self.root_.recursive_sequence(),
         )
-
+        
         self.structure_ = full_secstruct
         self.sequence_ = full_sequence
-
+        
         self.root_ = parse_to_motifs(full_secstruct, full_sequence)
-        # helpe for recusion
+        # help for recusion
         self.counter_ = 0
         self.id_mapping_ = dict()
         self.set_ids_(self.root_)
         self.total_structures_ += 1
 
-    def get_sequence_structure(self):
-        return self.sequence_, self.structure_
+
+    def change_motif(self, id: int, new_secstruct: str, new_sequence: str) -> None:
+        # performing some basic checks
+        assert len(new_sequence) == len(new_secstruct)
+        assert len(re.sub("[AUCGT&]", "", new_sequence)) == 0
+        assert len(re.sub("[.)(&]", "", new_secstruct)) == 0
+        assert (
+            new_secstruct.count("&")
+            == new_sequence.count("&")
+            # and new_sequence.count("&") <= 1
+        )
+        assert id in self.id_mapping_
+        
+        helix_replace = new_secstruct.find("&") != -1
+        
+        if helix_replace:
+            self.helix_replace_(id, new_secstruct, new_sequence)
+        else:
+            self.motif_replace_(id, new_secstruct, new_sequence)
+                
+        full_secstruct, full_sequence = (
+            self.root_.recursive_structure(),
+            self.root_.recursive_sequence(),
+        )
+        
+        self.structure_ = full_secstruct
+        self.sequence_ = full_sequence
+        
+        self.root_ = parse_to_motifs(full_secstruct, full_sequence)
+        # help for recusion
+        self.counter_ = 0
+        self.id_mapping_ = dict()
+        self.set_ids_(self.root_)
+        self.total_structures_ += 1
+
+    def get_sequence_structure(self) -> Tuple[str, str]:
+        return (self.sequence_, self.structure_)
 
     def _get_ids_internal(self, m, ids, mtype):
         if m.type() == mtype:
@@ -155,9 +186,8 @@ class SecStruct:
         for m in self.id_mapping_.values():
             yield m
 
-
     def itermotifs(self):
-        for (idx,motif) in self.id_mapping_.items():
+        for (idx, motif) in self.id_mapping_.items():
             yield (idx, motif)
 
     def hairpins(self, **kwargs):
@@ -169,6 +199,7 @@ class SecStruct:
         for m in self.id_mapping_.values():
             if m.is_helix():
                 yield m
+
     def junctions(self):
         for m in self.id_mapping_.values():
             if m.is_junction():
@@ -194,6 +225,9 @@ class SecStruct:
         self.sequence_ = self.root_.recursive_sequence()
 
     def __add__(self, other):
+        """
+        Operator overload to allow the concatenation of SecStruct objects using `+`
+        """
         seq_total = self.sequence + other.sequence
         ss_total = self.structure + other.structure
         # TODO bring over barcode info

@@ -263,9 +263,10 @@ def dsci(sequence: str, target: str, dms: List[float]) -> Tuple[float]:
     Calculates the DSCI score as developed by the Rouskin Group at MIT. The generated score
     is on the range of [0,1] and 0.95 is a common quality cutoff.
 
-    :param: str sequence: the RNA sequence to be analyzed
-    :param: str target: the target secondary structure
-    :param: List[float] dms: the DMS reactivities for the construct
+    :param str sequence: the RNA sequence to be analyzed
+    :param str target: the target secondary structure
+    :param List[float] dms: the DMS reactivities for the construct
+
     :rtype: Tuple[float]
     """
     if sequence.count("N") == 0:

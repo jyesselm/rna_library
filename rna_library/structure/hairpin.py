@@ -43,7 +43,7 @@ class Hairpin(Motif):
         :return: recursive_structure
         :rtype: str
         """
-        return self.sequence()[1:-1]
+        return self.structure()[1:-1]
 
     def recursive_sequence(self) -> str:
         """
