@@ -29,6 +29,20 @@ class JunctionEntry:
         # argument validation
         self.validate_arguments_()
 
+
+    def flip(self):
+        # TODO documenation and clean this up
+        it = self.__sequence.find('&')
+        left, right = self.__reactivity[0:it], self.__reactivity[it+1:]
+        new_reactivity = right + [-1] + left
+        assert len(new_reactivity) == len(self.__reactivity)
+        assert abs(np.sum(new_reactivity) - np.sum(self.__reactivity)) <= 0.05
+        self.__reactivity = new_reactivity
+        seq_left, seq_right = self.__sequence.split('&')
+        self.__sequence = seq_right + '&' + seq_left
+        ss_left, ss_right = self.__structure.split('&')
+        self.__structure = ss_right + '&' + ss_left
+
     def validate_arguments_(self):
         """
         Helper method that validates arguments in the constructor.
@@ -137,6 +151,23 @@ class JunctionData:
         if invalid_args:
             raise InvalidArgument(error_msg)
 
+        self.rebuild_data()
+
+    def flip( self ):
+        # TODO documentation
+        for idx in range(len(self.entries)):
+            self.entries[idx].flip()
+        
+        seq_left, seq_right = self.sequence.split('&')	 
+        ss_left, ss_right = self.structure.split('&')
+        self.sequence = seq_right + '&' + seq_left
+        self.structure = ss_right + '&' + ss_left
+        self.rebuild_data()
+
+
+    def merge(self, other):
+        # TODO documentation
+        self.entries.extend( other.entries )
         self.rebuild_data()
 
     def get_active_data(self):
