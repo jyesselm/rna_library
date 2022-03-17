@@ -30,7 +30,9 @@ class JunctionEntry:
         self.validate_arguments_()
 
 
-    def flip(self):
+    def flip(self) -> None:
+        """Method that flips the reactivity values in the event that the sequence is "flipped": Ex: GAG&CAUUC is CAUUC&GAG flipped. 
+		This method makes the first equivalent to the second."""
         # TODO documenation and clean this up
         it = self.__sequence.find('&')
         left, right = self.__reactivity[0:it], self.__reactivity[it+1:]
@@ -76,6 +78,14 @@ class JunctionEntry:
 
         if invalid_args:
             raise InvalidArgument(error_msg)
+
+
+    def sn(self) -> float:
+        return self.__sn
+
+    def reads(self) -> float:
+        return self.__reads
+
 
     def key(self) -> Tuple[str, str]:
         """
@@ -166,11 +176,10 @@ class JunctionData:
 
 
     def merge(self, other):
-        # TODO documentation
         self.entries.extend( other.entries )
         self.rebuild_data()
 
-    def get_active_data(self):
+    def get_active_data(self) -> List[List[float]]: # TODO documentation
         active = []
         for row, nt in zip(self.data, self.sequence):
             if nt == "A" or nt == "C":
@@ -288,16 +297,11 @@ class JunctionData:
         )
         ax.set_ylim((0, ymax * 1.25))
 
-    def num_entries(self):
+    def num_entries(self) -> int:
+        """
+		Getter that shows how many entries are in the JunctionData object.
+		
+		:rtype: int
+		"""
         return len(self.entries)
-#    def measure_variance(self) -> Dict[str, float]:
-#
-#        result = dict()
-#        active_data = self.get_active_data()
-#        for method, func in EXCESS_MAPPER.items():
-#            temp = 0
-#            for row in active_data:
-#                temp += func(row)
-#            result[method] = temp
-#
-#        return result
+

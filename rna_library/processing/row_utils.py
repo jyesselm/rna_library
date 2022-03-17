@@ -25,7 +25,8 @@ def add_reactivity(
     """
     # TODO the output directory should probably be indicated somewhere as a param
     raw_data = list(glob(f'{output_directory}/{row["construct"]}_*popavg_reacts.csv'))
-    assert len(raw_data) == 1, len(raw_data)
+    assert len(raw_data) == 1, str(len(raw_data))+ " " + row['construct']
+
     df = pd.read_csv(raw_data[0])
     num_rows = len(df.index)
     assert num_rows == len(row["RNA"])
