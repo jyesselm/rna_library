@@ -5,6 +5,7 @@ import matplotlib
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from typing import Dict
 from .stats import EXCESS_MAPPER, comparative_variance
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Dict
@@ -12,6 +13,9 @@ from rna_library.core import is_symmetrical, InvalidArgument, safe_mkdir
 
 # TODO finish documentaiton here
 
+from collections import namedtuple
+
+QualitySummary = namedtuple('QualitySummary', 'sn reads')
 
 class JunctionEntry:
     """Represents a single junction entry from an RNA construct"""
@@ -28,6 +32,14 @@ class JunctionEntry:
         self.__symmetrical = is_symmetrical(self.__sequence)
         # argument validation
         self.validate_arguments_()
+
+    
+    def reads(self):
+        return self.__reads
+
+    def sn(self):
+        return self.__sn
+
 
 
     def flip(self) -> None:
@@ -162,6 +174,14 @@ class JunctionData:
             raise InvalidArgument(error_msg)
 
         self.rebuild_data()
+
+    def quality_summary(self) -> Dict[str,QualitySummary]:
+        result = dict()
+        ee : JunctionEntry
+        for ee in self.entries:
+            result[ee.construct()] = QualitySummary(sn=ee.sn(), reads=ee.reads())
+        return result
+            
 
     def flip( self ):
         # TODO documentation
