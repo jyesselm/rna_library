@@ -41,6 +41,7 @@ class JunctionEntry:
 			__reads : Number of reads in the original construct as an int().
 			__score : DSCI score for the original structure.
 			__indices : A list() of indices of where the junction is in the original structure().
+			__external : boolean flag indicating if the JunctionEntry() is the least nested motif in its structure.
 	"""
 
     def __init__(self, **kwargs):
@@ -54,7 +55,8 @@ class JunctionEntry:
         self.__reads = kwargs.get("reads", None)
         self.__score = kwargs.get("score", None)
         self.__symmetrical = is_symmetrical(self.__sequence)
-		self.__indices = kwargs.get('indices', None)
+        self.__indices = kwargs.get('indices', None)
+        self.__external = kwargs.get('external', None)
         # argument validation
         self.validate_arguments_()
 
@@ -73,6 +75,13 @@ class JunctionEntry:
 		"""
         return self.__sn
 
+    def is_external(self) -> bool:
+        """
+		Getter for whether the junction is the least nested motif in its structure.
+
+		:rtype: bool
+		"""
+        return self.__external
 
     def indices(self) -> List[int]:
         """Gets the indices for where the junction is found in the original structure.
@@ -522,3 +531,18 @@ class JunctionData:
         for ee in self.entries:
             result[ee.construct()] = ee.reactivity()
         return result
+
+
+    def get_external(self) -> Dict[str, bool]:
+        """
+		Aggregates whether each junction is an external junction for each of the JunctionEntry() objects
+        insdie of the JunctionData() object.
+
+		:rtype: Dict[str,bool]
+		"""
+        result : Dict[str, List[float]] = dict()
+        ee : JunctionEntry
+        for ee in self.entries:
+            result[ee.construct()] = ee.is_external()
+        return result
+
