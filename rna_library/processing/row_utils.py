@@ -130,11 +130,8 @@ def collect_junction_entries(
         m: Junction
         strands = m.strands()
         assert len(strands) == 2
-        reacts = (
-            [reactivity[idx] for idx in strands[0]]
-            + [-1]
-            + [reactivity[idx] for idx in strands[1]]
-        )
+        indices =  strands[0] + [-1] + strands[1]
+        reacts = [reactivity[idx] for idx in indices]
         je = JunctionEntry(
             sequence=m.sequence(),
             structure=m.structure(),
@@ -143,6 +140,8 @@ def collect_junction_entries(
             sn=sn,
             reads=reads,
             score=score,
+			indices=indices,
+            external=m.parent().parent().is_singlestrand()
         )
 
         holder[je.key()].append(je)

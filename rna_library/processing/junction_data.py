@@ -108,9 +108,9 @@ class JunctionEntry:
 		"""
         it = self.__sequence.find('&')
         left, right = self.__reactivity[0:it], self.__reactivity[it+1:]
-        new_reactivity = right + [-1] + left
+        new_reactivity = right + [0.0] + left
         assert len(new_reactivity) == len(self.__reactivity)
-        assert abs(np.sum(new_reactivity) - np.sum(self.__reactivity)) <= 0.05
+        assert abs(np.sum(new_reactivity) - np.sum(self.__reactivity)) <= 0.05, f"{abs(np.sum(new_reactivity) - np.sum(self.__reactivity))}"
         self.__reactivity = new_reactivity
         seq_left, seq_right = self.__sequence.split('&')
         self.__sequence = seq_right + '&' + seq_left
@@ -279,7 +279,7 @@ class JunctionData:
         seq_left, seq_right = self.sequence.split('&')	 
         ss_left, ss_right = self.structure.split('&')
         self.sequence = seq_right + '&' + seq_left
-        self.structure = ss_right + '&' + ss_left
+        self.structure = '(' + (len(ss_right)-2)*'.' + '(&)' + (len(ss_left)-2)*'.' + ')'
         self.rebuild_data()
 
 
@@ -304,11 +304,11 @@ class JunctionData:
 		:rtype: None
 		"""
 	
-        if self.sequence() != other.sequence:
-            raise Exception(f"Cannot merge JunctionData() objects with different sequences: '{self.sequence()}' vs '{other.sequence()}'")
+        if self.sequence != other.sequence:
+            raise Exception(f"Cannot merge JunctionData() objects with different sequences: '{self.sequence}' vs '{other.sequence}'")
         
-        if self.structure() != other.structure:
-            raise Exception(f"Cannot merge JunctionData() objects with different structures: '{self.structure()}' vs '{other.structure()}'")
+        if self.structure != other.structure:
+            raise Exception(f"Cannot merge JunctionData() objects with different structures: '{self.structure}' vs '{other.structure}'")
         
         self.entries.extend( other.entries )
         self.rebuild_data()
