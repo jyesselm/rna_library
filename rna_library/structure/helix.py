@@ -1,4 +1,5 @@
 import itertools
+from typing import List
 from plum import dispatch
 
 from rna_library.structure.motif import Motif
@@ -146,3 +147,34 @@ class Helix(Motif):
         nt_combos = list(itertools.product(*bp_codes))
         sequences = list(map(bp_codes_to_sequence, nt_combos))
         self.sequences(sequences)
+
+    def change_outer_flanking( self, new_cp : str ) -> None:
+        """Changes the outer closing pair to the supplied new_cp. new_cp must be a string of length 2.
+		Consider the below example:
+		>>> h = Helix(sequence='12&34',structure='((&))'))
+		>>> h.sequence()
+		'12&34'
+		>>> h.change_outer_flanking('AB')
+		>>> h.sequence()
+		'A2&3B'
+		"""
+        assert len(new_cp) == 2
+        tks : List[str] = list(self.sequence())
+        tks[0], tks[-1] = new_cp[0], new_cp[1] 
+        self.sequence_ = ''.join( tks )
+
+    def change_inner_flanking( self, new_cp : str ) -> None:
+        """Changes the inner closing pair to the supplied new_cp. new_cp must be a string of length 2.
+		Consider the below example:
+		>>> h = Helix(sequence='12&34',structure='((&))'))
+		>>> h.sequence()
+		'12&34'
+		>>> h.change_inner_flanking('AB')
+		>>> h.sequence()
+		'1A&B4'
+		"""
+        assert len(new_cp) == 2
+        it : int  = self.sequence().find('&')
+        tks : List[str] = list(self.sequence())
+        tks[it-1], tks[it+1] = new_cp[0], new_cp[1] 
+        self.sequence_ = ''.join( tks )

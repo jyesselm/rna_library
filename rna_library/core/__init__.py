@@ -1,5 +1,8 @@
 """
-Core module containing basic data types for RNA analysis.
+core module responsible for enums, nucleotide methodology, errors, utility functions and folding algorithms.
+
+Author: Chris Jurich <cjurich2@unl.edu>
+Date: 2022-04-29
 """
 from .enums import (
     IntEnum,

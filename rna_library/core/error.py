@@ -23,3 +23,4 @@ class InvalidArgument(Exception):
    """
    Exception for a bad argument being supplied.
    """
+   pass
