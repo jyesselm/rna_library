@@ -10,6 +10,7 @@ from typing import Tuple, List
 
 #TODO(CJ): fix these imports or at least make them prettier
 from rna_library.structure.motif import *
+from rna_library.structure.hairpin import *
 from rna_library.core import *
 from .parser import parse_to_motifs
 
@@ -104,14 +105,17 @@ class SecStruct:
 		:param: str sequence: The sequence replacement for the Motif().
 		:rtype: None
 		"""
+        def is_hairpin_only( ss : str ) -> bool:
+            #TODO(CJ): Fix this 
+            total_len = len(ss)
+            return ss[0] == '(' and ss[-1] == ')' and ss[1:-1].count('.') == (total_len-2)
         motif = self.id_mapping_[m_id]
-        new_motif = parse_to_motifs(new_secstruct, new_sequence)
-
         if motif.has_parent():
-            # reset the parent of the new motif
-            new_motif.parent(motif.parent())
-            motif.parent(None)
-
+            if is_hairpin_only(new_secstruct):
+                new_motif = Hairpin(sequence=new_sequence, strands=[[-1]*len(new_sequence)])
+                new_motif.sequence_ = new_sequence
+            else:
+                new_motif = parse_to_motifs(new_secstruct, new_sequence)
             cleaned_children = []
             for child in motif.parent().children():
                 if child.id() == m_id:
@@ -119,8 +123,13 @@ class SecStruct:
                 else:
                     cleaned_children.append(child)
 
-            new_motif.parent().set_children(cleaned_children)
+            # reset the parent of the new motif
+            new_motif.parent(motif.parent())
+            motif.parent(None)
 
+            new_motif.parent().set_children(cleaned_children)
+            refined_seq, refined_ss = self.root_.recursive_sequence(), self.root_.recursive_structure()
+            self.root_ = parse_to_motifs( refined_ss, refined_seq )
         else:
             # this is the case where you are actually just replacing the root? seems like a dumb thing to do
             # but who knows what people will try these days
@@ -202,6 +211,8 @@ class SecStruct:
                     self.id_mapping_[c.id()].change_outer_flanking( s1[-1] + s2[0] )
             self.helix_replace_(m_id, new_secstruct, new_sequence)
         else:
+            if include_flanking:
+                self.id_mapping_[m_id].parent_.change_inner_flanking(new_sequence[0] + new_sequence[-1])
             self.motif_replace_(m_id, new_secstruct, new_sequence)
                 
         full_secstruct, full_sequence = (
