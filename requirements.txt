@@ -1,7 +1,6 @@
 editdistance>=0.5.3
 pandas>=1.2.4
 matplotlib>=3.3.4
-matplotlib-base>=3.3.4
 typing_extensions>=3.7.4.3
 seaborn>=0.11.1
 plum-dispatch>=1.5.6
