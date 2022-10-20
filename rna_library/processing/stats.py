@@ -1,7 +1,7 @@
 """A collection of functions for measuring statistical variation in data entries"""
 import numpy as np
 from typing import List
-from scipy.stats import median_absolute_deviation
+#from scipy.stats import median_absolute_deviation
 
 def iqr_excess(data: List[float]) -> float:
     """
@@ -43,7 +43,8 @@ def sigma_excess_normed(data):
 def mad_excess(data):
     if not len(data):
         return 0
-    return median_absolute_deviation(data)
+    raise NotImplemented("Does not work now")
+    #return median_absolute_deviation(data)
 
 def comparative_variance( data1, data2 ):
     assert len(data1) == len(data2)
