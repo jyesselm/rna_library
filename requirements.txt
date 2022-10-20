@@ -1,11 +1,10 @@
 editdistance
 pandas
-matplotlib
+matplotlib==3.5.2
 typing_extensions
-seaborn
-plum-dispatch
-scipy
+plum-dispatch==1.7.2
+scipy==1.9.0
 sortedcollections
-dreem
 future
 pathlib2
+seaborn==0.11.2
