@@ -25,5 +25,5 @@ setup(
         "rna_library.processing",
     ],
     include_package_data=True,
-    install_requirements=requirements,
+    install_requires=requirements,
 )
