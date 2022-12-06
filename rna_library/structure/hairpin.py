@@ -18,7 +18,7 @@ class Hairpin(Motif):
 
     def buffer(self) -> int:
         """
-        For the :class:`Hairpin()` type, this is simply the size of the
+        For the :class:`Hairpin()` type, this is simply the size of the 
         closing helix meaning the number of closing pairs.
 
         :return: buffer
@@ -37,7 +37,7 @@ class Hairpin(Motif):
 
     def recursive_structure(self) -> str:
         """
-        Returns the owned portion of the structure. In this coding of structure
+        Returns the owned portion of the structure. In this coding of structure 
         it is just the loop portion and does not include the closing pair.
 
         :return: recursive_structure
@@ -47,7 +47,7 @@ class Hairpin(Motif):
 
     def recursive_sequence(self) -> str:
         """
-        Returns the owned portion of the sequence. In this coding of sequence
+        Returns the owned portion of the sequence. In this coding of sequence 
         it is just the loop portion and does not include the closing pair.
 
         :return: recursive_sequence

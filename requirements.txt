@@ -1,12 +1,4 @@
-editdistance
-pytest
+numpy
 pandas
-matplotlib==3.5.2
-typing_extensions
-plum-dispatch==1.7.2
-scipy==1.9.0
-sortedcollections
-future
-pathlib2
-seaborn==0.11.2
-vienna
+pytest
+plum-dispatch

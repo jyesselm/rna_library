@@ -7,7 +7,7 @@ from typing import List
 
 class Junction(Motif):
     """
-    Represents a junction of any size in an RNA structure including bulges and multi-loops.
+    Represents a junction of any size in an RNA structure including bulges and multi-loops.    
     """
 
     def __init__(self, **kwargs):
@@ -71,7 +71,7 @@ class Junction(Motif):
         """
         Returns a :class:`list()` of :class:`int()`'s of gap sizes in 3' to 5' order.
         Will have the same size as number of branches in the :class:`Jucntion()`.
-
+        
         :return: gaps
         :rtype: List[int]
         """
@@ -88,7 +88,7 @@ class Junction(Motif):
 
     def recursive_structure(self) -> str:
         """
-        Returns the owned portion of the structure. In this coding of structure
+        Returns the owned portion of the structure. In this coding of structure 
         it is the closing pairs as well as the child :class:`Helix()`'s and their children.
 
         :return: recursive_structure
@@ -104,7 +104,7 @@ class Junction(Motif):
 
     def recursive_sequence(self) -> str:
         """
-        Returns the owned portion of the sequence. In this coding of structure
+        Returns the owned portion of the sequence. In this coding of structure 
         it is the closing pairs as well as the child :class:`Helix()`'s and their children.
 
         :return: recursive_sequence
@@ -120,8 +120,8 @@ class Junction(Motif):
 
     def closing_pairs(self) -> List[str]:
         """
-        Returns a :class:`list()` of :class:`str()`'s that correspond to the closing pairs in
-        the :class:`Junction()` Motif.
+        Returns a :class:`list()` of :class:`str()`'s that correspond to the closing pairs in 
+        the :class:`Junction()` Motif. 
 
         :return: closing_pairs
         :rtype: List[str]
@@ -151,7 +151,7 @@ class Junction(Motif):
 
     def symmetric(self) -> bool:
         """
-        Indicates if the current :class:`Junction()` is symmetric, that is the sizes of all of the
+        Indicates if the current :class:`Junction()` is symmetric, that is the sizes of all of the 
         gaps are the same.
 
         :return: is_symmetric

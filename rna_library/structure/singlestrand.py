@@ -16,9 +16,9 @@ class SingleStrand(Motif):
 
     def buffer(self) -> int:
         """
-        For the :class:`SingleStrand()` type, this does not have any meaning and is always the value
+        For the :class:`SingleStrand()` type, this does not have any meaning and is always the value 
         ``-1``.
-
+        
         :return: buffer
         :rtype: int
         """
@@ -28,14 +28,14 @@ class SingleStrand(Motif):
         """
         Indicates that the :class:`Motif()` is of type :class:`SingleStrand()`.
 
-        :return: is_singlestrand
+        :return: is_singlestrand 
         :rtype: bool
         """
         return True
 
     def recursive_structure(self) -> str:
         """
-        Returns the owned portion of the structure. In this coding of structure
+        Returns the owned portion of the structure. In this coding of structure 
         it is just the nucleotides in the single strand plus its child if it exists.
 
         :return: recursive_structure
@@ -48,7 +48,7 @@ class SingleStrand(Motif):
 
     def recursive_sequence(self) -> str:
         """
-        Returns the owned portion of the sequence. In this coding of sequence
+        Returns the owned portion of the sequence. In this coding of sequence 
         it is just the nucleotides in the single strand plus its child if it exists.
 
         :return: recursive_sequence
@@ -62,7 +62,7 @@ class SingleStrand(Motif):
     def has_non_canonical(self):
         """
         Because there are no pairs "owned" by :class:`SingleStrand()`'s, it always returns ``False``.
-
+        
         :return: has_non_canonical
         :rtype: bool
         """
