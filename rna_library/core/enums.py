@@ -113,7 +113,7 @@ NUCLEOTIDE_MAPPER = {
 
 
 class MotifType(IntEnum):
-    """Enumerated type for all motif types """
+    """Enumerated type for all motif types"""
 
     UNASSIGNED = 0
     SINGLESTRAND = 1

@@ -26,7 +26,7 @@ class Helix(Motif):
     @dispatch
     def size(self) -> int:
         """
-        Returns the size of the :class:`Helix()` which is just the number of 
+        Returns the size of the :class:`Helix()` which is just the number of
         pairs in the stack.
 
         :return: size
@@ -37,7 +37,7 @@ class Helix(Motif):
     @dispatch
     def size(self, val):
         """
-        Sets the current size for the :class:`Helix()`. 
+        Sets the current size for the :class:`Helix()`.
 
         :param int val: the new size of the helix.
 
@@ -47,7 +47,7 @@ class Helix(Motif):
 
     def buffer(self):
         """
-        Returns the buffer of the :class:`Helix()` which is just the number of 
+        Returns the buffer of the :class:`Helix()` which is just the number of
         pairs in the stack.
 
         :return: buffer
@@ -58,8 +58,8 @@ class Helix(Motif):
     def pairs(self) -> List[str]:
         """
         Returns the basepairs in the stack as a list of strings of length 2.
-        Pairs are returned in order of lowest 3 prime starting index. 
-        
+        Pairs are returned in order of lowest 3 prime starting index.
+
         :return: pairs
         :rtype: List[str]
         """
@@ -77,7 +77,7 @@ class Helix(Motif):
     def recursive_structure(self):
         """
         Builds and returns the continguous sequence of the structure viewing the current
-        :class:`Motif()` as the root of the structure. The returned sequence will be part of 
+        :class:`Motif()` as the root of the structure. The returned sequence will be part of
         the main sequence.
 
         :return: sequence
@@ -94,7 +94,7 @@ class Helix(Motif):
     def recursive_sequence(self):
         """
         Builds and returns the continguous structure of the structure viewing the current
-        :class:`Motif()` as the root of the structure. The returned structure will be part of 
+        :class:`Motif()` as the root of the structure. The returned structure will be part of
         the main structure.
 
         :return: structure
@@ -148,33 +148,33 @@ class Helix(Motif):
         sequences = list(map(bp_codes_to_sequence, nt_combos))
         self.sequences(sequences)
 
-    def change_outer_flanking( self, new_cp : str ) -> None:
+    def change_outer_flanking(self, new_cp: str) -> None:
         """Changes the outer closing pair to the supplied new_cp. new_cp must be a string of length 2.
-		Consider the below example:
-		>>> h = Helix(sequence='12&34',structure='((&))'))
-		>>> h.sequence()
-		'12&34'
-		>>> h.change_outer_flanking('AB')
-		>>> h.sequence()
-		'A2&3B'
-		"""
+        Consider the below example:
+        >>> h = Helix(sequence='12&34',structure='((&))'))
+        >>> h.sequence()
+        '12&34'
+        >>> h.change_outer_flanking('AB')
+        >>> h.sequence()
+        'A2&3B'
+        """
         assert len(new_cp) == 2
-        tks : List[str] = list(self.sequence())
-        tks[0], tks[-1] = new_cp[0], new_cp[1] 
-        self.sequence_ = ''.join( tks )
+        tks: List[str] = list(self.sequence())
+        tks[0], tks[-1] = new_cp[0], new_cp[1]
+        self.sequence_ = "".join(tks)
 
-    def change_inner_flanking( self, new_cp : str ) -> None:
+    def change_inner_flanking(self, new_cp: str) -> None:
         """Changes the inner closing pair to the supplied new_cp. new_cp must be a string of length 2.
-		Consider the below example:
-		>>> h = Helix(sequence='12&34',structure='((&))'))
-		>>> h.sequence()
-		'12&34'
-		>>> h.change_inner_flanking('AB')
-		>>> h.sequence()
-		'1A&B4'
-		"""
+        Consider the below example:
+        >>> h = Helix(sequence='12&34',structure='((&))'))
+        >>> h.sequence()
+        '12&34'
+        >>> h.change_inner_flanking('AB')
+        >>> h.sequence()
+        '1A&B4'
+        """
         assert len(new_cp) == 2
-        it : int  = self.sequence().find('&')
-        tks : List[str] = list(self.sequence())
-        tks[it-1], tks[it+1] = new_cp[0], new_cp[1] 
-        self.sequence_ = ''.join( tks )
+        it: int = self.sequence().find("&")
+        tks: List[str] = list(self.sequence())
+        tks[it - 1], tks[it + 1] = new_cp[0], new_cp[1]
+        self.sequence_ = "".join(tks)

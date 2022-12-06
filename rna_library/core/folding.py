@@ -36,8 +36,6 @@ except FileNotFoundError:
     _LAST_SIZE = 0
 
 
-
-
 def folding_params() -> Tuple[str]:
     """
     See the default folding parameters being used with Vienna.
@@ -45,13 +43,14 @@ def folding_params() -> Tuple[str]:
     """
     return _DEFAULT_PARAMS
 
+
 def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
     """
     Uses RNAfold to predict the mfe for a structure. Does NOT cache the result.
-    
+
     :param: str sequence: RNA sequence ot be folded.
     :param: Tuple[str] params: default folding params for RNAfold, defaults to ('-p','--noLP','-d2')
-	:rtype: FoldResult
+        :rtype: FoldResult
     """
 
     def get_mfe(raw):
@@ -60,7 +59,6 @@ def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
             if ch != ")" and ch != "(":
                 tk += ch
         return float(tk)
-
 
     raw_result = (
         os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}").read().splitlines()
@@ -78,14 +76,15 @@ def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
     )
     return fold_result
 
+
 def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
     """
     Uses RNAfold to predict the mfe for a structure using a global cache of results to save time.
-    
+
     :param: str sequence: RNA sequence ot be folded.
     :param: Tuple[str] params: default folding params for RNAfold, defaults to ('-p','--noLP','-d2')
 
-	:rtype: FoldResult
+        :rtype: FoldResult
     """
     global _LAST_SIZE
     global _CURRENT_SIZE
@@ -100,7 +99,7 @@ def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResul
 
     if sequence in _CACHE:
         cached = _CACHE[sequence]
-        #if cached.params == params: TODO this seems to not work
+        # if cached.params == params: TODO this seems to not work
         return cached
 
     raw_result = (

@@ -46,7 +46,7 @@ def pool_with_distance(sequences: List[str], min_dist: int) -> List[str]:
     """
     Creates a pool of sequences where each sequence has at least the specified Levenshtein distance between it and all other sequences.
     Method sorts sequences internally so input order is not relevant to final pool.
-    
+
     .. warning:: This function can runs in polynomial time so large pools **WILL** take a significant amount of time to run. For reference, pools on the order of hundreds of thousands took multiple hours to run on an i7 in 2021.
 
     :param list[str] sequences: A list of starting RNA sequences.
@@ -67,7 +67,7 @@ def pool_with_distance(sequences: List[str], min_dist: int) -> List[str]:
 def bp_codes_to_sequence(bp_code) -> str:
     """
     Converts a list of :class:`BasePair()`'s into a sequence string.
-    
+
     :param list[BasePair] bp_code: a list of basepairs to be converted. Basepairs are in order of nesting.
     :rtype: str
     """
@@ -85,8 +85,8 @@ def bp_codes_to_sequence(bp_code) -> str:
 def nt_codes_to_sequences(codes) -> str:
     """
     Converts a list of :class:`Nucleotide()`'s into a sequence string.
-    
-    :param list[Nucleotide] codes: a list of nucleotides to be converted. 
+
+    :param list[Nucleotide] codes: a list of nucleotides to be converted.
     :rtype: str
     """
     resulu = []
@@ -97,9 +97,9 @@ def nt_codes_to_sequences(codes) -> str:
 
 def get_pair_list(secstruct: str) -> List[Tuple[int, int]]:
     """
-    Creates a list of pairs of indices from a dot-bracket secstruct string. Note 
-    that the function assumes the incoming structure is valid. 
-    
+    Creates a list of pairs of indices from a dot-bracket secstruct string. Note
+    that the function assumes the incoming structure is valid.
+
     :param str secstruct: a dot-bracket structure which is assumed to be valid
     :rtype: list[tuple(int,int)]
     :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
@@ -120,11 +120,11 @@ def get_pair_list(secstruct: str) -> List[Tuple[int, int]]:
 
 def connectivity_list(structure: str) -> List[int]:
     """
-    Generates a connectivity list or pairmap from a dot-bracket secondary structure. 
-    The list has a value of ``-1`` for unpaired positions else has the index of a 
+    Generates a connectivity list or pairmap from a dot-bracket secondary structure.
+    The list has a value of ``-1`` for unpaired positions else has the index of a
     positions complement.
-    
-    :param str structure: a dot-bracket structure 
+
+    :param str structure: a dot-bracket structure
     :rtype: list[int]
     :raises TypeError: if the number of left parentheses exceeds the number of right parentheses
     """
@@ -171,7 +171,7 @@ def is_circular(start: int, connections: List[int]) -> bool:
 def is_symmetrical(token: str) -> bool:
     """
     Checks if a sequence or secondary structure is well-formed and symmetrical.
-    
+
     :param: str token: sequence or secondary structure to test
     :rtype: bool
     """
@@ -202,10 +202,10 @@ def safe_mkdir(dirname: str) -> None:
 
 def valid_db(structure: str) -> bool:
     """
-	Checks if a structure is a valid dot-bracket structure containing only '(', '.' or ')' characters.
+        Checks if a structure is a valid dot-bracket structure containing only '(', '.' or ')' characters.
     :param: str structure: dot bracket structure
     :rtype: bool
-	"""
+    """
     lparen_ct = 0
     for ch in structure:
         if ch == "(":
@@ -232,7 +232,7 @@ def load_fasta(fname: str) -> dict[str, str]:
     """
     Reads in sequences from a .fasta file and return a dictionary with construct names as keys
     and RNA sequences as values.
-    
+
     :param: str fname: name of the .fasta file to load
     :rtype: dict
     """

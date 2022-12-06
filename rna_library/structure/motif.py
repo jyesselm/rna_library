@@ -24,13 +24,13 @@ from plum import dispatch
 class Motif(ABC):
     """
     Abstract base class that :class:`Hairpin()`, :class:`Helix()`, :class:`Junction()` and :class:`SingleStrand()` all inherit from.
-    
+
     """
 
     def __init__(self, **kwargs):
         """
         Constructor for ``Motif``.
-        
+
         .. warning:: Should **NOT** be called directly. All instantiations are handled by ``rna_library.parser.parse_to_motifs()``
 
         """
@@ -99,7 +99,7 @@ class Motif(ABC):
     def str(self) -> str:
         """
         Creates a recursive string representation of the current :class:`Motif()` object.
-        
+
         :rtype: :class:`str()`
         """
         if self.id_ is not None:
@@ -129,9 +129,9 @@ class Motif(ABC):
     def __eq__(self, other: Motif) -> bool:
         """
         Overloaded ``==`` operator for :class:`Motif()`. Requires that type of motif, sequence and token are identical.
-        
+
         :param Motif other: Another :class:`Motif()` to be compared against.
-        
+
         """
         return (
             self.type() == other.type()
@@ -142,7 +142,7 @@ class Motif(ABC):
     def __str__(self) -> str:
         """
         String representation of just the motif at hand.
-        
+
         :return: The :class:`str()` representation of the :class:`Motif()`.
         :rtype: :class:`str()`
         """
@@ -195,7 +195,7 @@ class Motif(ABC):
     def children(self) -> List[Motif]:
         """
         Getter for the :class:`Motif()`'s child motifs. Returned as a list for iteration. Only returns direct children or an empty list if the motif has not children.
-        
+
         :return: A :class:`list()` of :class:`Motif()` if the current :class:`Motif()` has any.
         :rtype: :class:`list[Motif]`
         """
@@ -206,7 +206,7 @@ class Motif(ABC):
         Appends a new :class:`Motif()` to the internal list of children for the current :class:`Motif()`.
 
         .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
-        
+
         :param: Motif other: Another :class:`Motif()` to be appended to the internal children list.
         """
         self.children_.append(other)
@@ -216,18 +216,18 @@ class Motif(ABC):
         Sets the entire list of `Motif()` to the internal list of children for the current :class:`Motif()`.
 
         .. warning:: Should **NOT** be called directly. Other function calls must occur to ensure that the internal graph is accurate.
-        
+
         :param  List[Motif] other: Another :class:`Motif()` to be appended to the internal children list.
         """
         self.children_ = other
 
     @dispatch
     def parent(self, other):
-        """ 
-        Sets the :class:`Motif()`'s parent to the supplied :class:`Motif()`. 
+        """
+        Sets the :class:`Motif()`'s parent to the supplied :class:`Motif()`.
 
         :param Motif other: The new parent for the current :class:`Motif()`.
-        
+
         :return: None
         :rtype: NoneType
         """
@@ -235,10 +235,10 @@ class Motif(ABC):
 
     @dispatch
     def parent(self):
-        """ 
-        Gets the parent :class:`Motif()`'s for the current :class:`Motif()`. 
-        
-        :return: the parent motif 
+        """
+        Gets the parent :class:`Motif()`'s for the current :class:`Motif()`.
+
+        :return: the parent motif
         :rtype: :class:`Motif()`
         """
         return self.parent_
@@ -249,7 +249,7 @@ class Motif(ABC):
         Sets the :class:`Motif()`'s identifying token to an inputted string. Input is **NOT** validated.
 
         :param str tk: the new token for the :class:`Motif()`.
-        
+
         :return: None
         :rtype: NoneType
         """
@@ -272,7 +272,7 @@ class Motif(ABC):
         Sets the :class:`Motif()`'s structure to an inputted string. Input is **NOT** validated.
 
         :param str tk: the new structure for the :class:`Motif()`.
-        
+
         :return: None
         :rtype: NoneType
         """
@@ -308,9 +308,9 @@ class Motif(ABC):
     @dispatch
     def sequence(self):
         """
-        Gets the sequence for the :class:`Motif()`. 
-        Because the nucleotides owned by the :class:`Motif()` may not be contiguous, breaks will 
-        be separated by an ampersand '&'. 
+        Gets the sequence for the :class:`Motif()`.
+        Because the nucleotides owned by the :class:`Motif()` may not be contiguous, breaks will
+        be separated by an ampersand '&'.
 
         :return: sequence
         :rtype: str
@@ -321,8 +321,8 @@ class Motif(ABC):
     def sequence(self, seq):
         """
         Sets the sequence for the :class:`Motif()` to the supplied string. Warning the input **NOT** validated.
-        
-        :param str seq: the new sequence for the :class:`Motif()`. 
+
+        :param str seq: the new sequence for the :class:`Motif()`.
         """
         # TODO some kind of validation
         self.sequence_ = seq
@@ -331,7 +331,7 @@ class Motif(ABC):
     def id(self):
         """
         Gets the id :class:`int` value for the given :class:`Motif()`.
-        
+
         :return: id
         :rtype: int
         """
@@ -341,7 +341,7 @@ class Motif(ABC):
     def id(self, new_id):
         """
         Sets the id for the :class:`Motif()`. Warning: It is **NOT** currently validated.
-        
+
         :param int new_id: the new id for the :class:`Motif()`
         :return: none
         :rtype: NoneType
@@ -362,7 +362,7 @@ class Motif(ABC):
     @dispatch
     def depth(self, value):
         """
-        Sets the depth of the current :class:`Motif()`. 
+        Sets the depth of the current :class:`Motif()`.
 
         :param int value: the new depth value for the current :class:`Motif()`.
 
@@ -391,7 +391,7 @@ class Motif(ABC):
         Returns whether the :class:`Motif()` has any children.
 
         :return:  has_children
-        :rtype: bool 
+        :rtype: bool
         """
         return len(self.children_) > 0
 
@@ -408,7 +408,7 @@ class Motif(ABC):
     def recursive_sequence(self) -> str:
         """
         Builds and returns the continguous sequence of the structure viewing the current
-        :class:`Motif()` as the root of the structure. The returned sequence will be part of 
+        :class:`Motif()` as the root of the structure. The returned sequence will be part of
         the main sequence.
 
         :return: sequence
@@ -420,7 +420,7 @@ class Motif(ABC):
     def recursive_structure(self) -> str:
         """
         Builds and returns the continguous structure of the structure viewing the current
-        :class:`Motif()` as the root of the structure. The returned structure will be part of 
+        :class:`Motif()` as the root of the structure. The returned structure will be part of
         the main structure.
 
         :return: structure
@@ -444,7 +444,7 @@ class Motif(ABC):
         and placement of '&' are the same.
 
         :param str sequence: template string to compare against.
-        
+
         :return: is_same
         :rtype: bool
         """
@@ -478,7 +478,7 @@ class Motif(ABC):
     def contains(self, pos: int) -> bool:
         """
         Indicates if a nucleotide index is contained or belongs to the current :class:`Motif()`.
-        
+
         :param list[int] pos: the querying index
 
         :return: is_contained
@@ -514,7 +514,7 @@ class Motif(ABC):
         Note that the `Motif.number_sequences()` method should be queried prior so that the index call will
         be known to be valid.
 
-        :param int idx: The index to be used. 
+        :param int idx: The index to be used.
         """
         self.sequence_ = self.sequences_[idx]
 
@@ -540,7 +540,7 @@ def highest_id(m: Motif, best: int = 0) -> int:
     Figures out the highest id number in a given :class:`Motif()` graph.
 
     :param Motif m: motif to start the query on
-    :param int best: current highest or "best" motif id at that recursion level. 
+    :param int best: current highest or "best" motif id at that recursion level.
 
     :return: highest_id
     :rtype: int
