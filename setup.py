@@ -20,9 +20,7 @@ setup(
     packages=[
         "rna_library",
         "rna_library.core",
-        "rna_library.design",
         "rna_library.structure",
-        "rna_library.processing",
     ],
     include_package_data=True,
     install_requires=requirements,
