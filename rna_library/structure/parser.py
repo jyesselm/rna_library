@@ -118,8 +118,8 @@ def parse_to_motifs(structure: str, sequence: str) -> Motif:
     """
     Method takes a structure sequence pair and returns a root :class:`Motif()` with a complete associated graph.
 
-    :param str structure: a valid dot-bracket structure 
-    :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB] 
+    :param str structure: a valid dot-bracket structure
+    :param str sequence: the corresponding sequence composed of the alphabet [ACGUTNB]
 
     :return: motif
     :rtype: Motif

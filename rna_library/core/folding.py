@@ -25,7 +25,6 @@ _CURRENT_SIZE = None
 _LAST_SIZE = None
 """The size of the cache the last time it was saved."""
 
-
 try:
     _CACHE = pickle.load(open(_CACHE_FILE, "rb"))
     _CURRENT_SIZE = len(_CACHE)
@@ -61,7 +60,9 @@ def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
         return float(tk)
 
     raw_result = (
-        os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}").read().splitlines()
+        os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}")
+        .read()
+        .splitlines()
     )
     safe_rm("dot.ps")
     safe_rm("rna.ps")
@@ -77,7 +78,9 @@ def fold(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
     return fold_result
 
 
-def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResult:
+def fold_cache(
+    sequence: str, params: Tuple[str] = _DEFAULT_PARAMS
+) -> FoldResult:
     """
     Uses RNAfold to predict the mfe for a structure using a global cache of results to save time.
 
@@ -103,7 +106,9 @@ def fold_cache(sequence: str, params: Tuple[str] = _DEFAULT_PARAMS) -> FoldResul
         return cached
 
     raw_result = (
-        os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}").read().splitlines()
+        os.popen(f"RNAfold {' '.join(list(params))} <<< {sequence}")
+        .read()
+        .splitlines()
     )
     safe_rm("dot.ps")
     safe_rm("rna.ps")

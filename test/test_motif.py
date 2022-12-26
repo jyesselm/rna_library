@@ -1,35 +1,30 @@
-import sys
-import pytest
-
 from rna_library import Motif, highest_id
 from rna_library import MotifType
 
 
 class BaseTest(Motif):
-    """Test class that inherits from :class:`Motif()` designed to test basic functionality since :class:`Motif()` has abstract methods."""
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    """
+    Test class that inherits from :class:`Motif()` designed to test basic
+    functionality since :class:`Motif()` has abstract methods.
+    """
 
     def buffer(self):
-        """Overrides :class:`Motif()`'s abstract method to allow instantiation. No other purpose."""
-        pass
+        """
+        Overrides :class:`Motif()`'s abstract method to allow instantiation.
+        No other purpose."
+        """
 
     def generate_sequences(self):
         """Overrides :class:`Motif()`'s abstract method to allow instantiation. No other purpose."""
-        pass
 
     def has_non_canonical(self):
         """Overrides :class:`Motif()`'s abstract method to allow instantiation. No other purpose."""
-        pass
 
     def recursive_sequence(self):
         """Overrides :class:`Motif()`'s abstract method to allow instantiation. No other purpose."""
-        pass
 
     def recursive_structure(self):
         """Overrides :class:`Motif()`'s abstract method to allow instantiation. No other purpose."""
-        pass
 
 
 def test_const_data():
@@ -78,9 +73,9 @@ def test_getters_and_setters():
     other.token("other-motif")
     other.sequence("AACCC")
 
-    tm.parent(other)
+    tm.parent = other
 
-    assert tm.parent() == other
+    assert tm.parent == other
 
 
 def test_equality_op():

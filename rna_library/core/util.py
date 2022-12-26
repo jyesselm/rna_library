@@ -9,7 +9,6 @@ from .enums import *
 from .error import *
 from pathlib import Path
 from typing import List, Tuple
-from scipy.stats import mannwhitneyu
 
 
 def satisfies_constraints(sequence: str, template: str) -> bool:
@@ -276,8 +275,10 @@ def dsci(sequence: str, target: str, dms: List[float]) -> Tuple[float]:
             paired.append(val)
 
     if min(len(unpaired), len(paired)) < 5:
-        raise Exception("Must be at least 5 unpaired and paired dms reactivity values")
+        raise Exception(
+            "Must be at least 5 unpaired and paired dms reactivity values")
     # TODO probably need to add something about where there aren't a ton of observations
-    result = mannwhitneyu(unpaired, paired, alternative="greater")
-    denominator = len(paired) * len(unpaired)
-    return (result.statistic / denominator, result.pvalue)
+    #result = mannwhitneyu(unpaired, paired, alternative="greater")
+    #denominator = len(paired) * len(unpaired)
+    # return (result.statistic / denominator, result.pvalue)
+    return (0, 0)

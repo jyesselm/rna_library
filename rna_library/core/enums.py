@@ -1,4 +1,4 @@
-"""Enumerated types for base pairs, nucleotides and motifs. 
+"""Enumerated types for base pairs, nucleotides and motifs.
 Assist with ensuring type correctness and lowers overhead vs string-based
 implementations."""
 
@@ -12,7 +12,7 @@ Ordered for easy conversion by the :class:`BasePair()` class."""
 LEGAL_BPS = {"A", "C", "G", "U"}
 """A :class:`set()` of all 4 allowed nucleotide types."""
 NTS = ("A", "C", "G", "U")
-"""A :class:`tuple()` of all 4 canonical nucleotide types. Ordered 
+"""A :class:`tuple()` of all 4 canonical nucleotide types. Ordered
 for each conversion by the :class:`Nucleotide()` class."""
 
 
@@ -66,7 +66,7 @@ class BasePair(IntEnum):
 
 
 BP_VALS = [int(bp) for bp in BasePair]
-"""A :class:`list()` that contains the integer values for all of the 
+"""A :class:`list()` that contains the integer values for all of the
 :class:`BasePair()` enumerations."""
 
 BASEPAIR_MAPPER = {
@@ -99,7 +99,7 @@ class Nucleotide(IntEnum):
 
 
 NT_VALS = [int(nt) for nt in Nucleotide]
-"""A :class:`list()` that contains the integer values for all of the 
+"""A :class:`list()` that contains the integer values for all of the
 :class:`Nucleotide()` enumerations."""
 
 NUCLEOTIDE_MAPPER = {
